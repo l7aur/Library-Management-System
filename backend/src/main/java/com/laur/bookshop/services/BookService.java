@@ -25,7 +25,7 @@ public class BookService {
     }
 
     public Book findBookByISBN(String isbn) {
-        return bookRepository.findByISBN(isbn).orElseThrow(
+        return bookRepository.findByIsbn(isbn).orElseThrow(
                 () -> new IllegalStateException("Book with ISBN " + isbn + " not found")
         );
     }
@@ -41,7 +41,7 @@ public class BookService {
     }
 
     public Book updateBook(String isbn, Book book) {
-        Book exitingBook = bookRepository.findByISBN(isbn).orElseThrow(
+        Book exitingBook = bookRepository.findByIsbn(isbn).orElseThrow(
                 () -> new IllegalStateException("Book with ISBN " + isbn + " not found")
         );
         exitingBook.setTitle(book.getTitle());
@@ -52,8 +52,8 @@ public class BookService {
         return bookRepository.save(exitingBook);
     }
 
-    public void deleteBookByISBN(String isbn) {
-        bookRepository.deleteByISBN(isbn);
+    public void deleteBookByIsbn(String isbn) {
+        bookRepository.deleteByIsbn(isbn);
     }
 
     public void deleteBookByTitle(String title) {
