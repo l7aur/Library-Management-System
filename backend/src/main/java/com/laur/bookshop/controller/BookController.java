@@ -24,32 +24,32 @@ public class BookController {
         return bookService.findBookByISBN(isbn);
     }
 
-    @GetMapping("books/{author}")
-    public Book getBookByAuthor(@PathVariable String author) {
+    @GetMapping("/books/{author}")
+    public List<Book> getBookByAuthor(@PathVariable String author) {
         return bookService.findBookByAuthor(author);
     }
 
-    @GetMapping("books/{title}")
+    @GetMapping("/books/{title}")
     public Book getBookByTitle(@PathVariable String title) {
         return bookService.findBookByTitle(title);
     }
 
-    @PostMapping("books")
+    @PostMapping("/books")
     public Book addBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
 
-    @PutMapping("/book/{isbn}")
+    @PutMapping("/books/{isbn}")
     public Book updateBook(@PathVariable String isbn, @RequestBody Book book) {
         return bookService.updateBook(isbn, book);
     }
 
-    @DeleteMapping("/book/{isbn}")
+    @DeleteMapping("/books/{isbn}")
     public void deleteBookByIsbn(@PathVariable String isbn) {
         bookService.deleteBookByIsbn(isbn);
     }
 
-    @DeleteMapping("/person/{title}")
+    @DeleteMapping("/books/{title}")
     public void deleteBookByTitle(@PathVariable String title) {
         bookService.deleteBookByTitle(title);
     }
