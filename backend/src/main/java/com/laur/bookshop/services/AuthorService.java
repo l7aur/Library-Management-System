@@ -1,14 +1,12 @@
-package com.laur.demo.services;
+package com.laur.bookshop.services;
 
-import com.laur.demo.model.data.Author;
-import com.laur.demo.repository.data.AuthorRepository;
-import lombok.AllArgsConstructor;
+import com.laur.bookshop.model.data.Author;
+import com.laur.bookshop.repository.data.AuthorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class AuthorService {
     private final AuthorRepository authorRepository;
 

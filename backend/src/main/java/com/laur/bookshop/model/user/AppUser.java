@@ -1,4 +1,4 @@
-package com.laur.demo.model.user;
+package com.laur.bookshop.model.user;
 
 import jakarta.persistence.*;
 import lombok.Data;

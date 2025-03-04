@@ -1,4 +1,4 @@
-package com.laur.demo;
+package com.laur.bookshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

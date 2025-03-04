@@ -1,4 +1,4 @@
-package com.laur.demo.controller;
+package com.laur.bookshop.controller;
 
 public class PublisherController {
 }

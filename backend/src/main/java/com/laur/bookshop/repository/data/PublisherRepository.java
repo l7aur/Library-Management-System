@@ -1,6 +1,6 @@
-package com.laur.demo.repository.data;
+package com.laur.bookshop.repository.data;
 
-import com.laur.demo.model.data.Publisher;
+import com.laur.bookshop.model.data.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

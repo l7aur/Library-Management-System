@@ -1,9 +1,7 @@
-package com.laur.demo.model.data;
+package com.laur.bookshop.model.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
