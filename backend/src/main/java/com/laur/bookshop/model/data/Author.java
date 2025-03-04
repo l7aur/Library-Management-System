@@ -23,6 +23,9 @@ public class Author {
     @Column(name = "alias")
     private String alias;
 
+    @Column(name = "nationality")
+    private String nationality;
+
     @ManyToMany(mappedBy = "authors")
     private List<Book> books;
 }
