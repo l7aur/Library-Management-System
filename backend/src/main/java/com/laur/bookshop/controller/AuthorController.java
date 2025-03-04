@@ -35,6 +35,11 @@ public class AuthorController {
         return authorService.findAuthorsByNationality(nationality);
     }
 
+    @PostMapping("/authors")
+    public Author addAuthor(@RequestBody Author author) {
+        return authorService.addAuthor(author);
+    }
+
     @PutMapping("/authors/{firstName}{lastName}")
     public Author updateAuthor(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Author author) {
         return authorService.updateAuthor(firstName, lastName, author);
