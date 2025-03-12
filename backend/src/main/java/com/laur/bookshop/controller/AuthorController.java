@@ -1,6 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.Author;
+import com.laur.bookshop.model.AuthorCreateDTO;
 import com.laur.bookshop.services.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +37,8 @@ public class AuthorController {
     }
 
     @PostMapping("/authors")
-    public Author addAuthor(@RequestBody Author author) {
-        return authorService.addAuthor(author);
+    public Author addAuthor(@RequestBody AuthorCreateDTO authorDTO) {
+        return authorService.addAuthor(authorDTO);
     }
 
     @PutMapping("/authors/{firstName}{lastName}")

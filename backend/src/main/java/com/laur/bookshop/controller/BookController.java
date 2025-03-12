@@ -1,6 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.Book;
+import com.laur.bookshop.model.BookCreateDTO;
 import com.laur.bookshop.services.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,8 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public Book addBook(@RequestBody Book book) {
-        return bookService.addBook(book);
+    public Book addBook(@RequestBody BookCreateDTO bookDTO) {
+        return bookService.addBook(bookDTO);
     }
 
     @PutMapping("/books/{isbn}")

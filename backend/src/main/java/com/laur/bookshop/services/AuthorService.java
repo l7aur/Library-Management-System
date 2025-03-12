@@ -1,18 +1,21 @@
 package com.laur.bookshop.services;
 
 import com.laur.bookshop.model.Author;
+import com.laur.bookshop.model.AuthorCreateDTO;
+import com.laur.bookshop.model.Book;
 import com.laur.bookshop.repository.AuthorRepository;
+import com.laur.bookshop.repository.BookRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class AuthorService {
     private final AuthorRepository authorRepository;
-
-    public AuthorService(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+    private final BookRepository bookRepository;
 
     public List<Author> findAllAuthors() {
         return authorRepository.findAll();
@@ -42,8 +45,20 @@ public class AuthorService {
         );
     }
 
-    public Author addAuthor(Author author) {
-        return authorRepository.save(author);
+    public Author addAuthor(AuthorCreateDTO author) {
+        List<Book> books = new ArrayList<>();
+        for(String book : author.getBooks()) {
+            books.add(bookRepository.findByTitle(book).orElseThrow(
+                    () -> new IllegalStateException("No book found with title: " + book)
+            ));
+        }
+        Author newAuthor = new Author();
+        newAuthor.setFirstName(author.getFirstName());
+        newAuthor.setLastName(author.getLastName());
+        newAuthor.setNationality(author.getNationality());
+        newAuthor.setAlias(author.getAlias());
+        newAuthor.setBooks(books);
+        return authorRepository.save(newAuthor);
     }
 
     public Author updateAuthor(String firstName, String lastName, Author author) {

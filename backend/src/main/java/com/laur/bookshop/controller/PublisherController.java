@@ -1,6 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.Publisher;
+import com.laur.bookshop.model.PublisherCreateDTO;
 import com.laur.bookshop.services.PublisherService;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class PublisherController {
     }
 
     @PostMapping("/publishers")
-    public Publisher addPublisher(@RequestBody Publisher publisher) {
+    public Publisher addPublisher(@RequestBody PublisherCreateDTO publisher) {
         return publisherService.addPublisher(publisher);
     }
 }

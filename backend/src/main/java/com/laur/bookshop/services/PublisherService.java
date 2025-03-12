@@ -1,18 +1,21 @@
 package com.laur.bookshop.services;
 
+import com.laur.bookshop.model.Book;
 import com.laur.bookshop.model.Publisher;
+import com.laur.bookshop.model.PublisherCreateDTO;
+import com.laur.bookshop.repository.BookRepository;
 import com.laur.bookshop.repository.PublisherRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PublisherService {
     private final PublisherRepository publisherRepository;
-
-    public PublisherService(PublisherRepository publisherRepository) {
-        this.publisherRepository = publisherRepository;
-    }
+    private final BookRepository bookRepository;
 
     public List<Publisher> findAllPublishers(){
         return publisherRepository.findAll();
@@ -36,8 +39,18 @@ public class PublisherService {
         );
     }
 
-    public Publisher addPublisher(Publisher publisher){
-        return publisherRepository.save(publisher);
+    public Publisher addPublisher(PublisherCreateDTO publisher){
+        List<Book> books = new ArrayList<>();
+        for(String book : publisher.getBooks()){
+            books.add(bookRepository.findByTitle(book).orElseThrow(
+                    () -> new IllegalStateException("Book " + book + " not found")
+            ));
+        }
+        Publisher newPublisher = new Publisher();
+        newPublisher.setLocation(publisher.getLocation());
+        newPublisher.setFoundingYear(publisher.getFoundingYear());
+        newPublisher.setName(publisher.getName());
+        return publisherRepository.save(newPublisher);
     }
 
     public Publisher updatePublisher(String name, Publisher publisher){
