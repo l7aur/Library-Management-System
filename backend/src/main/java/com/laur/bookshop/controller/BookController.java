@@ -1,6 +1,6 @@
 package com.laur.bookshop.controller;
 
-import com.laur.bookshop.model.data.Book;
+import com.laur.bookshop.model.Book;
 import com.laur.bookshop.services.BookService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.laur.bookshop.model.data;
+package com.laur.bookshop.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

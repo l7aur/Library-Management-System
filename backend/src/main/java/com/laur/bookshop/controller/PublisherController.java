@@ -1,6 +1,6 @@
 package com.laur.bookshop.controller;
 
-import com.laur.bookshop.model.data.Publisher;
+import com.laur.bookshop.model.Publisher;
 import com.laur.bookshop.services.PublisherService;
 import org.springframework.web.bind.annotation.*;
 

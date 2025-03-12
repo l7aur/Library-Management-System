@@ -1,6 +1,6 @@
-package com.laur.bookshop.repository.data;
+package com.laur.bookshop.repository;
 
-import com.laur.bookshop.model.data.Book;
+import com.laur.bookshop.model.Book;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

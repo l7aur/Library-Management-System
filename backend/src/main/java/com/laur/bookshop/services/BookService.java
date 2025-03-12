@@ -1,7 +1,7 @@
 package com.laur.bookshop.services;
 
-import com.laur.bookshop.model.data.Book;
-import com.laur.bookshop.repository.data.BookRepository;
+import com.laur.bookshop.model.Book;
+import com.laur.bookshop.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

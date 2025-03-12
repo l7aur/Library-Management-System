@@ -1,4 +1,4 @@
-package com.laur.bookshop.model.user;
+package com.laur.bookshop.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,29 +11,30 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "app_user")
-public class AppUser implements UserDetails {
+@Table(name = "user")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name= "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "app_user_role",
-            joinColumns = @JoinColumn(name = "app_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
+    @Column(name= "role", nullable = false)
+    private UserRole role;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return List.of();
     }
 
     @Override
