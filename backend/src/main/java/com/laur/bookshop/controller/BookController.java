@@ -3,6 +3,7 @@ package com.laur.bookshop.controller;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.model.BookCreateDTO;
 import com.laur.bookshop.services.BookService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,12 @@ public class BookController {
         return bookService.findAllBooks();
     }
 
-    @GetMapping("/books/{isbn}")
+    @GetMapping("/books/isbn/{isbn}")
     public Book getBookByISBN(@PathVariable String isbn) {
         return bookService.findBookByISBN(isbn);
     }
 
-    @GetMapping("/books/{author}")
+    @GetMapping("/books/author/{author}")
     public List<Book> getBookByAuthor(@PathVariable String author) {
         return bookService.findBookByAuthor(author);
     }
@@ -36,7 +37,7 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public Book addBook(@RequestBody BookCreateDTO bookDTO) {
+    public Book addBook(@Valid @RequestBody BookCreateDTO bookDTO) {
         return bookService.addBook(bookDTO);
     }
 

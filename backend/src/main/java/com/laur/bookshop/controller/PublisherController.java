@@ -3,15 +3,16 @@ package com.laur.bookshop.controller;
 import com.laur.bookshop.model.Publisher;
 import com.laur.bookshop.model.PublisherCreateDTO;
 import com.laur.bookshop.services.PublisherService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class PublisherController {
     private final PublisherService publisherService;
-
-    public PublisherController(PublisherService publisherService) { this.publisherService = publisherService; }
 
     @GetMapping("/publishers")
     public List<Publisher> getAllPublishers() {
@@ -23,12 +24,12 @@ public class PublisherController {
         return publisherService.findPublisherByName(name);
     }
 
-    @GetMapping("/publishers/{location}")
+    @GetMapping("/publishers/location/{location}")
     public List<Publisher> getPublisherByLocation(@PathVariable String location) {
         return publisherService.findPublisherByLocation(location);
     }
 
-    @GetMapping("/publishers/{foundingYear}")
+    @GetMapping("/publishers/foundingYear/{foundingYear}")
     public List<Publisher> getPublisherByFoundingYear(@PathVariable int foundingYear) {
         return publisherService.findPublisherByFoundingYear(foundingYear);
     }
@@ -44,7 +45,7 @@ public class PublisherController {
     }
 
     @PostMapping("/publishers")
-    public Publisher addPublisher(@RequestBody PublisherCreateDTO publisher) {
+    public Publisher addPublisher(@Valid @RequestBody PublisherCreateDTO publisher) {
         return publisherService.addPublisher(publisher);
     }
 }

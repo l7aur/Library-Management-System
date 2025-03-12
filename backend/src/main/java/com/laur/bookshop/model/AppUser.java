@@ -11,8 +11,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "user")
-public class User implements UserDetails {
+@Table(name = "app_user")
+public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name= "role", nullable = false)
-    private UserRole role;
+    private AppUserRole role;
 
     @Column(name = "first_name")
     private String firstName;

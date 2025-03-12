@@ -1,6 +1,6 @@
 package com.laur.bookshop.model;
 
-public enum UserRole {
+public enum AppUserRole {
     UNKNOWN,
     ADMIN,
     CUSTOMER,

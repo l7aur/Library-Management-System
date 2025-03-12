@@ -23,7 +23,7 @@ public class PublisherService {
 
     public Publisher findPublisherByName(String name){
         return publisherRepository.findByName(name).orElseThrow(
-                () -> new RuntimeException("No publisher found with name " + name)
+                () -> new IllegalStateException("No publisher found with name " + name)
         );
     }
 
@@ -50,6 +50,7 @@ public class PublisherService {
         newPublisher.setLocation(publisher.getLocation());
         newPublisher.setFoundingYear(publisher.getFoundingYear());
         newPublisher.setName(publisher.getName());
+        newPublisher.setBooks(books);
         return publisherRepository.save(newPublisher);
     }
 
