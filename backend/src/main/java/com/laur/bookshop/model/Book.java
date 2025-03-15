@@ -34,4 +34,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
 }

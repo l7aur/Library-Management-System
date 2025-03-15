@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin
 public class AppUserController {
     private final AppUserService appUserService;
 

@@ -1,8 +1,6 @@
 package com.laur.bookshop.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
@@ -26,4 +24,14 @@ public class BookCreateDTO {
 
     @NotEmpty(message = "The authors are mandatory!")
     private List<String> authors;
+
+    @NotEmpty(message = "The price is mandatory!")
+    @Positive
+    @NotNull
+    private Double price;
+
+    @NotEmpty(message = "The stock is mandatory!")
+    @Positive
+    @NotNull
+    private Integer stock;
 }

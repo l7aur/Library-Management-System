@@ -1,21 +1,19 @@
 import PublisherT from "../types/PublisherT.tsx";
-import DataTable, {TableColumn} from 'react-data-table-component';
+import DataTable, { TableColumn } from 'react-data-table-component';
 
 interface PublishersTableProps {
     data: PublisherT[];
     loading: boolean;
     isError: boolean;
-    onRowSelect: (state: {selectedRows: PublisherT[]}) => void;
-    theme: 'light' | 'dark';
+    onRowSelect: (state: { selectedRows: PublisherT[] }) => void;
 }
 
-function PublishersTable({data, loading, isError, onRowSelect, theme}: PublishersTableProps) {
-    const columns: TableColumn < PublisherT > [] = [
-        {name: 'ID', selector: (row: PublisherT) => row.id, sortable: true},
-        {name: 'Name', selector: (row: PublisherT) => row.name, sortable: true},
-        {name: 'Location', selector: (row: PublisherT) => row.location, sortable: true},
-        {name: 'FoundingYear', selector: (row: PublisherT) => row.foundingYear, sortable: true}
-        //{name: 'Books', selector: (row: PublisherT) => row.id, sortable: true},
+function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTableProps) {
+    const columns: TableColumn<PublisherT>[] = [
+        { name: 'ID', selector: (row) => row.id, sortable: true, id: 1 },
+        { name: 'Name', selector: (row) => row.name, sortable: true },
+        { name: 'Location', selector: (row) => row.location, sortable: true },
+        { name: 'FoundingYear', selector: (row) => row.foundingYear, sortable: true },
     ];
 
     return (
@@ -24,6 +22,8 @@ function PublishersTable({data, loading, isError, onRowSelect, theme}: Publisher
                 <p className="loading-text">Loading...</p>
             ) : isError ? (
                 <p className="error-text">An error occurred while fetching data!</p>
+            ) : data.length === 0 ? (
+                <p className="empty-text">No publishers found.</p>
             ) : (
                 <div className="publishers-table-container">
                     <DataTable
@@ -34,7 +34,7 @@ function PublishersTable({data, loading, isError, onRowSelect, theme}: Publisher
                         highlightOnHover
                         selectableRows
                         onSelectedRowsChange={onRowSelect}
-                        theme={theme === "dark" ? "dark" : "light"}
+                        defaultSortFieldId={1}
                     />
                 </div>
             )}

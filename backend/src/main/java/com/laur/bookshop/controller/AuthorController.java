@@ -4,15 +4,16 @@ import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.AuthorCreateDTO;
 import com.laur.bookshop.services.AuthorService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
+@CrossOrigin
 public class AuthorController {
     private final AuthorService authorService;
-
-    public AuthorController(AuthorService authorService) { this.authorService = authorService; }
 
     @GetMapping("/authors")
     public List<Author> getAllAuthors() {return authorService.findAllAuthors(); }
