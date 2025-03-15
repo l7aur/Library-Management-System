@@ -15,22 +15,24 @@ public class BookCreateDTO {
     @Size(min = 2, max = 255, message = "The title must have between 2 and 255 characters!")
     private String title;
 
-    @Size(max = 2025, message = "No book can be published in the future!")
+    @NotBlank(message = "The publish year is mandatory!")
+    @Min(value = 1000, message = "No book can be published for that long!")
+    @Max(value = 2025, message = "No book can be published in the future!")
     private Integer publishYear;
 
-    @NotEmpty(message = "The publisher is mandatory!")
+    @NotBlank(message = "The publisher is mandatory!")
     @Size(min = 2, max = 50, message = "The publisher must have between 2 and 50 characters!")
     private String publisher;
 
-    @NotEmpty(message = "The authors are mandatory!")
+    @NotBlank(message = "The authors are mandatory!")
     private List<String> authors;
 
-    @NotEmpty(message = "The price is mandatory!")
+    @NotBlank(message = "The price is mandatory!")
     @Positive
     @NotNull
     private Double price;
 
-    @NotEmpty(message = "The stock is mandatory!")
+    @NotBlank(message = "The stock is mandatory!")
     @Positive
     @NotNull
     private Integer stock;

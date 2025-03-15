@@ -38,7 +38,7 @@ public class AuthorController {
         return authorService.findAuthorsByNationality(nationality);
     }
 
-    @PostMapping("/authors")
+    @PostMapping("/authors/add")
     public Author addAuthor(@Valid @RequestBody AuthorCreateDTO authorDTO) {
         return authorService.addAuthor(authorDTO);
     }

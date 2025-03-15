@@ -9,16 +9,18 @@ import MyNavbar from "./components/MyNavbar.tsx";
 
 const App: React.FC = () => {
     return (
-        <Router>
-            <MyNavbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/books" element={<Books />} />
-                <Route path="/authors" element={<Authors />} />
-                <Route path="/publishers" element={<Publishers />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Router>
+        <div className="flex flex-col items-center min-h-screen w-full max-w-screen">
+            <Router>
+                <MyNavbar/>
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/books" element={<Books/>}/>
+                    <Route path="/authors" element={<Authors/>}/>
+                    <Route path="/publishers" element={<Publishers/>}/>
+                    <Route path="*" element={<NotFound/>}/>
+                </Routes>
+            </Router>
+        </div>
     );
 };
 

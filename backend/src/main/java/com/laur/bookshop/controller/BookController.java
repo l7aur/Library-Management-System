@@ -37,7 +37,7 @@ public class BookController {
         return bookService.findBookByTitle(title);
     }
 
-    @PostMapping("/books")
+    @PostMapping("/books/add")
     public Book addBook(@Valid @RequestBody BookCreateDTO bookDTO) {
         return bookService.addBook(bookDTO);
     }

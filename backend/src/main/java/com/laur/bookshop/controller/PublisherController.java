@@ -45,7 +45,7 @@ public class PublisherController {
         publisherService.deletePublisherByName(name);
     }
 
-    @PostMapping("/publishers")
+    @PostMapping("/publishers/add")
     public Publisher addPublisher(@Valid @RequestBody PublisherCreateDTO publisher) {
         return publisherService.addPublisher(publisher);
     }

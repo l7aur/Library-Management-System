@@ -1,9 +1,9 @@
 export interface BookT {
     id: string;
     isbn: string;
+    publishYear: number;
     title: string;
-    author: string[];
-    publisher: string;
+    publisherId: string;
     price: number;
     stock: number;
 }

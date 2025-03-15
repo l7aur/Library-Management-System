@@ -10,8 +10,8 @@ interface PublishersTableProps {
 
 function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTableProps) {
     const columns: TableColumn<PublisherT>[] = [
-        { name: 'ID', selector: (row) => row.id, sortable: true, id: 1 },
-        { name: 'Name', selector: (row) => row.name, sortable: true },
+        // { name: 'ID', selector: (row) => row.id, sortable: true, id: 1 },
+        { name: 'Name', selector: (row) => row.name, sortable: true, id: 1 },
         { name: 'Location', selector: (row) => row.location, sortable: true },
         { name: 'FoundingYear', selector: (row) => row.foundingYear, sortable: true },
     ];

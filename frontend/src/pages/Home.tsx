@@ -4,7 +4,7 @@ import React from "react";
 const Home: React.FC = () => {
 
     return (
-        <div className="flex flex-col items-center min-h-screen">
+        <div className="flex flex-col items-center min-h-screen w-full max-w-screen">
 
                 <h1 className="text-4xl font-bold">Welcome to Laurentiu's Bookstore</h1>
                 <p className="mt-2 text-lg">Discover our books</p>
