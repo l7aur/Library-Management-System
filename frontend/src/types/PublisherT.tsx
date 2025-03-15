@@ -1,4 +1,4 @@
-interface Publisher {
+interface PublisherT {
     id: string;
     name: string;
     location: string;
@@ -6,4 +6,4 @@ interface Publisher {
     books: string[];
 }
 
-export default Publisher;
+export default PublisherT;

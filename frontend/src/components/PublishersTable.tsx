@@ -1,21 +1,21 @@
-import Publisher from "../model/publisher.model.ts";
+import PublisherT from "../types/PublisherT.tsx";
 import DataTable, {TableColumn} from 'react-data-table-component';
 
 interface PublishersTableProps {
-    data: Publisher[];
+    data: PublisherT[];
     loading: boolean;
     isError: boolean;
-    onRowSelect: (state: {selectedRows: Publisher[]}) => void;
+    onRowSelect: (state: {selectedRows: PublisherT[]}) => void;
     theme: 'light' | 'dark';
 }
 
 function PublishersTable({data, loading, isError, onRowSelect, theme}: PublishersTableProps) {
-    const columns: TableColumn < Publisher > [] = [
-        {name: 'ID', selector: (row: Publisher) => row.id, sortable: true},
-        {name: 'Name', selector: (row: Publisher) => row.name, sortable: true},
-        {name: 'Location', selector: (row: Publisher) => row.location, sortable: true},
-        {name: 'FoundingYear', selector: (row: Publisher) => row.foundingYear, sortable: true}
-        //{name: 'Books', selector: (row: Publisher) => row.id, sortable: true},
+    const columns: TableColumn < PublisherT > [] = [
+        {name: 'ID', selector: (row: PublisherT) => row.id, sortable: true},
+        {name: 'Name', selector: (row: PublisherT) => row.name, sortable: true},
+        {name: 'Location', selector: (row: PublisherT) => row.location, sortable: true},
+        {name: 'FoundingYear', selector: (row: PublisherT) => row.foundingYear, sortable: true}
+        //{name: 'Books', selector: (row: PublisherT) => row.id, sortable: true},
     ];
 
     return (
