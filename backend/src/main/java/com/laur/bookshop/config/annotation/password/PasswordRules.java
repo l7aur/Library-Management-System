@@ -1,4 +1,4 @@
-package com.laur.bookshop.config.annotation;
+package com.laur.bookshop.config.annotation.password;
 
 import com.laur.bookshop.config.exceptions.PasswordException;
 

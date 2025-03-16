@@ -1,5 +1,6 @@
 package com.laur.bookshop.model;
 
+import com.laur.bookshop.config.annotation.isbn.ValidISBN;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -8,8 +9,7 @@ import java.util.UUID;
 
 @Data
 public class BookCreateDTO {
-    @NotBlank(message = "ISBN is mandatory!")
-    @Size(min = 13, max = 13, message = "ISBN must have exactly 13 digits!")
+    @ValidISBN
     private String isbn;
 
     @NotBlank(message = "The title is mandatory!")
