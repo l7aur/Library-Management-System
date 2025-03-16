@@ -47,25 +47,11 @@ const AddAuthorForm: React.FC<AddAuthorFormProps> = ({
                 className="mb-2 p-2 border border-gray-300 rounded w-full"
             />
 
-            <input
-                type="text"
-                placeholder="Books (comma separated)"
-                value={newAuthor.books.join(', ')} // Display books as a comma-separated string
-                onChange={(e) => {
-                    const value = e.target.value;
-                    setNewAuthor({
-                        ...newAuthor,
-                        books: value.split(',').map(book => book.trim()) // Convert to an array of books
-                    });
-                }}
-                className="mb-2 p-2 border border-gray-300 rounded w-full"
-            />
-
             <button
                 onClick={handleAddAuthor}
                 className="p-2 bg-green-500 text-white rounded"
             >
-                Send request
+                Add author
             </button>
         </div>
     );

@@ -16,14 +16,17 @@ interface AuthorOption {
     value: AuthorRed;
 }
 
-const AddBookForm: React.FC<AddBookFormProps> = ({ newBook, setNewBook, handleAddBook, error }) => {
+const AddBookForm: React.FC<AddBookFormProps> = ({
+                                                     newBook,
+                                                     setNewBook,
+                                                     handleAddBook,
+                                                     error
+                                                    }) => {
 
     const {data: authors, loading: loadingAuthors, isError: errorAuthors} = useFetchAuthors();
     const {data: publishers, loading: loadingPublishers, isError: errorPublishers} = useFetchPublishers();
 
-
     const [selected, setSelected] = useState<AuthorOption[]>([]);
-
     const authorOptions = authors.map((author) => ({
         value: author.id,
         label: `${author.firstName} ${author.lastName}`,
@@ -85,6 +88,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ newBook, setNewBook, handleAd
                             />
 
                             <select
+                                className="mb-2 p-2 border border-gray-300 rounded w-full"
                                 value={newBook.publisher.name}
                                 onChange={(e) => {
                                     const selectedPublisher = publishers.find(publisher => publisher.name === e.target.value);
@@ -92,10 +96,9 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ newBook, setNewBook, handleAd
                                         setNewBook({ ...newBook, publisher: selectedPublisher });
                                     }
                                 }}
-                                className="mb-2 p-2 border border-gray-300 rounded w-full"
                             >
                                 {publishers.map((publisher) => (
-                                    <option key={publisher.id} value={publisher.name}>
+                                    <option style={{ backgroundColor: "#242424", color: "white" }} key={publisher.id} value={publisher.name}>
                                         {publisher.name}
                                     </option>
                                 ))}

@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import Authors from "./pages/Authors.tsx";
 import Publishers from "./pages/Publishers.tsx";
 import MyNavbar from "./components/MyNavbar.tsx";
+import Cart from "./pages/Cart.tsx";
 
 const App: React.FC = () => {
     return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
                     <Route path="/books" element={<Books/>}/>
                     <Route path="/authors" element={<Authors/>}/>
                     <Route path="/publishers" element={<Publishers/>}/>
+                    <Route path="/cart" element={<Cart/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </Router>
