@@ -1,20 +1,18 @@
+import PublisherT from "../../types/PublisherT.tsx";
 import DataTable, { TableColumn } from 'react-data-table-component';
-import AuthorT from "../types/AuthorT.tsx";
 
-interface AuthorsTableProps {
-    data: AuthorT[];
+interface PublishersTableProps {
+    data: PublisherT[];
     loading: boolean;
     isError: boolean;
-    onRowSelect: (state: { selectedRows: AuthorT[] }) => void;
+    onRowSelect: (state: { selectedRows: PublisherT[] }) => void;
 }
 
-function AuthorsTable({ data, loading, isError, onRowSelect }: AuthorsTableProps) {
-    const columns: TableColumn<AuthorT>[] = [
-        { name: 'First Name', selector: (row) => row.firstName, sortable: true, id: 1 },
-        { name: 'Last Name', selector: (row) => row.lastName, sortable: true },
-        { name: 'Alias', selector: (row) => row.alias, sortable: true },
-        { name: 'Nationality', selector: (row) => row.nationality, sortable: true },
-        { name: 'Books', selector: (row) => row.books?.join(", "), sortable: true },
+function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTableProps) {
+    const columns: TableColumn<PublisherT>[] = [
+        { name: 'Name', selector: (row) => row.name, sortable: true, id: 1 },
+        { name: 'Location', selector: (row) => row.location, sortable: true },
+        { name: 'FoundingYear', selector: (row) => row.foundingYear, sortable: true },
     ];
 
     return (
@@ -24,7 +22,7 @@ function AuthorsTable({ data, loading, isError, onRowSelect }: AuthorsTableProps
             ) : isError ? (
                 <p className="error-text">An error occurred while fetching data!</p>
             ) : data.length === 0 ? (
-                <p className="empty-text">No authors found.</p>
+                <p className="empty-text">No publishers found.</p>
             ) : (
                 <div className="books-table-container"
                      style={{
@@ -34,19 +32,20 @@ function AuthorsTable({ data, loading, isError, onRowSelect }: AuthorsTableProps
                      }}>
                     <DataTable
                         theme={'dark'}
-                        title="Authors"
+                        title="Publishers"
                         columns={columns}
                         data={data}
                         pagination
                         highlightOnHover
                         selectableRows
                         onSelectedRowsChange={onRowSelect}
-                        defaultSortFieldId={3}
+                        defaultSortFieldId={1}
                     />
                 </div>
+
             )}
         </>
     );
 }
 
-export default AuthorsTable;
+export default PublishersTable;

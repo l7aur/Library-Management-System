@@ -1,5 +1,5 @@
 import React from "react";
-import PublishersTable from "../components/PublishersTable.tsx";
+import PublishersTable from "../components/Tables/PublishersTable.tsx";
 import AddPublisherForm from "../components/Forms/AddPublisherForm.tsx";
 import useAddPublisher from "../hooks/useAddPublisher.tsx";
 import useFetchPublishers from "../hooks/useFetchPublishers.tsx";
@@ -34,7 +34,7 @@ const Publishers: React.FC = () => {
                     onClick={() => setIsAdding(false)}
                     className="mb-4 p-2 bg-blue-500 text-white rounded"
                 >
-                    Quit form
+                    Cancel
                 </button>)}
 
 

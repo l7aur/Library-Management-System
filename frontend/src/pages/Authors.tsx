@@ -1,5 +1,5 @@
 import React from "react";
-import AuthorsTable from "../components/AuthorsTable.tsx";
+import AuthorsTable from "../components/Tables/AuthorsTable.tsx";
 import useFetchAuthors from "../hooks/useFetchAuthors.tsx";
 import useAddAuthor from "../hooks/useAddAuthor.tsx";
 import AddAuthorForm from "../components/Forms/AddAuthorForm.tsx";
@@ -33,7 +33,7 @@ const Authors: React.FC = () => {
                     onClick={() => setIsAdding(false)}
                     className="mb-4 p-2 bg-blue-500 text-white rounded"
                 >
-                    Quit form
+                    Cancel
                 </button>
             )}
             <AuthorsTable

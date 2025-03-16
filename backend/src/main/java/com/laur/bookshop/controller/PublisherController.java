@@ -15,7 +15,7 @@ import java.util.List;
 public class PublisherController {
     private final PublisherService publisherService;
 
-    @GetMapping("/publishers")
+    @GetMapping("/publishers/all")
     public List<Publisher> getAllPublishers() {
         return publisherService.findAllPublishers();
     }

@@ -1,10 +1,9 @@
-import {API_BASE_URL} from "../constants/api.ts";
 import {BookT} from "../types/BookT.tsx";
+import {BOOKS_ADD_ENDPOINT, BOOKS_GET_ALL_ENDPOINT} from "../constants/api.ts";
 
-const API_URL = `${API_BASE_URL}/books`;
 
 export const fetchBooks = async (): Promise<BookT[]> => {
-    const response = await fetch(API_URL);
+    const response = await fetch(BOOKS_GET_ALL_ENDPOINT);
     return response.json();
 };
 
@@ -30,7 +29,7 @@ export const addBook = async (newBook: BookT): Promise<BookT> => {
         price: newBook.price,
         stock: newBook.stock
     };
-    const response = await fetch(`${API_URL}/books/add`, {
+    const response = await fetch(BOOKS_ADD_ENDPOINT, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -1,15 +1,14 @@
 import PublisherT from "../types/PublisherT.tsx";
-import {API_BASE_URL} from "../constants/api.ts";
+import {PUBLISHERS_ADD_ENDPOINT, PUBLISHERS_GET_ALL_ENDPOINT} from "../constants/api.ts";
 
-const API_URL = `${API_BASE_URL}/publishers`;
 
 export const fetchPublishers = async (): Promise<PublisherT[]> => {
-    const response = await fetch(API_URL);
+    const response = await fetch(PUBLISHERS_GET_ALL_ENDPOINT);
     return response.json();
 };
 
 export const addPublisher = async (newPublisher: PublisherT): Promise<PublisherT> => {
-    const response = await fetch(`${API_URL}/add`, {
+    const response = await fetch(PUBLISHERS_ADD_ENDPOINT, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

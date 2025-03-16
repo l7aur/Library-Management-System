@@ -13,10 +13,11 @@ function useFetchBooks() {
                 setLoading(true);
                 const response = await fetchBooks();
                 setData(response);
-                setLoading(false);
             } catch (error) {
                 console.error(error);
                 setIsError(true);
+            }
+            finally {
                 setLoading(false);
             }
         };

@@ -1,5 +1,5 @@
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { BookT } from "../types/BookT.tsx";
+import { BookT } from "../../types/BookT.tsx";
 
 interface BooksTableProps {
     data: BookT[];

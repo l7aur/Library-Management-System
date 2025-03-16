@@ -15,7 +15,7 @@ import java.util.List;
 public class AuthorController {
     private final AuthorService authorService;
 
-    @GetMapping("/authors")
+    @GetMapping("/authors/all")
     public List<Author> getAllAuthors() {return authorService.findAllAuthors(); }
 
     @GetMapping("/authors/{firstName}/{lastName}")

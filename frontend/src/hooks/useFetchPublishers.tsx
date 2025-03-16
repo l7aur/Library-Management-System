@@ -13,10 +13,11 @@ function useFetchPublishers() {
                 setLoading(true);
                 const response = await fetchPublishers();
                 setData(response);
-                setLoading(false);
             } catch (error) {
                 console.error(error);
                 setIsError(true);
+            }
+            finally {
                 setLoading(false);
             }
         };

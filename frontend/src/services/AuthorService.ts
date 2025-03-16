@@ -1,15 +1,13 @@
 import AuthorT from "../types/AuthorT.tsx";
-import {API_BASE_URL} from "../constants/api.ts";
-
-const API_URL = `${API_BASE_URL}/authors`;
+import {AUTHORS_ADD_ENDPOINT, AUTHORS_GET_ALL_ENDPOINT} from "../constants/api.ts";
 
 export const fetchAuthors = async (): Promise<AuthorT[]> => {
-    const response = await fetch(API_URL);
+    const response = await fetch(AUTHORS_GET_ALL_ENDPOINT);
     return response.json();
 };
 
 export const addAuthor = async (newAuthor: AuthorT): Promise<AuthorT> => {
-    const response = await fetch(`${API_URL}/add`, {
+    const response = await fetch(AUTHORS_ADD_ENDPOINT, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

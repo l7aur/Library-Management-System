@@ -11,7 +11,7 @@ const useAddPublisher = () => {
         try {
             const addedPublisher = await addPublisher(newPublisher);
             console.log("Publisher added:", addedPublisher);
-            setIsAdding(false); // Hide the form after adding
+            setIsAdding(false);
             setNewPublisher({ id: "", name: "", location: "", foundingYear: 0, books: [] }); // Clear the form fields
         } catch (err) {
             setError("Error adding publisher: " + err);

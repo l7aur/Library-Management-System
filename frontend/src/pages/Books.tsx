@@ -1,5 +1,5 @@
 import React from "react";
-import BooksTable from "../components/BooksTable.tsx";
+import BooksTable from "../components/Tables/BooksTable.tsx";
 import useFetchBooks from "../hooks/useFetchBooks.tsx";
 import useAddBook from "../hooks/useAddBook.tsx";
 import AddBookForm from "../components/Forms/AddBookForm.tsx";
@@ -33,7 +33,7 @@ const Books: React.FC = () => {
                     onClick={() => setIsAdding(false)}
                     className="mb-4 p-2 bg-blue-500 text-white rounded"
                 >
-                    Quit form
+                    Cancel
                 </button>)}
 
             <BooksTable
