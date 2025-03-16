@@ -1,5 +1,5 @@
 import React from "react";
-import PublisherT from "../types/PublisherT.tsx";
+import PublisherT from "../../types/PublisherT.tsx";
 
 interface AddPublisherFormProps {
     newPublisher: PublisherT;
@@ -49,19 +49,19 @@ const AddPublisherForm: React.FC<AddPublisherFormProps> = ({
                 className="mb-2 p-2 border border-gray-300 rounded w-full"
             />
 
-            <input
-                type="text"
-                placeholder="Books (comma separated)"
-                value={newPublisher.books.join(', ')} // Display books as a comma-separated string
-                onChange={(e) => {
-                    const value = e.target.value;
-                    setNewPublisher({
-                        ...newPublisher,
-                        books: value.split(',').map(book => book.trim()) // Convert to an array of books
-                    });
-                }}
-                className="mb-2 p-2 border border-gray-300 rounded w-full"
-            />
+            {/*<input*/}
+            {/*    type="text"*/}
+            {/*    placeholder="Books (comma separated)"*/}
+            {/*    value={newPublisher.books.join(', ')} // Display books as a comma-separated string*/}
+            {/*    onChange={(e) => {*/}
+            {/*        const value = e.target.value;*/}
+            {/*        setNewPublisher({*/}
+            {/*            ...newPublisher,*/}
+            {/*            books: value.split(',').map(book => book.trim()) // Convert to an array of books*/}
+            {/*        });*/}
+            {/*    }}*/}
+            {/*    className="mb-2 p-2 border border-gray-300 rounded w-full"*/}
+            {/*/>*/}
 
             <button
                 onClick={handleAddPublisher}

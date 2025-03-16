@@ -10,7 +10,6 @@ interface PublishersTableProps {
 
 function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTableProps) {
     const columns: TableColumn<PublisherT>[] = [
-        // { name: 'ID', selector: (row) => row.id, sortable: true, id: 1 },
         { name: 'Name', selector: (row) => row.name, sortable: true, id: 1 },
         { name: 'Location', selector: (row) => row.location, sortable: true },
         { name: 'FoundingYear', selector: (row) => row.foundingYear, sortable: true },
@@ -25,8 +24,14 @@ function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTabl
             ) : data.length === 0 ? (
                 <p className="empty-text">No publishers found.</p>
             ) : (
-                <div className="publishers-table-container">
+                <div className="books-table-container"
+                     style={{
+                         width: "90vw",
+                         margin: "20px auto",
+                         overflowX: "auto",
+                     }}>
                     <DataTable
+                        theme={'dark'}
                         title="Publishers"
                         columns={columns}
                         data={data}

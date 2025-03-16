@@ -1,5 +1,5 @@
 import DataTable, { TableColumn } from 'react-data-table-component';
-import {BookT} from "../types/BookT.tsx";
+import { BookT } from "../types/BookT.tsx";
 
 interface BooksTableProps {
     data: BookT[];
@@ -10,11 +10,18 @@ interface BooksTableProps {
 
 function BooksTable({ data, loading, isError, onRowSelect }: BooksTableProps) {
     const columns: TableColumn<BookT>[] = [
-        { name: 'ID', selector: (row) => row.id, sortable: true, id: 1 },
-        { name: 'ISBN', selector: (row) => row.isbn, sortable: true },
+        { name: 'ISBN', selector: (row) => row.isbn, sortable: true, id: 1 },
         { name: 'Title', selector: (row) => row.title, sortable: true },
-        // { name: 'Author', selector: (row) => row.author, sortable: true },
-        { name: 'Publisher', selector: (row) => row.publisher, sortable: true },
+        {
+            name: 'Authors',
+            selector: (row) => row.authors.map((author) => `${author.firstName} ${author.lastName}`).join(', '), // Join authors' names
+            sortable: true,
+        },
+        {
+            name: 'Publisher',
+            selector: (row) => row.publisher.name,
+            sortable: true,
+        },
         { name: 'Price', selector: (row) => row.price, sortable: true },
         { name: 'Stock', selector: (row) => row.stock, sortable: true },
     ];
@@ -28,8 +35,14 @@ function BooksTable({ data, loading, isError, onRowSelect }: BooksTableProps) {
             ) : data.length === 0 ? (
                 <p className="empty-text">No books found.</p>
             ) : (
-                <div className="books-table-container">
+                <div className="books-table-container"
+                     style={{
+                         width: "90vw",
+                         margin: "20px auto",
+                         overflowX: "auto",
+                     }}>
                     <DataTable
+                        theme={'dark'}
                         title="Books"
                         columns={columns}
                         data={data}

@@ -1,4 +1,4 @@
-import AuthorT from "../types/AuthorT.tsx";
+import AuthorT from "../../types/AuthorT.tsx";
 import React from "react";
 
 interface AddAuthorFormProps {

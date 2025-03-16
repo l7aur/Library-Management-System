@@ -1,6 +1,6 @@
 import React from "react";
 import PublishersTable from "../components/PublishersTable.tsx";
-import AddPublisherForm from "../components/AddPublisherForm.tsx";
+import AddPublisherForm from "../components/Forms/AddPublisherForm.tsx";
 import useAddPublisher from "../hooks/useAddPublisher.tsx";
 import useFetchPublishers from "../hooks/useFetchPublishers.tsx";
 

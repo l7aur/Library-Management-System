@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -43,15 +44,13 @@ public class BookService {
     }
 
     public Book addBook(BookCreateDTO book) {
-        Publisher publisher = publisherRepository.findByName(book.getPublisher()).orElseThrow(
-                () -> new IllegalStateException("Publisher " + book.getPublisher() + " not found")
+        Publisher publisher = publisherRepository.findById(book.getPublisherId()).orElseThrow(
+                () -> new IllegalStateException("Publisher " + book.getPublisherId() + " not found")
         );
         List<Author> authors = new ArrayList<>();
-        for(String author : book.getAuthors()) {
-            String fName = author.split(" ")[0];
-            String lName = author.split(" ")[1];
-            authors.add(authorRepository.findByFirstNameAndLastName(fName, lName).orElseThrow(
-                    () -> new IllegalStateException("Author with name " + author + " not found")
+        for(UUID authorId : book.getAuthorIds()) {
+            authors.add(authorRepository.findById(authorId).orElseThrow(
+                    () -> new IllegalStateException("Author with name " + authorId + " not found")
             ));
         }
         Book newBook = new Book();
@@ -60,6 +59,8 @@ public class BookService {
         newBook.setAuthors(authors);
         newBook.setPublisher(publisher);
         newBook.setPublishYear(book.getPublishYear());
+        newBook.setPrice(book.getPrice());
+        newBook.setStock(book.getStock());
         return bookRepository.save(newBook);
     }
 

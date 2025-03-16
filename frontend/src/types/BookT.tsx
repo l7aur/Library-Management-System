@@ -3,7 +3,23 @@ export interface BookT {
     isbn: string;
     publishYear: number;
     title: string;
-    publisherId: string;
+    publisher: PublisherRed;
+    authors: AuthorRed[];
     price: number;
     stock: number;
+}
+
+export interface PublisherRed {
+    id: string;
+    name: string;
+    location: string;
+    foundingYear: number;
+}
+
+export interface AuthorRed {
+    id: string;
+    firstName: string;
+    lastName: string;
+    alias: string;
+    nationality: string;
 }

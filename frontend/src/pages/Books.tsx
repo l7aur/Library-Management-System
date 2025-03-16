@@ -2,7 +2,7 @@ import React from "react";
 import BooksTable from "../components/BooksTable.tsx";
 import useFetchBooks from "../hooks/useFetchBooks.tsx";
 import useAddBook from "../hooks/useAddBook.tsx";
-import AddBookForm from "../components/AddBookForm.tsx";
+import AddBookForm from "../components/Forms/AddBookForm.tsx";
 
 const Books: React.FC = () => {
     const { data, loading, isError } = useFetchBooks();

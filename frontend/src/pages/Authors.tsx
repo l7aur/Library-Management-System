@@ -2,7 +2,7 @@ import React from "react";
 import AuthorsTable from "../components/AuthorsTable.tsx";
 import useFetchAuthors from "../hooks/useFetchAuthors.tsx";
 import useAddAuthor from "../hooks/useAddAuthor.tsx";
-import AddAuthorForm from "../components/AddAuthorForm.tsx";
+import AddAuthorForm from "../components/Forms/AddAuthorForm.tsx";
 
 const Authors: React.FC = () => {
     const {data, loading, isError} = useFetchAuthors();
