@@ -1,6 +1,7 @@
-package com.laur.bookshop.model;
+package com.laur.bookshop.dto;
 
 import com.laur.bookshop.config.annotation.password.ValidPassword;
+import com.laur.bookshop.model.AppUserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

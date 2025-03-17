@@ -27,8 +27,4 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     @Modifying
     @Query("DELETE FROM Book b WHERE b.isbn = :title")
     void deleteByTitle(@Param("title") String title);
-
-//    TODO
-//    Optional<List<Book>> findByPublisher(String publisher);
-
 }

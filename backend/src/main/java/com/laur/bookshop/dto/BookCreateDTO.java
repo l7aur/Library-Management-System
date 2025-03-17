@@ -1,4 +1,4 @@
-package com.laur.bookshop.model;
+package com.laur.bookshop.dto;
 
 import com.laur.bookshop.config.annotation.isbn.ValidISBN;
 import jakarta.validation.constraints.*;

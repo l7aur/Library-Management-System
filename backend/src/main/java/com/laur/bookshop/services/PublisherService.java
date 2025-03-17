@@ -1,8 +1,10 @@
 package com.laur.bookshop.services;
 
+import com.laur.bookshop.config.exceptions.BookNotFoundException;
+import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.model.Publisher;
-import com.laur.bookshop.model.PublisherCreateDTO;
+import com.laur.bookshop.dto.PublisherCreateDTO;
 import com.laur.bookshop.repository.BookRepository;
 import com.laur.bookshop.repository.PublisherRepository;
 import lombok.AllArgsConstructor;
@@ -23,19 +25,19 @@ public class PublisherService {
 
     public Publisher findPublisherByName(String name){
         return publisherRepository.findByName(name).orElseThrow(
-                () -> new IllegalStateException("No publisher found with name " + name)
+                () -> new PublisherNotFoundException("No publisher found with name " + name)
         );
     }
 
     public List<Publisher> findPublisherByLocation(String location){
         return publisherRepository.findByLocation(location).orElseThrow(
-                () -> new IllegalStateException("Publishers with location " + location + " not found")
+                () -> new PublisherNotFoundException("Publishers with location " + location + " not found")
         );
     }
 
     public List<Publisher> findPublisherByFoundingYear(int year){
         return publisherRepository.findByFoundingYear(year).orElseThrow(
-                () -> new IllegalStateException("Publishers with founding year " + year + " not found")
+                () -> new PublisherNotFoundException("Publishers with founding year " + year + " not found")
         );
     }
 
@@ -43,7 +45,7 @@ public class PublisherService {
         List<Book> books = new ArrayList<>();
         for(String book : publisher.getBooks()){
             books.add(bookRepository.findByTitle(book).orElseThrow(
-                    () -> new IllegalStateException("Book " + book + " not found")
+                    () -> new BookNotFoundException("Book " + book + " not found")
             ));
         }
         Publisher newPublisher = new Publisher();
@@ -56,7 +58,7 @@ public class PublisherService {
 
     public Publisher updatePublisher(String name, Publisher publisher){
         Publisher existingPublisher = publisherRepository.findByName(name).orElseThrow(
-                () -> new IllegalStateException("Publisher with name " + publisher.getName() + " not found")
+                () -> new PublisherNotFoundException("Publisher with name " + publisher.getName() + " not found")
         );
         existingPublisher.setName(publisher.getName());
         existingPublisher.setFoundingYear(publisher.getFoundingYear());

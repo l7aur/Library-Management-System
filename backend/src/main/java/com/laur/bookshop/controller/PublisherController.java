@@ -1,7 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.Publisher;
-import com.laur.bookshop.model.PublisherCreateDTO;
+import com.laur.bookshop.dto.PublisherCreateDTO;
 import com.laur.bookshop.services.PublisherService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

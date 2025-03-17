@@ -1,4 +1,4 @@
-package com.laur.bookshop.model;
+package com.laur.bookshop.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

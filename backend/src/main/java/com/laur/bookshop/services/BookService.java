@@ -1,8 +1,11 @@
 package com.laur.bookshop.services;
 
+import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
+import com.laur.bookshop.config.exceptions.BookNotFoundException;
+import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.Book;
-import com.laur.bookshop.model.BookCreateDTO;
+import com.laur.bookshop.dto.BookCreateDTO;
 import com.laur.bookshop.model.Publisher;
 import com.laur.bookshop.repository.AuthorRepository;
 import com.laur.bookshop.repository.BookRepository;
@@ -27,30 +30,30 @@ public class BookService {
 
     public Book findBookByTitle(String title) {
         return bookRepository.findByTitle(title).orElseThrow(
-                () -> new IllegalStateException("Book with ISBN " + title + " not found")
+                () -> new BookNotFoundException("Book with ISBN " + title + " not found")
         );
     }
 
     public Book findBookByISBN(String isbn) {
         return bookRepository.findByIsbn(isbn).orElseThrow(
-                () -> new IllegalStateException("Book with ISBN " + isbn + " not found")
+                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
         );
     }
 
     public List<Book> findBookByAuthor(String author) {
         return bookRepository.findByAuthor(author).orElseThrow(
-                () -> new IllegalStateException("Book with author " + author + " not found")
+                () -> new BookNotFoundException("Book with author " + author + " not found")
         );
     }
 
     public Book addBook(BookCreateDTO book) {
         Publisher publisher = publisherRepository.findById(book.getPublisherId()).orElseThrow(
-                () -> new IllegalStateException("Publisher " + book.getPublisherId() + " not found")
+                () -> new PublisherNotFoundException("Publisher " + book.getPublisherId() + " not found")
         );
         List<Author> authors = new ArrayList<>();
         for(UUID authorId : book.getAuthorIds()) {
             authors.add(authorRepository.findById(authorId).orElseThrow(
-                    () -> new IllegalStateException("Author with name " + authorId + " not found")
+                    () -> new AuthorNotFoundException("Author with name " + authorId + " not found")
             ));
         }
         Book newBook = new Book();
@@ -66,7 +69,7 @@ public class BookService {
 
     public Book updateBook(String isbn, Book book) {
         Book existingBook = bookRepository.findByIsbn(isbn).orElseThrow(
-                () -> new IllegalStateException("Book with ISBN " + isbn + " not found")
+                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
         );
         existingBook.setTitle(book.getTitle());
         existingBook.setAuthors(book.getAuthors());

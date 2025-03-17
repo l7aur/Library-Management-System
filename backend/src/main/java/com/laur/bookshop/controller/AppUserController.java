@@ -1,7 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.AppUser;
-import com.laur.bookshop.model.AppUserDTO;
+import com.laur.bookshop.dto.AppUserDTO;
 import com.laur.bookshop.services.AppUserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.Book;
-import com.laur.bookshop.model.BookCreateDTO;
+import com.laur.bookshop.dto.BookCreateDTO;
 import com.laur.bookshop.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,9 @@
 package com.laur.bookshop.services;
 
+import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
+import com.laur.bookshop.config.exceptions.BookNotFoundException;
 import com.laur.bookshop.model.Author;
-import com.laur.bookshop.model.AuthorCreateDTO;
+import com.laur.bookshop.dto.AuthorCreateDTO;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.repository.AuthorRepository;
 import com.laur.bookshop.repository.BookRepository;
@@ -23,25 +25,25 @@ public class AuthorService {
 
     public List<Author> findAuthorsByFirstName(String firstName) {
         return  authorRepository.findByFirstName(firstName).orElseThrow(
-                () -> new IllegalStateException("No author found with firstName: " + firstName)
+                () -> new AuthorNotFoundException("No author found with firstName: " + firstName)
         );
     }
 
     public List<Author> findAuthorsByLastName(String lastName) {
         return  authorRepository.findByLastName(lastName).orElseThrow(
-                () -> new IllegalStateException("No author found with lastName: " + lastName)
+                () -> new AuthorNotFoundException("No author found with lastName: " + lastName)
         );
     }
 
     public Author findAuthorByFirstNameAndLastName(String firstName, String lastName) {
         return authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
-                () -> new IllegalStateException("No author found with firstName: " + firstName + " and lastName: " + lastName)
+                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
         );
     }
 
     public List<Author> findAuthorsByNationality(String nationality) {
         return authorRepository.findByNationality(nationality).orElseThrow(
-                () -> new IllegalStateException("No author found with nationality: " + nationality)
+                () -> new AuthorNotFoundException("No author found with nationality: " + nationality)
         );
     }
 
@@ -49,7 +51,7 @@ public class AuthorService {
         List<Book> books = new ArrayList<>();
         for(String book : author.getBooks()) {
             books.add(bookRepository.findByTitle(book).orElseThrow(
-                    () -> new IllegalStateException("No book found with title: " + book)
+                    () -> new BookNotFoundException("No book found with title: " + book)
             ));
         }
         Author newAuthor = new Author();
@@ -63,7 +65,7 @@ public class AuthorService {
 
     public Author updateAuthor(String firstName, String lastName, Author author) {
         Author existingAuthor = authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
-                () -> new IllegalStateException("No author found with firstName: " + firstName + " and lastName: " + lastName)
+                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
         );
         existingAuthor.setFirstName(author.getFirstName());
         existingAuthor.setLastName(author.getLastName());
