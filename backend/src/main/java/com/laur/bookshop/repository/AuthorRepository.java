@@ -11,13 +11,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AuthorRepository extends JpaRepository<Author, UUID> {
-    Optional<List<Author>> findByFirstName(String firstName);
-    Optional<List<Author>> findByLastName(String lastName);
-    Optional<List<Author>> findByNationality(String nationality);
-    Optional<Author> findByFirstNameAndLastName(String firstName, String lastName);
-
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Author a WHERE a.firstName = :firstName AND a.lastName = :lastName")
-    void deleteByFirstNameAndLastName(String firstName, String lastName);
+//    Optional<List<Author>> findByFirstName(String firstName);
+//    Optional<List<Author>> findByLastName(String lastName);
+//    Optional<List<Author>> findByNationality(String nationality);
+//    Optional<Author> findByFirstNameAndLastName(String firstName, String lastName);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("DELETE FROM Author a WHERE a.firstName = :firstName AND a.lastName = :lastName")
+//    void deleteByFirstNameAndLastName(String firstName, String lastName);
 }

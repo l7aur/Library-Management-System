@@ -13,6 +13,7 @@ function MyNavbar() {
                 <Nav.Link href="/books" className="nav-link-custom mx-3">Books</Nav.Link>
                 <Nav.Link href="/authors" className="nav-link-custom mx-3">Authors</Nav.Link>
                 <Nav.Link href="/publishers" className="nav-link-custom mx-3">Publishers</Nav.Link>
+                <Nav.Link href="/app_users" className="nav-link-custom mx-3">AppUsers - Admin View</Nav.Link>
                 <Nav.Link href="/cart" className="nav-link-custom mx-3">Cart</Nav.Link>
 
                 {!isAuthenticated && (

@@ -12,12 +12,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PublisherRepository extends JpaRepository<Publisher, UUID> {
-    Optional<Publisher> findByName(String name);
-    Optional<List<Publisher>> findByLocation(String location);
-    Optional<List<Publisher>> findByFoundingYear(int foundingYear);
-
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Publisher p WHERE p.name = :name")
-    void deleteByName(@Param("name") String name);
+//    Optional<Publisher> findByName(String name);
+//    Optional<List<Publisher>> findByLocation(String location);
+//    Optional<List<Publisher>> findByFoundingYear(int foundingYear);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("DELETE FROM Publisher p WHERE p.name = :name")
+//    void deleteByName(@Param("name") String name);
 }

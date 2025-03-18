@@ -1,17 +1,51 @@
 import React, {useState} from "react";
 import PublishersTable from "../components/Tables/PublishersTable.tsx";
 import AddPublisherForm from "../components/Forms/AddPublisherForm.tsx";
-import useAddPublisher from "../hooks/useAddPublisher.tsx";
-import useFetchPublishers from "../hooks/useFetchPublishers.tsx";
+import useAddPublisher from "../hooks/adds/useAddPublisher.tsx";
+import useFetchPublishers from "../hooks/fetches/useFetchPublishers.tsx";
 import PublisherT from "../types/PublisherT.tsx";
+import {PUBLISHERS_DELETE_ENDPOINT} from "../constants/api.ts";
 
 const Publishers: React.FC = () => {
-    const {data, loading, isError} = useFetchPublishers();
+    const {data, setData, loading, isError} = useFetchPublishers();
     const {isAdding, newPublisher, setNewPublisher, handleAddPublisher, setIsAdding, error} = useAddPublisher();
+    const [clearSelectedRows, setClearSelectedRows] = useState<boolean>(false);
 
     const [selectedPublishers, setSelectedPublishers] = useState<PublisherT[]>([]);
     const handleRowSelect = (state: { selectedRows: PublisherT[] }) => {
         setSelectedPublishers(state.selectedRows);
+    };
+
+    const deleteAuthors = async (publisherObjects: PublisherT[]) => {
+        const publisherIds = publisherObjects.map(publisher => publisher.id);
+        const response = await fetch(PUBLISHERS_DELETE_ENDPOINT, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ids: publisherIds})
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.text();
+    };
+
+    const handleDelete = () => {
+        deleteAuthors(selectedPublishers)
+            .then(response => {
+                console.log('Authors deleted successfully:', response);
+                const updatedData = data.filter(
+                    publisher => !selectedPublishers.some(selected => selected.id === publisher.id)
+                );
+                setData(updatedData);
+                setClearSelectedRows(true);
+            })
+            .catch(error => {
+                console.error('Error deleting authors:', error);
+            });
+        setClearSelectedRows(false);
     };
 
     return (
@@ -44,7 +78,7 @@ const Publishers: React.FC = () => {
                         Cancel
                     </button>)}
                 <button
-                    onClick={() => console.log("Delete clicked")}
+                    onClick={handleDelete}
                     disabled={selectedPublishers.length === 0} // Disable when no books are selected
                     className={`mb-4 p-2 text-white rounded ${
                         selectedPublishers.length === 0
@@ -71,6 +105,7 @@ const Publishers: React.FC = () => {
                 loading={loading}
                 isError={isError}
                 onRowSelect={handleRowSelect}
+                clearSelection={clearSelectedRows}
             />
         </div>
     );

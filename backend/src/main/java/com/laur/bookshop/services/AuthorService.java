@@ -8,10 +8,12 @@ import com.laur.bookshop.model.Book;
 import com.laur.bookshop.repository.AuthorRepository;
 import com.laur.bookshop.repository.BookRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -21,30 +23,6 @@ public class AuthorService {
 
     public List<Author> findAllAuthors() {
         return authorRepository.findAll();
-    }
-
-    public List<Author> findAuthorsByFirstName(String firstName) {
-        return  authorRepository.findByFirstName(firstName).orElseThrow(
-                () -> new AuthorNotFoundException("No author found with firstName: " + firstName)
-        );
-    }
-
-    public List<Author> findAuthorsByLastName(String lastName) {
-        return  authorRepository.findByLastName(lastName).orElseThrow(
-                () -> new AuthorNotFoundException("No author found with lastName: " + lastName)
-        );
-    }
-
-    public Author findAuthorByFirstNameAndLastName(String firstName, String lastName) {
-        return authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
-                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
-        );
-    }
-
-    public List<Author> findAuthorsByNationality(String nationality) {
-        return authorRepository.findByNationality(nationality).orElseThrow(
-                () -> new AuthorNotFoundException("No author found with nationality: " + nationality)
-        );
     }
 
     public Author addAuthor(AuthorCreateDTO author) {
@@ -63,17 +41,49 @@ public class AuthorService {
         return authorRepository.save(newAuthor);
     }
 
-    public Author updateAuthor(String firstName, String lastName, Author author) {
-        Author existingAuthor = authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
-                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
-        );
-        existingAuthor.setFirstName(author.getFirstName());
-        existingAuthor.setLastName(author.getLastName());
-        existingAuthor.setNationality(author.getNationality());
-        return authorRepository.save(existingAuthor);
+    public ResponseEntity<String> deleteAuthorsById(List<UUID> ids) {
+        if (ids == null || ids.isEmpty())
+            return ResponseEntity.badRequest().body("No IDs provided");
+        for(UUID i : ids)
+            authorRepository.deleteById(i);
+        return ResponseEntity.ok("Authors deleted successfully");
     }
 
-    public void deleteAuthorByFirstNameAndLastName(String firstName, String lastName) {
-        authorRepository.deleteByFirstNameAndLastName(firstName, lastName);
-    }
+//    public List<Author> findAuthorsByFirstName(String firstName) {
+//        return  authorRepository.findByFirstName(firstName).orElseThrow(
+//                () -> new AuthorNotFoundException("No author found with firstName: " + firstName)
+//        );
+//    }
+//
+//    public List<Author> findAuthorsByLastName(String lastName) {
+//        return  authorRepository.findByLastName(lastName).orElseThrow(
+//                () -> new AuthorNotFoundException("No author found with lastName: " + lastName)
+//        );
+//    }
+//
+//    public Author findAuthorByFirstNameAndLastName(String firstName, String lastName) {
+//        return authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
+//                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
+//        );
+//    }
+//
+//    public List<Author> findAuthorsByNationality(String nationality) {
+//        return authorRepository.findByNationality(nationality).orElseThrow(
+//                () -> new AuthorNotFoundException("No author found with nationality: " + nationality)
+//        );
+//    }
+
+//    public Author updateAuthor(String firstName, String lastName, Author author) {
+//        Author existingAuthor = authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
+//                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
+//        );
+//        existingAuthor.setFirstName(author.getFirstName());
+//        existingAuthor.setLastName(author.getLastName());
+//        existingAuthor.setNationality(author.getNationality());
+//        return authorRepository.save(existingAuthor);
+//    }
+//
+//    public void deleteAuthorByFirstNameAndLastName(String firstName, String lastName) {
+//        authorRepository.deleteByFirstNameAndLastName(firstName, lastName);
+//    }
 }

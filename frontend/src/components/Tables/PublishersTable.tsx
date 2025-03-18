@@ -6,9 +6,10 @@ interface PublishersTableProps {
     loading: boolean;
     isError: boolean;
     onRowSelect: (state: { selectedRows: PublisherT[] }) => void;
+    clearSelection: boolean;
 }
 
-function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTableProps) {
+function PublishersTable({ data, loading, isError, onRowSelect, clearSelection }: PublishersTableProps) {
     const columns: TableColumn<PublisherT>[] = [
         { name: 'Name', selector: (row) => row.name, sortable: true, id: 1 },
         { name: 'Location', selector: (row) => row.location, sortable: true },
@@ -40,6 +41,7 @@ function PublishersTable({ data, loading, isError, onRowSelect }: PublishersTabl
                         selectableRows
                         onSelectedRowsChange={onRowSelect}
                         defaultSortFieldId={1}
+                        clearSelectedRows={clearSelection}
                     />
                 </div>
 

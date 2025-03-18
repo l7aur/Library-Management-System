@@ -1,6 +1,6 @@
 import React from "react";
-import PublisherT from "../types/PublisherT.tsx";
-import {fetchPublishers} from "../services/PublisherService.ts";
+import PublisherT from "../../types/PublisherT.tsx";
+import {fetchPublishers} from "../../services/PublisherService.ts";
 
 function useFetchPublishers() {
     const [data, setData] = React.useState<PublisherT[]>([]);
@@ -24,7 +24,7 @@ function useFetchPublishers() {
         fetchData();
     }, []);
 
-    return { data, loading, isError };
+    return { data, setData, loading, isError };
 }
 
 export default useFetchPublishers;

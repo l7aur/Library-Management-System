@@ -11,6 +11,7 @@ import com.laur.bookshop.repository.AuthorRepository;
 import com.laur.bookshop.repository.BookRepository;
 import com.laur.bookshop.repository.PublisherRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,24 +27,6 @@ public class BookService {
 
     public List<Book> findAllBooks() {
         return bookRepository.findAll();
-    }
-
-    public Book findBookByTitle(String title) {
-        return bookRepository.findByTitle(title).orElseThrow(
-                () -> new BookNotFoundException("Book with ISBN " + title + " not found")
-        );
-    }
-
-    public Book findBookByISBN(String isbn) {
-        return bookRepository.findByIsbn(isbn).orElseThrow(
-                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
-        );
-    }
-
-    public List<Book> findBookByAuthor(String author) {
-        return bookRepository.findByAuthor(author).orElseThrow(
-                () -> new BookNotFoundException("Book with author " + author + " not found")
-        );
     }
 
     public Book addBook(BookCreateDTO book) {
@@ -67,23 +50,49 @@ public class BookService {
         return bookRepository.save(newBook);
     }
 
-    public Book updateBook(String isbn, Book book) {
-        Book existingBook = bookRepository.findByIsbn(isbn).orElseThrow(
-                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
-        );
-        existingBook.setTitle(book.getTitle());
-        existingBook.setAuthors(book.getAuthors());
-        existingBook.setIsbn(book.getIsbn());
-        existingBook.setPublisher(book.getPublisher());
-        existingBook.setPublishYear(book.getPublishYear());
-        return bookRepository.save(existingBook);
+    public ResponseEntity<String> deleteBooksById(List<UUID> ids) {
+        if (ids == null || ids.isEmpty())
+            return ResponseEntity.badRequest().body("No IDs provided");
+        for(UUID i : ids)
+            bookRepository.deleteById(i);
+        return ResponseEntity.ok("Books deleted successfully");
     }
 
-    public void deleteBookByIsbn(String isbn) {
-        bookRepository.deleteByIsbn(isbn);
-    }
-
-    public void deleteBookByTitle(String title) {
-        bookRepository.deleteByTitle(title);
-    }
+//    public Book findBookByTitle(String title) {
+//        return bookRepository.findByTitle(title).orElseThrow(
+//                () -> new BookNotFoundException("Book with ISBN " + title + " not found")
+//        );
+//    }
+//
+//    public Book findBookByISBN(String isbn) {
+//        return bookRepository.findByIsbn(isbn).orElseThrow(
+//                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
+//        );
+//    }
+//
+//    public List<Book> findBookByAuthor(String author) {
+//        return bookRepository.findByAuthor(author).orElseThrow(
+//                () -> new BookNotFoundException("Book with author " + author + " not found")
+//        );
+//    }
+//
+//    public Book updateBook(String isbn, Book book) {
+//        Book existingBook = bookRepository.findByIsbn(isbn).orElseThrow(
+//                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
+//        );
+//        existingBook.setTitle(book.getTitle());
+//        existingBook.setAuthors(book.getAuthors());
+//        existingBook.setIsbn(book.getIsbn());
+//        existingBook.setPublisher(book.getPublisher());
+//        existingBook.setPublishYear(book.getPublishYear());
+//        return bookRepository.save(existingBook);
+//    }
+//
+//    public void deleteBookByIsbn(String isbn) {
+//        bookRepository.deleteByIsbn(isbn);
+//    }
+//
+//    public void deleteBookByTitle(String title) {
+//        bookRepository.deleteByTitle(title);
+//    }
 }

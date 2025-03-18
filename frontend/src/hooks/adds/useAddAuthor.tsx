@@ -1,6 +1,6 @@
 import {useState} from "react";
-import AuthorT from "../types/AuthorT.tsx";
-import {addAuthor} from "../services/AuthorService.ts";
+import AuthorT from "../../types/AuthorT.tsx";
+import {addAuthor} from "../../services/AuthorService.ts";
 
 const useAddAuthor = () => {
     const [isAdding, setIsAdding] = useState(false);

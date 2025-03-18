@@ -6,9 +6,10 @@ interface BooksTableProps {
     loading: boolean;
     isError: boolean;
     onRowSelect: (state: { selectedRows: BookT[] }) => void;
+    clearSelection: boolean;
 }
 
-function BooksTable({ data, loading, isError, onRowSelect }: BooksTableProps) {
+function BooksTable({ data, loading, isError, onRowSelect, clearSelection }: BooksTableProps) {
     const columns: TableColumn<BookT>[] = [
         { name: 'ISBN', selector: (row) => row.isbn, sortable: true, id: 1 },
         { name: 'Title', selector: (row) => row.title, sortable: true },
@@ -51,6 +52,8 @@ function BooksTable({ data, loading, isError, onRowSelect }: BooksTableProps) {
                         selectableRows
                         onSelectedRowsChange={onRowSelect}
                         defaultSortFieldId={1}
+                        clearSelectedRows={clearSelection}
+
                     />
                 </div>
             )}

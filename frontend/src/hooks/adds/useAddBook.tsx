@@ -1,6 +1,6 @@
 import { useState } from "react";
-import {BookT} from "../types/BookT.tsx";
-import {addBook} from "../services/BookService.ts";
+import {BookT} from "../../types/BookT.tsx";
+import {addBook} from "../../services/BookService.ts";
 
 const useAddBook = () => {
     const [newBook, setNewBook] = useState<BookT>({ id: "", isbn: "", publishYear: 0, title: "", publisher: {id: "", name: "", location: "", foundingYear: 0}, authors: [], price: 0.0, stock: 0 });

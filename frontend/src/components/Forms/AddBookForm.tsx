@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import useFetchAuthors from "../../hooks/useFetchAuthors.tsx";
-import useFetchPublishers from "../../hooks/useFetchPublishers.tsx";
+import useFetchAuthors from "../../hooks/fetches/useFetchAuthors.tsx";
+import useFetchPublishers from "../../hooks/fetches/useFetchPublishers.tsx";
 import {AuthorRed, BookT} from "../../types/BookT.tsx";
 import {MultiSelect} from "react-multi-select-component";
 
@@ -23,7 +23,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({
                                                      error
                                                     }) => {
 
-    const {data: authors, loading: loadingAuthors, isError: errorAuthors} = useFetchAuthors();
+    const {data: authors, loading: loadingAuthors, isError: errorAuthors} = useFetchAuthors(refresh);
     const {data: publishers, loading: loadingPublishers, isError: errorPublishers} = useFetchPublishers();
 
     const [selected, setSelected] = useState<AuthorOption[]>([]);

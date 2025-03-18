@@ -1,21 +1,21 @@
-import DataTable, { TableColumn } from 'react-data-table-component';
-import AuthorT from "../../types/AuthorT.tsx";
+import {AppUserT} from "../../types/AppUserT.tsx";
+import DataTable, {TableColumn} from "react-data-table-component";
 
-interface AuthorsTableProps {
-    data: AuthorT[];
+interface AppUserTableProps {
+    data: AppUserT[];
     loading: boolean;
     isError: boolean;
-    onRowSelect: (state: { selectedRows: AuthorT[] }) => void;
+    onRowSelect: (state: { selectedRows: AppUserT[] }) => void;
     clearSelection: boolean;
 }
 
-function AuthorsTable({ data, loading, isError, onRowSelect, clearSelection }: AuthorsTableProps) {
-    const columns: TableColumn<AuthorT>[] = [
+function AppUsersTable({ data, loading, isError, onRowSelect, clearSelection }: AppUserTableProps) {
+    const columns: TableColumn<AppUserT>[] = [
         { name: 'First Name', selector: (row) => row.firstName, sortable: true, id: 1 },
         { name: 'Last Name', selector: (row) => row.lastName, sortable: true },
-        { name: 'Alias', selector: (row) => row.alias, sortable: true },
-        { name: 'Nationality', selector: (row) => row.nationality, sortable: true },
-        { name: 'Books', selector: (row) => row.books?.join(", "), sortable: true },
+        { name: 'Role', selector: (row) => row.role, sortable: true },
+        { name: 'Username', selector: (row) => row.userName, sortable: true },
+        { name: 'Password', selector: (row) => row.password, sortable: true },
     ];
 
     return (
@@ -25,9 +25,9 @@ function AuthorsTable({ data, loading, isError, onRowSelect, clearSelection }: A
             ) : isError ? (
                 <p className="error-text">An error occurred while fetching data!</p>
             ) : data.length === 0 ? (
-                <p className="empty-text">No authors found.</p>
+                <p className="empty-text">No app users found.</p>
             ) : (
-                <div className="books-table-container"
+                <div className="app-user-table-container"
                      style={{
                          width: "90vw",
                          margin: "20px auto",
@@ -35,7 +35,7 @@ function AuthorsTable({ data, loading, isError, onRowSelect, clearSelection }: A
                      }}>
                     <DataTable
                         theme={'dark'}
-                        title="Authors"
+                        title="App Users"
                         columns={columns}
                         data={data}
                         pagination
@@ -46,9 +46,10 @@ function AuthorsTable({ data, loading, isError, onRowSelect, clearSelection }: A
                         clearSelectedRows={clearSelection}
                     />
                 </div>
+
             )}
         </>
     );
 }
 
-export default AuthorsTable;
+export default AppUsersTable;

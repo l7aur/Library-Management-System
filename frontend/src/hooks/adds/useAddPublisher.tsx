@@ -1,6 +1,6 @@
 import {useState} from "react";
-import PublisherT from "../types/PublisherT.tsx";
-import {addPublisher} from "../services/PublisherService.ts";
+import PublisherT from "../../types/PublisherT.tsx";
+import {addPublisher} from "../../services/PublisherService.ts";
 
 const useAddPublisher = () => {
     const [isAdding, setIsAdding] = useState(false);

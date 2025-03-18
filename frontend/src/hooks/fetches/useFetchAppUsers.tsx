@@ -1,9 +1,9 @@
+import {AppUserT} from "../../types/AppUserT.tsx";
 import React from "react";
-import {fetchBooks} from "../services/BookService.ts";
-import {BookT} from "../types/BookT.tsx";
+import {fetchAppUsers} from "../../services/AppUserService.ts";
 
-function useFetchBooks() {
-    const [data, setData] = React.useState<BookT[]>([]);
+function useFetchAppUsers() {
+    const [data, setData] = React.useState<AppUserT[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isError, setIsError] = React.useState<boolean>(false);
 
@@ -11,7 +11,7 @@ function useFetchBooks() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetchBooks();
+                const response = await fetchAppUsers();
                 setData(response);
             } catch (error) {
                 console.error(error);
@@ -24,7 +24,7 @@ function useFetchBooks() {
         fetchData();
     }, []);
 
-    return { data, loading, isError };
+    return { data, setData, loading, isError };
 }
 
-export default useFetchBooks;
+export default useFetchAppUsers;

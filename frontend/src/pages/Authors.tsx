@@ -1,17 +1,51 @@
 import React, {useState} from "react";
 import AuthorsTable from "../components/Tables/AuthorsTable.tsx";
-import useFetchAuthors from "../hooks/useFetchAuthors.tsx";
-import useAddAuthor from "../hooks/useAddAuthor.tsx";
+import useFetchAuthors from "../hooks/fetches/useFetchAuthors.tsx";
+import useAddAuthor from "../hooks/adds/useAddAuthor.tsx";
 import AddAuthorForm from "../components/Forms/AddAuthorForm.tsx";
 import AuthorT from "../types/AuthorT.tsx";
+import {AUTHORS_DELETE_ENDPOINT} from "../constants/api.ts";
 
 const Authors: React.FC = () => {
-    const {data, loading, isError} = useFetchAuthors();
+    const {data, setData, loading, isError} = useFetchAuthors();
     const {isAdding, newAuthor, setNewAuthor, handleAddAuthor, setIsAdding, error} = useAddAuthor();
-
     const [selectedAuthors, setSelectedAuthors] = useState<AuthorT[]>([]);
+    const [clearSelectedRows, setClearSelectedRows] = useState<boolean>(false);
+
     const handleRowSelect = (state: { selectedRows: AuthorT[] }) => {
         setSelectedAuthors(state.selectedRows);
+    };
+
+    const deleteAuthors = async (authorObjects: AuthorT[]) => {
+        const authorIds = authorObjects.map(author => author.id);
+        const response = await fetch(AUTHORS_DELETE_ENDPOINT, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ids: authorIds})
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.text();
+    };
+
+    const handleDelete = () => {
+        deleteAuthors(selectedAuthors)
+            .then(response => {
+                console.log('Authors deleted successfully:', response);
+                const updatedData = data.filter(
+                    author => !selectedAuthors.some(selected => selected.id === author.id)
+                );
+                setData(updatedData);
+                setClearSelectedRows(true);
+            })
+            .catch(error => {
+                console.error('Error deleting authors:', error);
+            });
+        setClearSelectedRows(false);
     };
 
     return (
@@ -44,8 +78,8 @@ const Authors: React.FC = () => {
                     </button>
                 )}
                 <button
-                    onClick={() => console.log("Delete clicked")}
-                    disabled={selectedAuthors.length === 0} // Disable when no books are selected
+                    onClick={handleDelete}
+                    disabled={selectedAuthors.length === 0}
                     className={`mb-4 p-2 text-white rounded ${
                         selectedAuthors.length === 0
                             ? "bg-gray-400 cursor-not-allowed opacity-50 disabled:pointer-events-none"
@@ -71,6 +105,7 @@ const Authors: React.FC = () => {
                 loading={loading}
                 isError={isError}
                 onRowSelect={handleRowSelect}
+                clearSelection={clearSelectedRows}
             />
         </div>
     );

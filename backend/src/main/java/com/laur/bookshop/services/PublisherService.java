@@ -8,10 +8,12 @@ import com.laur.bookshop.dto.PublisherCreateDTO;
 import com.laur.bookshop.repository.BookRepository;
 import com.laur.bookshop.repository.PublisherRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -21,24 +23,6 @@ public class PublisherService {
 
     public List<Publisher> findAllPublishers(){
         return publisherRepository.findAll();
-    }
-
-    public Publisher findPublisherByName(String name){
-        return publisherRepository.findByName(name).orElseThrow(
-                () -> new PublisherNotFoundException("No publisher found with name " + name)
-        );
-    }
-
-    public List<Publisher> findPublisherByLocation(String location){
-        return publisherRepository.findByLocation(location).orElseThrow(
-                () -> new PublisherNotFoundException("Publishers with location " + location + " not found")
-        );
-    }
-
-    public List<Publisher> findPublisherByFoundingYear(int year){
-        return publisherRepository.findByFoundingYear(year).orElseThrow(
-                () -> new PublisherNotFoundException("Publishers with founding year " + year + " not found")
-        );
     }
 
     public Publisher addPublisher(PublisherCreateDTO publisher){
@@ -56,17 +40,44 @@ public class PublisherService {
         return publisherRepository.save(newPublisher);
     }
 
-    public Publisher updatePublisher(String name, Publisher publisher){
-        Publisher existingPublisher = publisherRepository.findByName(name).orElseThrow(
-                () -> new PublisherNotFoundException("Publisher with name " + publisher.getName() + " not found")
-        );
-        existingPublisher.setName(publisher.getName());
-        existingPublisher.setFoundingYear(publisher.getFoundingYear());
-        existingPublisher.setLocation(publisher.getLocation());
-        return publisherRepository.save(existingPublisher);
+    public ResponseEntity<String> deletePublishersById(List<UUID> ids) {
+        if (ids == null || ids.isEmpty())
+            return ResponseEntity.badRequest().body("No IDs provided");
+        for(UUID i : ids)
+            publisherRepository.deleteById(i);
+        return ResponseEntity.ok("Publisher deleted successfully");
     }
+//    public Publisher findPublisherByName(String name){
+//        return publisherRepository.findByName(name).orElseThrow(
+//                () -> new PublisherNotFoundException("No publisher found with name " + name)
+//        );
+//    }
 
-    public void deletePublisherByName(String name){
-        publisherRepository.deleteByName(name);
-    }
+//    public List<Publisher> findPublisherByLocation(String location){
+//        return publisherRepository.findByLocation(location).orElseThrow(
+//                () -> new PublisherNotFoundException("Publishers with location " + location + " not found")
+//        );
+//    }
+//
+//    public List<Publisher> findPublisherByFoundingYear(int year){
+//        return publisherRepository.findByFoundingYear(year).orElseThrow(
+//                () -> new PublisherNotFoundException("Publishers with founding year " + year + " not found")
+//        );
+//    }
+
+
+
+//    public Publisher updatePublisher(String name, Publisher publisher){
+//        Publisher existingPublisher = publisherRepository.findByName(name).orElseThrow(
+//                () -> new PublisherNotFoundException("Publisher with name " + publisher.getName() + " not found")
+//        );
+//        existingPublisher.setName(publisher.getName());
+//        existingPublisher.setFoundingYear(publisher.getFoundingYear());
+//        existingPublisher.setLocation(publisher.getLocation());
+//        return publisherRepository.save(existingPublisher);
+//    }
+
+//    public void deletePublisherByName(String name){
+//        publisherRepository.deleteByName(name);
+//    }
 }

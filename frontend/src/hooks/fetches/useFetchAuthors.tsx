@@ -1,5 +1,5 @@
-import AuthorT from "../types/AuthorT.tsx";
-import {fetchAuthors} from "../services/AuthorService.ts";
+import AuthorT from "../../types/AuthorT.tsx";
+import {fetchAuthors} from "../../services/AuthorService.ts";
 import React from "react";
 
 function useFetchAuthors() {
@@ -24,7 +24,7 @@ function useFetchAuthors() {
         fetchData();
     }, []);
 
-    return { data, loading, isError };
+    return { data, setData, loading, isError };
 }
 
 export default useFetchAuthors;

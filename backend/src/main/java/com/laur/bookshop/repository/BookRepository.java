@@ -13,18 +13,18 @@ import java.util.UUID;
 
 public interface BookRepository extends JpaRepository<Book, UUID> {
     Optional<Book> findByTitle(String title);
-    Optional<Book> findByIsbn(@Param("isbn") String isbn);
-
-    @Query("SELECT b FROM Book b WHERE :author MEMBER OF b.authors")
-    Optional<List<Book>> findByAuthor(@Param("author") String author);
-
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Book b WHERE b.isbn = :isbn")
-    void deleteByIsbn(@Param("isbn") String isbn);
-
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Book b WHERE b.isbn = :title")
-    void deleteByTitle(@Param("title") String title);
+//    Optional<Book> findByIsbn(@Param("isbn") String isbn);
+//
+//    @Query("SELECT b FROM Book b WHERE :author MEMBER OF b.authors")
+//    Optional<List<Book>> findByAuthor(@Param("author") String author);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("DELETE FROM Book b WHERE b.isbn = :isbn")
+//    void deleteByIsbn(@Param("isbn") String isbn);
+//
+//    @Transactional
+//    @Modifying
+//    @Query("DELETE FROM Book b WHERE b.isbn = :title")
+//    void deleteByTitle(@Param("title") String title);
 }

@@ -25,7 +25,7 @@ const Login = () => {
             });
 
             if (!response.ok) {
-                let errMsg = "";
+                let errMsg;
                 const contentType = response.headers.get("Content-Type");
 
                 if (contentType && contentType.includes("application/json")) {
