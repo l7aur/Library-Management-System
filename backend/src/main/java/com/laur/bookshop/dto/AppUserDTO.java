@@ -28,6 +28,6 @@ public class AppUserDTO {
     private String lastName;
 
     public AppUserRole getRole() throws IllegalArgumentException {
-        return AppUserRole.valueOf(role);
+        return AppUserRole.valueOf(role.toUpperCase());
     }
 }

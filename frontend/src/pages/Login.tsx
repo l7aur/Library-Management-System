@@ -1,16 +1,52 @@
 import React, { useState } from "react";
+import {APP_USERS_LOGIN_ENDPOINT} from "../constants/api.ts";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         setError("");
-        console.log("Logging in with:", { username, password });
-        // TODO: Add authentication logic (API call)
+        console.log("Logging in with:", {username, password});
+
+        try {
+            const response = await fetch(APP_USERS_LOGIN_ENDPOINT, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                })
+            });
+
+            if (!response.ok) {
+                let errMsg = "";
+                const contentType = response.headers.get("Content-Type");
+
+                if (contentType && contentType.includes("application/json")) {
+                    try {
+                        const responseData = await response.json();
+                        errMsg = Object.values(responseData).join("\n");
+                    } catch {
+                        errMsg = "Failed to parse JSON response";
+                    }
+                } else {
+                    errMsg = await response.text();
+                }
+
+                console.log(errMsg);
+                throw new Error(errMsg);
+            }
+            console.log("Successful login");
+
+        } catch (error) {
+            setError((error instanceof Error) ? error.message : "Unable to log in!");
+        }
     };
 
     return (

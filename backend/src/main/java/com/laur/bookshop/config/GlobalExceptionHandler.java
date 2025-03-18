@@ -1,8 +1,6 @@
 package com.laur.bookshop.config;
 
-import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
-import com.laur.bookshop.config.exceptions.BookNotFoundException;
-import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
+import com.laur.bookshop.config.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +32,18 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
-    // Handle entity not found exceptions (e.g., BookNotFoundException, AuthorNotFoundException)
-    @ExceptionHandler({AuthorNotFoundException.class, BookNotFoundException.class, PublisherNotFoundException.class})
+    @ExceptionHandler({AuthorNotFoundException.class, BookNotFoundException.class, PublisherNotFoundException.class, AppUserNotFoundException.class})
     public ResponseEntity<String> handleNotFoundExceptions(RuntimeException ex) {
         log.error("Entity not found: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    // Handle generic exceptions
+    @ExceptionHandler({AppUserInvalidPassword.class})
+    public ResponseEntity<String> handleInvalidPasswordExceptions(RuntimeException ex) {
+        log.error("Incorrect password: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalExceptions(Exception ex) {
         log.error("Unexpected error: ", ex);

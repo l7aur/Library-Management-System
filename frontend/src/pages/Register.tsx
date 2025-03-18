@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {APP_USERS_ADD_ENDPOINT} from "../constants/api.ts";
 
 const Register = () => {
     const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ const Register = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (password != passwordConfirmation) {
@@ -18,7 +19,47 @@ const Register = () => {
         }
 
         setError("");
-        console.log("Logging in with:", {username, password, passwordConfirmation, fName, lName, role});
+        console.log("Logging in with:", {id: "", username, password, role, firstName: `${fName}`, lastName: `${lName}`});
+        try {
+            const response = await fetch(APP_USERS_ADD_ENDPOINT, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: "",
+                    username,
+                    password,
+                    role,
+                    firstName: fName,
+                    lastName: lName
+                })
+            });
+
+            if (!response.ok) {
+                let errMsg = "";
+                const contentType = response.headers.get("Content-Type");
+
+                if (contentType && contentType.includes("application/json")) {
+                    try {
+                        const responseData = await response.json();
+                        errMsg = Object.values(responseData).join("\n");
+                    } catch {
+                        errMsg = "Failed to parse JSON response";
+                    }
+                } else {
+                    errMsg = await response.text();
+                }
+
+                console.log(errMsg);
+                throw new Error(errMsg);
+            }
+
+            console.log("Success:", error);
+        } catch (error) {
+            setError((error instanceof Error) ? error.message : "Unknown error");
+        }
+
     };
 
     return (
@@ -41,10 +82,10 @@ const Register = () => {
                         className="p-2 border rounded-lg focus:outline-none focus:ring focus:ring-white text-white"
                         style={{ backgroundColor: "#242424" }}
                     >
-                        <option value="admin">Admin</option>
-                        <option value="employee">Employee</option>
-                        <option value="customer">Customer</option>
-                        <option value="unknown">Unknown</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="EMPLOYEE">Employee</option>
+                        <option value="CUSTOMER">Customer</option>
+                        <option value="UNKNOWN">Unknown</option>
                         <option value="" disabled>Select a role</option>
                     </select>
 
