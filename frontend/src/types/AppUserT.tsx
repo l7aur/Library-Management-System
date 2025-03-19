@@ -4,5 +4,5 @@ export interface AppUserT {
     lastName: string;
     password: string;
     role: string;
-    userName: string;
+    username: string;
 }
