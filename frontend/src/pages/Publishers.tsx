@@ -4,19 +4,20 @@ import AddPublisherForm from "../components/Forms/AddPublisherForm.tsx";
 import useAddPublisher from "../hooks/adds/useAddPublisher.tsx";
 import useFetchPublishers from "../hooks/fetches/useFetchPublishers.tsx";
 import PublisherT from "../types/PublisherT.tsx";
-import {PUBLISHERS_DELETE_ENDPOINT} from "../constants/api.ts";
+import {PUBLISHERS_DELETE_ENDPOINT, PUBLISHERS_EDIT_ENDPOINT} from "../constants/api.ts";
 
 const Publishers: React.FC = () => {
     const {data, setData, loading, isError} = useFetchPublishers();
     const {isAdding, newPublisher, setNewPublisher, handleAddPublisher, setIsAdding, error} = useAddPublisher();
     const [clearSelectedRows, setClearSelectedRows] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const [selectedPublishers, setSelectedPublishers] = useState<PublisherT[]>([]);
     const handleRowSelect = (state: { selectedRows: PublisherT[] }) => {
         setSelectedPublishers(state.selectedRows);
     };
 
-    const deleteAuthors = async (publisherObjects: PublisherT[]) => {
+    const deletePublishers = async (publisherObjects: PublisherT[]) => {
         const publisherIds = publisherObjects.map(publisher => publisher.id);
         const response = await fetch(PUBLISHERS_DELETE_ENDPOINT, {
             method: 'DELETE',
@@ -33,9 +34,9 @@ const Publishers: React.FC = () => {
     };
 
     const handleDelete = () => {
-        deleteAuthors(selectedPublishers)
+        deletePublishers(selectedPublishers)
             .then(response => {
-                console.log('Authors deleted successfully:', response);
+                console.log('Publishers deleted successfully:', response);
                 const updatedData = data.filter(
                     publisher => !selectedPublishers.some(selected => selected.id === publisher.id)
                 );
@@ -43,7 +44,34 @@ const Publishers: React.FC = () => {
                 setClearSelectedRows(true);
             })
             .catch(error => {
-                console.error('Error deleting authors:', error);
+                console.error('Error deleting publishers:', error);
+            });
+        setClearSelectedRows(false);
+    };
+
+    const editPublisher = async (publisherObject: PublisherT) => {
+        const response = await fetch(PUBLISHERS_EDIT_ENDPOINT, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(publisherObject)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.text();
+    };
+
+    const handleEdit = () => {
+        editPublisher(selectedPublishers[0])
+            .then(response => {
+                console.log('Publisher edited successfully:', response);
+                setClearSelectedRows(true);
+            })
+            .catch(error => {
+                console.error('Error editing publisher:', error);
             });
         setClearSelectedRows(false);
     };
@@ -61,6 +89,14 @@ const Publishers: React.FC = () => {
                     error={error}
                 />
             )}
+            {isEditing && (
+                <AddPublisherForm
+                    newPublisher={newPublisher}
+                    setNewPublisher={setNewPublisher}
+                    handleAddPublisher={handleEdit}
+                    error={error}
+                />
+            )}
             <div className="flex items-start gap-[5px] mb-4">
                 {!isAdding && (
                     <button
@@ -70,9 +106,9 @@ const Publishers: React.FC = () => {
                         Add publisher
                     </button>
                 )}
-                {isAdding && (
+                {(isAdding || isEditing) && (
                     <button
-                        onClick={() => setIsAdding(false)}
+                        onClick={() => (setIsAdding(false), setIsEditing(false))}
                         className="mb-4 p-2 bg-blue-500 text-white rounded"
                     >
                         Cancel
@@ -88,8 +124,9 @@ const Publishers: React.FC = () => {
                 >
                     Delete
                 </button>
+                {isEditing && (
                 <button
-                    onClick={() => console.log("Edit clicked")}
+                    onClick={handleEdit}
                     disabled={selectedPublishers.length === 0 || selectedPublishers.length > 1}
                     className={`mb-4 p-2 text-white rounded ${
                         selectedPublishers.length === 0 || selectedPublishers.length > 1
@@ -98,7 +135,15 @@ const Publishers: React.FC = () => {
                     }`}
                 >
                     Edit
-                </button>
+                </button>)}
+                {!isEditing && (
+                    <button
+                        onClick={() => setIsEditing(selectedPublishers.length == 1)}
+                        disabled={selectedPublishers.length === 0 || selectedPublishers.length > 1}
+                        className={'mb-4 p-2 text-white rounded'}
+                    >
+                        Edit
+                    </button>)}
             </div>
             <PublishersTable
                 data={data}

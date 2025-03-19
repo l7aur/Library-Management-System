@@ -2,6 +2,7 @@ package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.dto.AppUserCreateDTO;
+import com.laur.bookshop.model.AppUserRole;
 import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.services.AppUserService;
 import jakarta.validation.Valid;
@@ -33,6 +34,11 @@ public class AppUserController {
     public ResponseEntity<String> deleteAppUsersById(@RequestBody Map<String, List<UUID>> ids) {
         List<UUID> idList = ids.get("ids");
         return appUserService.deleteAppUsersById(idList);
+    }
+
+    @PutMapping("/app_users/edit")
+    public AppUser updateAppUser(@RequestBody AppUser appUser){
+        return appUserService.updateAppUser(appUser);
     }
 
     @PostMapping("/app_users/login")

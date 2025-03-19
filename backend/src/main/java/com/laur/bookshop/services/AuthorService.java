@@ -49,6 +49,16 @@ public class AuthorService {
         return ResponseEntity.ok("Authors deleted successfully");
     }
 
+    public Author updateAuthor(Author author) {
+        Author existingAuthor = authorRepository.findById(author.getId()).orElseThrow(
+                () -> new AuthorNotFoundException("No author found with id: " + author.getId())
+        );
+        existingAuthor.setFirstName(author.getFirstName());
+        existingAuthor.setLastName(author.getLastName());
+        existingAuthor.setNationality(author.getNationality());
+        return authorRepository.save(existingAuthor);
+    }
+
 //    public List<Author> findAuthorsByFirstName(String firstName) {
 //        return  authorRepository.findByFirstName(firstName).orElseThrow(
 //                () -> new AuthorNotFoundException("No author found with firstName: " + firstName)
@@ -73,15 +83,7 @@ public class AuthorService {
 //        );
 //    }
 
-//    public Author updateAuthor(String firstName, String lastName, Author author) {
-//        Author existingAuthor = authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
-//                () -> new AuthorNotFoundException("No author found with firstName: " + firstName + " and lastName: " + lastName)
-//        );
-//        existingAuthor.setFirstName(author.getFirstName());
-//        existingAuthor.setLastName(author.getLastName());
-//        existingAuthor.setNationality(author.getNationality());
-//        return authorRepository.save(existingAuthor);
-//    }
+
 //
 //    public void deleteAuthorByFirstNameAndLastName(String firstName, String lastName) {
 //        authorRepository.deleteByFirstNameAndLastName(firstName, lastName);

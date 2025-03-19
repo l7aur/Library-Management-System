@@ -58,6 +58,18 @@ public class BookService {
         return ResponseEntity.ok("Books deleted successfully");
     }
 
+        public Book updateBook(Book book) {
+        Book existingBook = bookRepository.findById(book.getId()).orElseThrow(
+                () -> new BookNotFoundException("Book with ISBN " + book.getId() + " not found")
+        );
+        existingBook.setTitle(book.getTitle());
+        existingBook.setAuthors(book.getAuthors());
+        existingBook.setIsbn(book.getIsbn());
+        existingBook.setPublisher(book.getPublisher());
+        existingBook.setPublishYear(book.getPublishYear());
+        return bookRepository.save(existingBook);
+    }
+
 //    public Book findBookByTitle(String title) {
 //        return bookRepository.findByTitle(title).orElseThrow(
 //                () -> new BookNotFoundException("Book with ISBN " + title + " not found")
@@ -76,17 +88,6 @@ public class BookService {
 //        );
 //    }
 //
-//    public Book updateBook(String isbn, Book book) {
-//        Book existingBook = bookRepository.findByIsbn(isbn).orElseThrow(
-//                () -> new BookNotFoundException("Book with ISBN " + isbn + " not found")
-//        );
-//        existingBook.setTitle(book.getTitle());
-//        existingBook.setAuthors(book.getAuthors());
-//        existingBook.setIsbn(book.getIsbn());
-//        existingBook.setPublisher(book.getPublisher());
-//        existingBook.setPublishYear(book.getPublishYear());
-//        return bookRepository.save(existingBook);
-//    }
 //
 //    public void deleteBookByIsbn(String isbn) {
 //        bookRepository.deleteByIsbn(isbn);

@@ -31,6 +31,12 @@ public class AuthorController {
         List<UUID> idList = ids.get("ids");
         return authorService.deleteAuthorsById(idList);
     }
+
+    @PutMapping("/authors/edit")
+    public Author updateAuthor(@RequestBody Author author) {
+        return authorService.updateAuthor(author);
+    }
+
 //    @GetMapping("/authors/{firstName}/{lastName}")
 //    public Author getAuthor(@PathVariable String firstName, @PathVariable String lastName) {
 //        return authorService.findAuthorByFirstNameAndLastName(firstName, lastName);
@@ -49,11 +55,5 @@ public class AuthorController {
 //    @GetMapping("/authors/{nationality}")
 //    public List<Author> getAuthorByNationality(@PathVariable String nationality) {
 //        return authorService.findAuthorsByNationality(nationality);
-//    }
-
-
-//    @PutMapping("/authors/{firstName}/{lastName}")
-//    public Author updateAuthor(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Author author) {
-//        return authorService.updateAuthor(firstName, lastName, author);
 //    }
 }

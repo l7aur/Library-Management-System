@@ -35,6 +35,10 @@ public class BookController {
         List<UUID> idList = ids.get("ids");
         return bookService.deleteBooksById(idList);
     }
+    @PutMapping("/books/edit")
+    public Book updateBook(@RequestBody Book book) {
+        return bookService.updateBook(book);
+    }
 
 //    @GetMapping("/books/isbn/{isbn}")
 //    public Book getBookByISBN(@PathVariable String isbn) {
@@ -51,10 +55,6 @@ public class BookController {
 //        return bookService.findBookByTitle(title);
 //    }
 //
-//    @PutMapping("/books/{isbn}")
-//    public Book updateBook(@PathVariable String isbn, @RequestBody Book book) {
-//        return bookService.updateBook(isbn, book);
-//    }
 //
 //    @DeleteMapping("/books/{isbn}")
 //    public void deleteBookByIsbn(@PathVariable String isbn) {

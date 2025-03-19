@@ -33,6 +33,12 @@ public class PublisherController {
         List<UUID> idList = ids.get("ids");
         return publisherService.deletePublishersById(idList);
     }
+
+    @PutMapping("/publishers/edit")
+    public Publisher updatePublisher(@RequestBody Publisher publisher) {
+        return publisherService.updatePublisher(publisher);
+    }
+
 //    @GetMapping("/publishers/{name}")
 //    public Publisher getPublisherByName(@PathVariable String name) {
 //        return publisherService.findPublisherByName(name);
@@ -46,11 +52,6 @@ public class PublisherController {
 //    @GetMapping("/publishers/foundingYear/{foundingYear}")
 //    public List<Publisher> getPublisherByFoundingYear(@PathVariable int foundingYear) {
 //        return publisherService.findPublisherByFoundingYear(foundingYear);
-//    }
-
-//    @PutMapping("/publishers/{title}")
-//    public Publisher updatePublisher(@PathVariable String title, @RequestBody Publisher publisher) {
-//        return publisherService.updatePublisher(title, publisher);
 //    }
 
 //    @DeleteMapping("/publishers/{name}")

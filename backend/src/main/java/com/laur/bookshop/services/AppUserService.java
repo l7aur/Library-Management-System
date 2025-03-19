@@ -42,6 +42,18 @@ public class AppUserService {
         return ResponseEntity.ok("App User deleted successfully");
     }
 
+    public AppUser updateAppUser(AppUser appUser) {
+        AppUser existingAppUser = appUserRepository.findById(appUser.getId()).orElseThrow(
+                () -> new AppUserNotFoundException("No user found with id" + appUser.getId())
+        );
+        existingAppUser.setUsername(appUser.getUsername());
+        existingAppUser.setPassword(appUser.getPassword());
+        existingAppUser.setFirstName(appUser.getFirstName());
+        existingAppUser.setLastName(appUser.getLastName());
+        existingAppUser.setRole(appUser.getRole());
+        return appUserRepository.save(existingAppUser);
+    }
+
     public AppUser login(LoginRequest request) {
         AppUser appUser = appUserRepository.findByUsername(request.getUsername()).orElseThrow(
                 () -> new AppUserNotFoundException("No user found with username: '" + request.getUsername() + "'")

@@ -47,6 +47,16 @@ public class PublisherService {
             publisherRepository.deleteById(i);
         return ResponseEntity.ok("Publisher deleted successfully");
     }
+
+        public Publisher updatePublisher(Publisher publisher){
+        Publisher existingPublisher = publisherRepository.findById(publisher.getId()).orElseThrow(
+                () -> new PublisherNotFoundException("Publisher with name " + publisher.getName() + " not found")
+        );
+        existingPublisher.setName(publisher.getName());
+        existingPublisher.setFoundingYear(publisher.getFoundingYear());
+        existingPublisher.setLocation(publisher.getLocation());
+        return publisherRepository.save(existingPublisher);
+    }
 //    public Publisher findPublisherByName(String name){
 //        return publisherRepository.findByName(name).orElseThrow(
 //                () -> new PublisherNotFoundException("No publisher found with name " + name)
@@ -63,18 +73,6 @@ public class PublisherService {
 //        return publisherRepository.findByFoundingYear(year).orElseThrow(
 //                () -> new PublisherNotFoundException("Publishers with founding year " + year + " not found")
 //        );
-//    }
-
-
-
-//    public Publisher updatePublisher(String name, Publisher publisher){
-//        Publisher existingPublisher = publisherRepository.findByName(name).orElseThrow(
-//                () -> new PublisherNotFoundException("Publisher with name " + publisher.getName() + " not found")
-//        );
-//        existingPublisher.setName(publisher.getName());
-//        existingPublisher.setFoundingYear(publisher.getFoundingYear());
-//        existingPublisher.setLocation(publisher.getLocation());
-//        return publisherRepository.save(existingPublisher);
 //    }
 
 //    public void deletePublisherByName(String name){
