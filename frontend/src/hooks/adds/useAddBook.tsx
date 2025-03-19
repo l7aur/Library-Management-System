@@ -15,7 +15,7 @@ const useAddBook = () => {
             setNewBook({ id: "", isbn: "", publishYear: 0, title: "", publisher:  {id: "", name: "", location: "", foundingYear: 0}, authors: [], price: 0.0, stock: 0 });
 
         } catch (err) {
-            setError("Error adding publisher: " + err);
+            setError("Error adding book: " + err);
             console.error(err);
         }
     };

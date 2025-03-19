@@ -25,10 +25,12 @@ export const addBook = async (newBook: BookT): Promise<BookT> => {
         publishYear: newBook.publishYear,
         title: newBook.title,
         publisherId: newBook.publisher.id,
-        authorIds: newBook.authors.map((author) => author.id),
+        authorIds: newBook.authors,
         price: newBook.price,
         stock: newBook.stock
     };
+    console.log("Querying with: ", bookJSON);
+    console.log("Querying with: ", newBook.authors);
     const response = await fetch(BOOKS_ADD_ENDPOINT, {
         method: "POST",
         headers: {

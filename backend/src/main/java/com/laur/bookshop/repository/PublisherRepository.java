@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PublisherRepository extends JpaRepository<Publisher, UUID> {
-//    Optional<Publisher> findByName(String name);
+    Optional<Publisher> findByName(String name);
 //    Optional<List<Publisher>> findByLocation(String location);
 //    Optional<List<Publisher>> findByFoundingYear(int foundingYear);
 //

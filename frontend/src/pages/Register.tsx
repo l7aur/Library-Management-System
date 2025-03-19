@@ -19,7 +19,7 @@ const Register = () => {
         }
 
         setError("");
-        console.log("Logging in with:", {id: "", username, password, role, firstName: `${fName}`, lastName: `${lName}`});
+        console.log("Registering with:", {id: "", username, password, role, firstName: `${fName}`, lastName: `${lName}`});
         try {
             const response = await fetch(APP_USERS_ADD_ENDPOINT, {
                 method: "POST",

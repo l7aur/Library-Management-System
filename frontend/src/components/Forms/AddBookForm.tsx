@@ -23,7 +23,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({
                                                      error
                                                     }) => {
 
-    const {data: authors, loading: loadingAuthors, isError: errorAuthors} = useFetchAuthors(refresh);
+    const {data: authors, loading: loadingAuthors, isError: errorAuthors} = useFetchAuthors();
     const {data: publishers, loading: loadingPublishers, isError: errorPublishers} = useFetchPublishers();
 
     const [selected, setSelected] = useState<AuthorOption[]>([]);

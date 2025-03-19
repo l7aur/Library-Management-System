@@ -39,10 +39,10 @@ public class PublisherController {
         return publisherService.updatePublisher(publisher);
     }
 
-//    @GetMapping("/publishers/{name}")
-//    public Publisher getPublisherByName(@PathVariable String name) {
-//        return publisherService.findPublisherByName(name);
-//    }
+    @GetMapping("/publishers/{name}")
+    public Publisher getPublisherByName(@PathVariable String name) {
+        return publisherService.findPublisherByName(name);
+    }
 
 //    @GetMapping("/publishers/location/{location}")
 //    public List<Publisher> getPublisherByLocation(@PathVariable String location) {

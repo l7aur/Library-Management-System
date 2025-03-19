@@ -49,19 +49,22 @@ public class PublisherService {
     }
 
         public Publisher updatePublisher(Publisher publisher){
+        if(publisher.getId() == null)
+            throw new PublisherNotFoundException("Publisher not found");
         Publisher existingPublisher = publisherRepository.findById(publisher.getId()).orElseThrow(
-                () -> new PublisherNotFoundException("Publisher with name " + publisher.getName() + " not found")
+                () -> new PublisherNotFoundException("Publisher with id " + publisher.getId() + " not found")
         );
         existingPublisher.setName(publisher.getName());
         existingPublisher.setFoundingYear(publisher.getFoundingYear());
         existingPublisher.setLocation(publisher.getLocation());
         return publisherRepository.save(existingPublisher);
     }
-//    public Publisher findPublisherByName(String name){
-//        return publisherRepository.findByName(name).orElseThrow(
-//                () -> new PublisherNotFoundException("No publisher found with name " + name)
-//        );
-//    }
+
+    public Publisher findPublisherByName(String name){
+        return publisherRepository.findByName(name).orElseThrow(
+                () -> new PublisherNotFoundException("No publisher found with name " + name)
+        );
+    }
 
 //    public List<Publisher> findPublisherByLocation(String location){
 //        return publisherRepository.findByLocation(location).orElseThrow(

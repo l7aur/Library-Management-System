@@ -18,8 +18,4 @@ export interface PublisherRed {
 
 export interface AuthorRed {
     id: string;
-    firstName: string;
-    lastName: string;
-    alias: string;
-    nationality: string;
 }

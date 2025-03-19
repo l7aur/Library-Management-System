@@ -44,6 +44,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
+    @ExceptionHandler({DuplicateException.class})
+    public ResponseEntity<String> handleDuplicateExceptions(RuntimeException ex) {
+        log.error("Duplicate exception: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalExceptions(Exception ex) {
         log.error("Unexpected error: ", ex);

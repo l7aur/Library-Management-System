@@ -2,6 +2,7 @@ package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
+import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.Book;
@@ -39,6 +40,8 @@ public class BookService {
                     () -> new AuthorNotFoundException("Author with name " + authorId + " not found")
             ));
         }
+        if(bookRepository.findByIsbn(book.getIsbn()).isPresent())
+            throw new DuplicateException("Book with the same ISBN already exists");
         Book newBook = new Book();
         newBook.setTitle(book.getTitle());
         newBook.setIsbn(book.getIsbn());
