@@ -1,7 +1,7 @@
 package com.laur.bookshop.controller;
 
 import com.laur.bookshop.model.AppUser;
-import com.laur.bookshop.dto.AppUserDTO;
+import com.laur.bookshop.dto.AppUserCreateDTO;
 import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.services.AppUserService;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class AppUserController {
     }
 
     @PostMapping("/app_users/add")
-    public AppUser addUser(@Valid @RequestBody AppUserDTO user) {
+    public AppUser addUser(@Valid @RequestBody AppUserCreateDTO user) {
         return appUserService.addAppUser(user);
     }
 

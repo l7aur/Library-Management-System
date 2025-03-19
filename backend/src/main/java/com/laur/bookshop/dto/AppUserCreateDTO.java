@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class AppUserDTO {
+public class AppUserCreateDTO {
     @NotEmpty(message = "Username cannot be empty!")
     @Size(min = 2, max = 20, message = "Username must have between 2 and 20 characters!")
     private String username;

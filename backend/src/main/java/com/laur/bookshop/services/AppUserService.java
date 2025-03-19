@@ -3,7 +3,7 @@ package com.laur.bookshop.services;
 import com.laur.bookshop.config.exceptions.AppUserInvalidPassword;
 import com.laur.bookshop.config.exceptions.AppUserNotFoundException;
 import com.laur.bookshop.model.AppUser;
-import com.laur.bookshop.dto.AppUserDTO;
+import com.laur.bookshop.dto.AppUserCreateDTO;
 import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class AppUserService {
         return appUserRepository.findAll();
     }
 
-    public AppUser addAppUser(AppUserDTO user) {
+    public AppUser addAppUser(AppUserCreateDTO user) {
         if(appUserRepository.findByUsername(user.getUsername()).isPresent())
             throw new AppUserNotFoundException("User '" + user.getUsername() + "' already exists");
         AppUser newAppUser = new AppUser();
