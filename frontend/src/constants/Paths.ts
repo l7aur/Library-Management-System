@@ -1,0 +1,9 @@
+export const HOME_PATH = "/";
+export const BOOKS_PATH = "/books";
+export const PUBLISHERS_PATH = "/publishers";
+export const AUTHORS_PATH = "/authors";
+export const LOGIN_PATH = "/login";
+export const REGISTER_PATH = "/register";
+export const CART_PATH = "/cart";
+export const APP_USERS_PATH = "/app_users";
+export const NOT_FOUND_PATH = "*";

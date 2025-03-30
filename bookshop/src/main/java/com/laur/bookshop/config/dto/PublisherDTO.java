@@ -1,4 +1,4 @@
-package com.laur.bookshop.config.validators.model;
+package com.laur.bookshop.config.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PublisherValidator {
+public class PublisherDTO {
     @NotEmpty(message = "Publisher name is mandatory!")
     @Size(min = 2, max = 50, message = "Publisher name must be between 2 and 50 characters!")
     private String name;
@@ -18,7 +18,7 @@ public class PublisherValidator {
     @Size(min = 2, max = 50, message = "Publisher location must be between 2 and 50 characters!")
     private String location;
 
-    @Min(value = 1500, message = "No publisher can be that old!")
+    @Min(value = 1000, message = "No publisher can be that old!")
     @Max(value = 2025, message = "No publisher could have been found in the future!")
     private Integer foundingYear;
 

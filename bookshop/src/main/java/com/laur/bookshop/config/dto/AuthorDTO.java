@@ -1,4 +1,4 @@
-package com.laur.bookshop.config.validators.model;
+package com.laur.bookshop.config.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class AuthorValidator {
+public class AuthorDTO {
     @NotBlank(message = "First name is mandatory!")
     @Size(min = 2, max = 50, message = "First name should be between 2 and 50 characters!")
     private String firstName;

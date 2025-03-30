@@ -2,7 +2,7 @@ package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
-import com.laur.bookshop.config.validators.model.AuthorValidator;
+import com.laur.bookshop.config.dto.AuthorDTO;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.repositories.AuthorRepo;
@@ -25,7 +25,7 @@ public class AuthorService {
         return authorRepo.findAll();
     }
 
-    public Author addAuthor(AuthorValidator a) {
+    public Author addAuthor(AuthorDTO a) {
         List<Book> books = new ArrayList<>();
         for (String title : a.getBooks()) {
             books.add(bookRepo.findByTitle(title).orElseThrow(
@@ -43,7 +43,7 @@ public class AuthorService {
 
     public ResponseEntity<String> deleteByIds(List<UUID> ids) {
         if (ids == null || ids.isEmpty())
-            return ResponseEntity.badRequest().body("No IDs provided");
+            return ResponseEntity.badRequest().body("No IDs provided!");
         for(UUID i : ids)
             authorRepo.deleteById(i);
         return ResponseEntity.ok("Authors deleted successfully!");

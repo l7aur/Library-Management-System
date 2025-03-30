@@ -4,7 +4,7 @@ import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
 import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
-import com.laur.bookshop.config.validators.model.BookValidator;
+import com.laur.bookshop.config.dto.BookDTO;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.model.Publisher;
@@ -30,7 +30,7 @@ public class BookService {
         return bookRepo.findAll();
     }
 
-    public Book addBook(BookValidator b) {
+    public Book addBook(BookDTO b) {
         Publisher publisher = publisherRepo.findById(b.getPublisherId()).orElseThrow(
                 () -> new PublisherNotFoundException("Publisher " + b.getPublisherId() + " not found!")
         );
@@ -41,7 +41,7 @@ public class BookService {
             ));
         }
         if(bookRepo.findByIsbn(b.getIsbn()).isPresent())
-            throw new DuplicateException("Book with the same ISBN already exists!");
+            throw new DuplicateException("Book with ISBN " + b.getIsbn() +" already exists!");
         Book book = new Book();
         book.setIsbn(b.getIsbn());
         book.setTitle(b.getTitle());
@@ -55,10 +55,10 @@ public class BookService {
 
     public ResponseEntity<String> deleteByIds(List<UUID> ids) {
         if (ids == null || ids.isEmpty())
-            return ResponseEntity.badRequest().body("No IDs provided");
+            return ResponseEntity.badRequest().body("No IDs provided!");
         for(UUID i : ids)
             bookRepo.deleteById(i);
-        return ResponseEntity.ok("Books deleted successfully");
+        return ResponseEntity.ok("Books deleted successfully!");
     }
 
     public Book updateBook(Book b) {

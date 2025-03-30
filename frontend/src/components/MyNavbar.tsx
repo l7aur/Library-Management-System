@@ -1,34 +1,37 @@
-import { Nav, Navbar } from "react-bootstrap";
-import {useGlobalState} from "../config/GlobalState.tsx";
+import {
+    APP_USERS_PATH, AUTHORS_PATH, BOOKS_PATH, CART_PATH, HOME_PATH,
+    LOGIN_PATH, PUBLISHERS_PATH, REGISTER_PATH
+} from "../constants/Paths.ts";
+import "./MyNavbar.css"
 
-function MyNavbar() {
-    const {isAuthenticated, globalUsername} = useGlobalState();
-
-
+const MyNavbar = () => {
     return (
-        <Navbar className="navbar-custom" variant="dark" expand="lg">
-            <div className="flex flex-row justify-between items-center">
-
-                <Nav.Link href="/" className="nav-link-custom mx-3">Home</Nav.Link>
-                <Nav.Link href="/books" className="nav-link-custom mx-3">Books</Nav.Link>
-                <Nav.Link href="/authors" className="nav-link-custom mx-3">Authors</Nav.Link>
-                <Nav.Link href="/publishers" className="nav-link-custom mx-3">Publishers</Nav.Link>
-                <Nav.Link href="/app_users" className="nav-link-custom mx-3">AppUsers - Admin View</Nav.Link>
-                <Nav.Link href="/cart" className="nav-link-custom mx-3">Cart</Nav.Link>
-
-                {!isAuthenticated && (
-                    <>
-                        <Nav.Link href="/login" className="nav-link-custom mx-3">Login</Nav.Link>
-                        <Nav.Link href="/register" className="nav-link-custom mx-3">Register</Nav.Link>
-                    </>
-                )}
-                {isAuthenticated && (
-                    <>
-                        <h2>Hello, {globalUsername} </h2>
-                    </>
-                )}
-            </div>
-        </Navbar>
+        <ul className="my_navbar_container">
+            <li>
+                <a href={HOME_PATH}>Home</a>
+            </li>
+            <li>
+                <a href={BOOKS_PATH}>Books</a>
+            </li>
+            <li>
+                <a href={AUTHORS_PATH}>Authors</a>
+            </li>
+            <li>
+                <a href={PUBLISHERS_PATH}>Publishers</a>
+            </li>
+            <li>
+                <a href={APP_USERS_PATH}>Users</a>
+            </li>
+            <li>
+                <a href={CART_PATH}>Cart</a>
+            </li>
+            <li>
+                <a href={LOGIN_PATH}>Login</a>
+            </li>
+            <li>
+                <a href={REGISTER_PATH}>Register</a>
+            </li>
+        </ul>
     );
 }
 

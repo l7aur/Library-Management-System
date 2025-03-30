@@ -1,4 +1,4 @@
-package com.laur.bookshop.model;
+package com.laur.bookshop.config.enums;
 
 public enum Role {
     ADMIN,

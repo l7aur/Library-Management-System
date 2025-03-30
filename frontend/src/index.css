@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -25,8 +23,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  justify-content: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -66,29 +63,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-.loading-text {
-  color: gray;
-  font-style: italic;
-}
-.error-text {
-  color: red;
-  font-weight: bold;
-}
-
-div#root {
-  width: 100%;
-}
-
-.rmsc.dark {
-  --rmsc-main: #ffffff;
-  --rmsc-hover: #747474;
-  --rmsc-selected: #444444;
-  --rmsc-border: #d1d5dc;
-  --rmsc-gray: #555555;
-  --rmsc-bg: #242424;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-  width: 100%;
 }

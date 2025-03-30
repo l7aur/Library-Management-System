@@ -24,7 +24,11 @@ public class Publisher {
     @Column(name = "founding_year")
     private Integer foundingYear;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "publisher",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @JsonIgnore
     private List<Book> books;
 }

@@ -1,4 +1,4 @@
-package com.laur.bookshop.config.validators.model;
+package com.laur.bookshop.config.dto;
 
 import com.laur.bookshop.config.validators.isbn.IsbnValidator;
 import jakarta.validation.constraints.*;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class BookValidator {
+public class BookDTO {
     @IsbnValidator
     private String isbn;
 
@@ -27,11 +27,11 @@ public class BookValidator {
     @NotEmpty(message = "The authors are mandatory!")
     private List<UUID> authorIds;
 
-    @Positive(message = "The price must be positive")
+    @Positive(message = "The price must be positive!")
     @NotNull(message = "The price is mandatory!")
     private Double price;
 
-    @Positive(message = "The stock must be positive")
+    @Positive(message = "The stock must be positive!")
     @NotNull(message = "The stock is mandatory!")
     private Integer stock;
 }

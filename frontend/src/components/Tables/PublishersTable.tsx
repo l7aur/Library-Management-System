@@ -1,53 +1,48 @@
-import PublisherT from "../../types/PublisherT.tsx";
-import DataTable, { TableColumn } from 'react-data-table-component';
+import DataTable, {TableColumn} from "react-data-table-component";
+import "./Table.css"
+import PublisherType from "../../types/PublisherType.tsx";
 
-interface PublishersTableProps {
-    data: PublisherT[];
-    loading: boolean;
-    isError: boolean;
-    onRowSelect: (state: { selectedRows: PublisherT[] }) => void;
-    clearSelection: boolean;
+interface Props {
+    data: PublisherType[]
+    loading: boolean
+    isError: boolean
+    onRowSelect: (state: {selectedRows: PublisherType[]}) => void
+    clearSelection: boolean
 }
 
-function PublishersTable({ data, loading, isError, onRowSelect, clearSelection }: PublishersTableProps) {
-    const columns: TableColumn<PublisherT>[] = [
+export default function PublishersTable({data, loading, isError, onRowSelect, clearSelection}: Props) {
+    const columns: TableColumn<PublisherType>[] = [
         { name: 'Name', selector: (row) => row.name, sortable: true, id: 1 },
         { name: 'Location', selector: (row) => row.location, sortable: true },
-        { name: 'FoundingYear', selector: (row) => row.foundingYear, sortable: true },
+        { name: 'FoundingYear', selector: (row) => row.foundingYear, sortable: true }
     ];
 
+    const isEmpty = data && data.length === 0;
+
+    if (loading) {
+        return (<p className="info-text">Loading...</p>);
+    }
+
+    if (isError) {
+        return (<p className="error-text">Error...</p>);
+    }
+
+    if (isEmpty) {
+        return (<p className="info-text">No publishers have been found</p>)
+    }
+
     return (
-        <>
-            {loading ? (
-                <p className="loading-text">Loading...</p>
-            ) : isError ? (
-                <p className="error-text">An error occurred while fetching data!</p>
-            ) : data.length === 0 ? (
-                <p className="empty-text">No publishers found.</p>
-            ) : (
-                <div className="books-table-container"
-                     style={{
-                         width: "90vw",
-                         margin: "20px auto",
-                         overflowX: "auto",
-                     }}>
-                    <DataTable
-                        theme={'dark'}
-                        title="Publishers"
-                        columns={columns}
-                        data={data}
-                        pagination
-                        highlightOnHover
-                        selectableRows
-                        onSelectedRowsChange={onRowSelect}
-                        defaultSortFieldId={1}
-                        clearSelectedRows={clearSelection}
-                    />
-                </div>
-
-            )}
-        </>
-    );
+        <DataTable
+            theme={'dark'}
+            title="Publishers"
+            columns={columns}
+            data={data}
+            pagination
+            highlightOnHover
+            selectableRows
+            onSelectedRowsChange={onRowSelect}
+            defaultSortFieldId={1}
+            clearSelectedRows={clearSelection}
+        />
+    )
 }
-
-export default PublishersTable;

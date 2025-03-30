@@ -2,7 +2,7 @@ package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.exceptions.AppUserNotFoundException;
 import com.laur.bookshop.config.exceptions.InvalidPassword;
-import com.laur.bookshop.config.validators.model.AppUserValidator;
+import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.repositories.AppUserRepo;
@@ -22,7 +22,7 @@ public class AppUserService {
         return appUserRepo.findAll();
     }
 
-    public AppUser addAppUser(AppUserValidator u) {
+    public AppUser addAppUser(AppUserDTO u) {
         if (appUserRepo.findByUsername(u.getUsername()).isPresent())
             throw new AppUserNotFoundException(u.getUsername() + " already exists!");
         AppUser user = new AppUser();

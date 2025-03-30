@@ -1,14 +1,14 @@
-package com.laur.bookshop.config.validators.model;
+package com.laur.bookshop.config.dto;
 
 import com.laur.bookshop.config.validators.password.PasswordValidator;
-import com.laur.bookshop.model.Role;
+import com.laur.bookshop.config.enums.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class AppUserValidator {
+public class AppUserDTO {
     @NotEmpty(message = "Username cannot be empty!")
     @Size(min = 2, max = 20, message = "Username must have between 2 and 20 characters!")
     private String username;

@@ -2,7 +2,7 @@ package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
 import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
-import com.laur.bookshop.config.validators.model.PublisherValidator;
+import com.laur.bookshop.config.dto.PublisherDTO;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.model.Publisher;
 import com.laur.bookshop.repositories.BookRepo;
@@ -25,7 +25,7 @@ public class PublisherService {
         return publisherRepo.findAll();
     }
 
-    public Publisher addPublisher(PublisherValidator p) {
+    public Publisher addPublisher(PublisherDTO p) {
         List<Book> books = new ArrayList<>();
         for(String title : p.getBooks()) {
             books.add(bookRepo.findByTitle(title).orElseThrow(

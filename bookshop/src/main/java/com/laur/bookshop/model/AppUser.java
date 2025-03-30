@@ -1,5 +1,6 @@
 package com.laur.bookshop.model;
 
+import com.laur.bookshop.config.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 

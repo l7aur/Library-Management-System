@@ -1,6 +1,6 @@
 package com.laur.bookshop.controllers;
 
-import com.laur.bookshop.config.validators.model.BookValidator;
+import com.laur.bookshop.config.dto.BookDTO;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.services.BookService;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class BookController {
     }
 
     @PostMapping("/books/add")
-    public Book addBook(@Valid @RequestBody BookValidator validatedBook) {
+    public Book addBook(@Valid @RequestBody BookDTO validatedBook) {
         return service.addBook(validatedBook);
     }
 

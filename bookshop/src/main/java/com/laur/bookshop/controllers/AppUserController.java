@@ -1,6 +1,6 @@
 package com.laur.bookshop.controllers;
 
-import com.laur.bookshop.config.validators.model.AppUserValidator;
+import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.services.AppUserService;
@@ -25,7 +25,7 @@ public class AppUserController {
     }
 
     @PostMapping("/app_users/add")
-    public AppUser addUser(@Valid @RequestBody AppUserValidator validatedUser) {
+    public AppUser addUser(@Valid @RequestBody AppUserDTO validatedUser) {
         return service.addAppUser(validatedUser);
     }
 

@@ -1,4 +1,4 @@
-interface AuthorT {
+export interface AuthorType {
     id: string;
     firstName: string;
     lastName: string;
@@ -6,5 +6,3 @@ interface AuthorT {
     nationality: string;
     books: string[];
 }
-
-export default AuthorT;

@@ -1,6 +1,6 @@
 package com.laur.bookshop.controllers;
 
-import com.laur.bookshop.config.validators.model.AuthorValidator;
+import com.laur.bookshop.config.dto.AuthorDTO;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.services.AuthorService;
 import jakarta.validation.Valid;
@@ -22,7 +22,7 @@ public class AuthorController {
     public List<Author> getAllAuthors() {return service.findAllAuthors(); }
 
     @PostMapping("/authors/add")
-    public Author addAuthor(@Valid @RequestBody AuthorValidator validatedAuthor) {
+    public Author addAuthor(@Valid @RequestBody AuthorDTO validatedAuthor) {
         return service.addAuthor(validatedAuthor);
     }
 

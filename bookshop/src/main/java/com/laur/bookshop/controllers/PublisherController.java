@@ -1,6 +1,6 @@
 package com.laur.bookshop.controllers;
 
-import com.laur.bookshop.config.validators.model.PublisherValidator;
+import com.laur.bookshop.config.dto.PublisherDTO;
 import com.laur.bookshop.model.Publisher;
 import com.laur.bookshop.services.PublisherService;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class PublisherController {
     }
 
     @PostMapping("/publishers/add")
-    public Publisher addPublisher(@Valid @RequestBody PublisherValidator validatedPublisher) {
+    public Publisher addPublisher(@Valid @RequestBody PublisherDTO validatedPublisher) {
         return service.addPublisher(validatedPublisher);
     }
 

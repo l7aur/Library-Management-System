@@ -1,9 +1,9 @@
-import AuthorT from "../../types/AuthorT.tsx";
-import {fetchAuthors} from "../../services/AuthorService.ts";
-import React from "react";
+import * as React from "react";
+import BookType from "../types/BookType.tsx";
+import {findAll} from "../services/BookService.ts";
 
-function useFetchAuthors() {
-    const [data, setData] = React.useState<AuthorT[]>([]);
+export default function useFindAllBooks() {
+    const [data, setData] = React.useState<BookType[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isError, setIsError] = React.useState<boolean>(false);
 
@@ -11,7 +11,7 @@ function useFetchAuthors() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetchAuthors();
+                const response = await findAll();
                 setData(response);
             } catch (error) {
                 console.error(error);
@@ -26,5 +26,3 @@ function useFetchAuthors() {
 
     return { data, setData, loading, isError };
 }
-
-export default useFetchAuthors;

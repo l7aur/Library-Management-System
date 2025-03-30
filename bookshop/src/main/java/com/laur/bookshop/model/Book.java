@@ -34,7 +34,10 @@ public class Book {
     private Integer publishYear;
 
     @ManyToOne
-    @JoinColumn(name = "publisher_id", nullable = false)
+    @JoinColumn(
+            name = "publisher_id",
+            nullable = false
+    )
     @JsonManagedReference
     private Publisher publisher;
 

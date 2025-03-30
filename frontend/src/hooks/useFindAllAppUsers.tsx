@@ -1,9 +1,9 @@
-import React from "react";
-import PublisherT from "../../types/PublisherT.tsx";
-import {fetchPublishers} from "../../services/PublisherService.ts";
+import * as React from "react";
+import {AppUserType} from "../types/AppUserType.tsx";
+import {findAll} from "../services/AppUserService.ts";
 
-function useFetchPublishers() {
-    const [data, setData] = React.useState<PublisherT[]>([]);
+export default function useFindAllAppUsers() {
+    const [data, setData] = React.useState<AppUserType[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isError, setIsError] = React.useState<boolean>(false);
 
@@ -11,7 +11,7 @@ function useFetchPublishers() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetchPublishers();
+                const response = await findAll();
                 setData(response);
             } catch (error) {
                 console.error(error);
@@ -26,5 +26,3 @@ function useFetchPublishers() {
 
     return { data, setData, loading, isError };
 }
-
-export default useFetchPublishers;
