@@ -13,7 +13,6 @@ import {
     APP_USERS_PATH, AUTHORS_PATH, BOOKS_PATH, CART_PATH, HOME_PATH,
     LOGIN_PATH, NOT_FOUND_PATH, PUBLISHERS_PATH, REGISTER_PATH
 } from "./constants/Paths.ts";
-// import "./App.css"
 
 function App() {
 
@@ -32,7 +31,6 @@ function App() {
                     <Route path={REGISTER_PATH} element={<RegisterPage/>}/>
                     <Route path={NOT_FOUND_PATH} element={<NotFoundPage/>}/>
                 </Routes>
-
             </Router>
         </div>
     )
