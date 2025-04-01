@@ -5,3 +5,19 @@
     gap: 5px;
     padding: 5px;
 }
+
+.err_crud {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: red;
+}
+
+.oks_crud {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: green;
+}

@@ -14,7 +14,7 @@ export default function useFindAllAppUsers() {
             const response = await findAll();
             setData(response || []);
         } catch (error) {
-            console.error("Find err ", error);
+            console.error("Find error ", error);
             setIsError(true);
         } finally {
             setLoading(false);

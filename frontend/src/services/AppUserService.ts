@@ -1,5 +1,5 @@
 import {AppUserType} from "../types/AppUserType.tsx";
-import {APP_USERS_ADD_ENDPOINT, APP_USERS_GET_ALL_ENDPOINT} from "../constants/API.ts";
+import {APP_USER_DELETE_ENDPOINT, APP_USERS_ADD_ENDPOINT, APP_USERS_GET_ALL_ENDPOINT} from "../constants/API.ts";
 
 export const findAll = async (): Promise<AppUserType[]> => {
     const response = await fetch(APP_USERS_GET_ALL_ENDPOINT);
@@ -14,8 +14,16 @@ export const add = async (newUser: AppUserType): Promise<AppUserType> => {
         },
         body: JSON.stringify(newUser),
     });
-    if(!response.ok) {
-        throw new Error("Failed to add user!");
-    }
     return response.json();
+}
+
+export const del = async (ids: string[]): Promise<string> => {
+    const response = await fetch(APP_USER_DELETE_ENDPOINT, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ids: ids}),
+    });
+    return response.text();
 }
