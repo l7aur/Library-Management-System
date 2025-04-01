@@ -2,4 +2,66 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.input_container {
+    width: 20vw; /* Full width input */
+    padding: 10px; /* Adds space inside the input */
+    margin: 10px 0; /* Adds space above and below the input */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size for text inside the input */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+.input_container:focus {
+    border-color: #646cff; /* Border color on focus */
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6); /* Slight glow on focus */
+    outline: none; /* Removes default focus outline */
+}
+
+.button_container {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+.button_container:hover {
+    border-color: #646cff;
+}
+
+.button_container:focus,
+.button_container:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+
+.select_container {
+    display: block; /* Ensures the select aligns vertically */
+    width: 22vw; /* Full width */
+    padding: 10px; /* Adds space inside the input */
+    margin: 10px 0; /* Adds space above and below the input */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size for text inside the input */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+.select_container:focus,
+.select_container:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+.select_container:hover {
+    border-color: #646cff;
+}
+.select_container option {
+    padding: 10px; /* Optional: Extra padding for dropdown options */
 }

@@ -8,21 +8,22 @@ export default function useFindAllAppUsers() {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isError, setIsError] = React.useState<boolean>(false);
 
-    const fetchData = async () => {
+    const fetchFindData = async () => {
         try {
             setLoading(true);
             const response = await findAll();
-            setData(response);
+            setData(response || []);
         } catch (error) {
-            console.error(error);
+            console.error("Find err ", error);
             setIsError(true);
         } finally {
             setLoading(false);
         }
     };
+
     useEffect(() => {
-        fetchData().catch((error) => console.error("Error fetching data:", error));
+        fetchFindData().catch((error) => console.error("Error fetching data:", error));
     }, []);
 
-    return {data, setData, loading, isError, refetch: fetchData};
+    return {fData: data, setFData: setData, fLoading: loading, isFError: isError, refetch: fetchFindData};
 }

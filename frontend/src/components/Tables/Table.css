@@ -1,7 +1,13 @@
 .info-text {
     color: #bbb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .error-text {
     color: #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

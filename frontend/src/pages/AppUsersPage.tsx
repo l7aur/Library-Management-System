@@ -5,16 +5,30 @@ import useFindAllAppUsers from "../hooks/useFindAllAppUsers.tsx";
 import "./Page.css"
 import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import CreateAppUserForm from "../components/forms/CreateAppUserForm.tsx";
+import UserFormDataType from "../types/UserFormDataType.tsx";
+import {add} from "../services/AppUserService.ts";
 
 const AppUsersPage = () => {
-    const {data, setData, loading, isError, refetch} = useFindAllAppUsers();
+    const {fData, setFData, fLoading, isFError, refetch} = useFindAllAppUsers();
     const [clearSelection, setClearSelection] = useState<boolean>(false);
     const [selectedAppUsers, setSelectedAppUsers] = useState<AppUserType[]>([]);
     const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
 
-    const handleCreate = () => {
-        setIsCreateFormOpen(true);
-    }
+    const handleCreate = (newUser: UserFormDataType) => {
+        add(newUser)
+            .then( (response: AppUserType) => {
+                if (fData.length > 0) {
+                    setFData((prevFData) => [
+                        ...prevFData,
+                        { id: response.id, role: response.role, firstName: response.firstName, lastName: response.lastName, username: response.username, password: response.password },
+                    ]);
+                } else {
+                    setFData([{ id: response.id, role: response.role, firstName: response.firstName, lastName: response.lastName, username: response.username, password: response.password }]);
+                }
+            })
+            .catch( (error: Error) => {console.log(error)});
+    };
+
 
     const handleRead = () => {
         setIsCreateFormOpen(false);
@@ -31,9 +45,9 @@ const AppUsersPage = () => {
     return (
         <div className="page_container">
             <AppUsersTable
-                data={data}
-                loading={loading}
-                isError={isError}
+                data={fData}
+                loading={fLoading}
+                isError={isFError}
                 onRowSelect={onRowSelect}
                 clearSelection={clearSelection}
             />
@@ -46,7 +60,7 @@ const AppUsersPage = () => {
             {isCreateFormOpen && (
                 <CreateAppUserForm
                     onClose={() => setIsCreateFormOpen(false)}
-                    onSubmit={handleCreate}
+                    onSubmit={(newUserData) => handleCreate(newUserData)}
                 />
             )}
         </div>
