@@ -15,7 +15,14 @@ const AppUsersPage = () => {
     const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
     const [error, setError] = useState<string[]>([]);
     const [okays, setOkays] = useState<string[]>([]);
-    const [formFillData, setFormFillData] = useState<AppUserType>({id: "", username: "", password: "", role: "", firstName: "", lastName: ""});
+    const [formFillData, setFormFillData] = useState<AppUserType>({
+        id: "",
+        username: "",
+        password: "",
+        role: "",
+        firstName: "",
+        lastName: ""
+    });
 
     const isValidUser = (user: AppUserType): boolean => {
         return Boolean(user.username)
@@ -29,7 +36,7 @@ const AppUsersPage = () => {
     const handleCreate = (newUser: UserFormDataType) => {
         setError([]);
         setOkays([]);
-        if(newUser.password !== newUser.confirmation) {
+        if (newUser.password !== newUser.confirmation) {
             setError(["Password and its confirmation mismatch!"]);
             return;
         }
@@ -49,15 +56,14 @@ const AppUsersPage = () => {
                             ? [...prevFData, formattedResponse]
                             : [formattedResponse]
                     );
-                }
-                else {
+                } else {
                     const err: string[] =
-                        [ formattedResponse.id
-                        , formattedResponse.username
-                        , formattedResponse.password
-                        , formattedResponse.role
-                        , formattedResponse.firstName
-                        , formattedResponse.lastName
+                        [formattedResponse.id
+                            , formattedResponse.username
+                            , formattedResponse.password
+                            , formattedResponse.role
+                            , formattedResponse.firstName
+                            , formattedResponse.lastName
                         ];
                     throw new Error(err.filter((x) => x != undefined).join("\n"));
                 }
@@ -75,7 +81,7 @@ const AppUsersPage = () => {
     const handleUpdate = (newUserData: UserFormDataType) => {
         setError([]);
         setOkays([]);
-        if(newUserData.password !== newUserData.confirmation) {
+        if (newUserData.password !== newUserData.confirmation) {
             setError(["Password and its confirmation mismatch!"]);
             return;
         }
@@ -100,17 +106,16 @@ const AppUsersPage = () => {
                 if (isValidUser(formattedResponse)) {
                     setFData((prevFData) =>
                         prevFData.map((entry) =>
-                            entry.id === formattedResponse.id ? { ...entry, ...formattedResponse } : entry
+                            entry.id === formattedResponse.id ? {...entry, ...formattedResponse} : entry
                         ));
-                }
-                else {
+                } else {
                     const err: string[] =
-                        [ formattedResponse.id
-                        , formattedResponse.username
-                        , formattedResponse.password
-                        , formattedResponse.role
-                        , formattedResponse.firstName
-                        , formattedResponse.lastName
+                        [formattedResponse.id
+                            , formattedResponse.username
+                            , formattedResponse.password
+                            , formattedResponse.role
+                            , formattedResponse.firstName
+                            , formattedResponse.lastName
                         ];
                     throw new Error(err.filter((x) => x != undefined).join("\n"));
                 }
@@ -152,33 +157,33 @@ const AppUsersPage = () => {
                 onRowSelect={onRowSelect}
                 clearSelection={clearSelection}
             />
-            <CRUDMenu
-                err={error}
-                oks={okays}
-                onCreate={() => setIsCreateFormOpen(true)}
-                onRead={() => {
-                    setError([]);
-                    setOkays([]);
-                    setIsCreateFormOpen(false);
-                    if(selectedAppUsers && selectedAppUsers.length > 0) {
-                        setError(["Cannot update the table if users are selected!"]);
-                        setSelectedAppUsers([]);
-                    }
-                    else
-                        handleRead();
-                }}
-                onUpdate={() => {
-                    setError([]);
-                    setOkays([]);
-                    if(selectedAppUsers && selectedAppUsers.length === 1) {
-                        setIsCreateFormOpen(true);
-                        setFormFillData(selectedAppUsers[0]);
-                    }
-                    else
-                        setError(["Cannot update more than one user at a time"]);
-                }}
-                onDelete={handleDelete}
-            />
+            {!isCreateFormOpen &&
+                (<CRUDMenu
+                        err={error}
+                        oks={okays}
+                        onCreate={() => setIsCreateFormOpen(true)}
+                        onRead={() => {
+                            setError([]);
+                            setOkays([]);
+                            setIsCreateFormOpen(false);
+                            if (selectedAppUsers && selectedAppUsers.length > 0) {
+                                setError(["Cannot update the table if users are selected!"]);
+                                setSelectedAppUsers([]);
+                            } else
+                                handleRead();
+                        }}
+                        onUpdate={() => {
+                            setError([]);
+                            setOkays([]);
+                            if (selectedAppUsers && selectedAppUsers.length === 1) {
+                                setIsCreateFormOpen(true);
+                                setFormFillData(selectedAppUsers[0]);
+                            } else
+                                setError(["Can update just one user at a time!"]);
+                        }}
+                        onDelete={handleDelete}
+                    />
+                )}
             {isCreateFormOpen && (
                 <CreateAppUserForm
                     data={formFillData}
