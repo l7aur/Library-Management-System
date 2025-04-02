@@ -2,25 +2,41 @@ import "./CreateForm.css"
 import * as React from "react";
 import {useState} from "react";
 import UserFormDataType from "../../types/UserFormDataType.tsx";
+import {AppUserType} from "../../types/AppUserType.tsx";
 
 interface Props {
+    data: AppUserType;
     onClose: () => void;
-    onSubmit: (formData: UserFormDataType) => void;
+    onSubmitCreate: (formData: UserFormDataType) => void;
+    onSubmitUpdate: (formData: UserFormDataType) => void;
 }
 
-const CreateAppUserForm: React.FC<Props> = ({onClose, onSubmit}) => {
-    const [formData, setFormData] = useState({id: "", username: "", password: "", role: "", firstName: "", lastName: "", confirmation: ""});
+const CreateAppUserForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmitUpdate}) => {
+    const [formData, setFormData] = useState(
+        {
+            id: data.id,
+            username: data.username,
+            password: data.password,
+            role: data.role,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            confirmation: data.password
+        });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
-        console.log("submit", formData);
-        onSubmit(formData);
+        if (formData.id === "") {
+            onSubmitCreate(formData);
+        } else {
+            onSubmitUpdate(formData);
+        }
         onClose();
     };
+
 
     return (
         <form className="create_form_container">
