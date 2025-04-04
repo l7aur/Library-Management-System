@@ -20,6 +20,7 @@ public class AppUser {
     @Column(name= "password", nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name= "role", nullable = false)
     private Role role;
 

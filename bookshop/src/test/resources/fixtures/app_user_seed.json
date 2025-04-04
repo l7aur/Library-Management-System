@@ -1,0 +1,82 @@
+[
+  {
+    "id": "43d9c59f-f21a-4dcf-9fc8-342b41622770",
+    "username": "user1",
+    "password": "password1",
+    "role": "ADMIN",
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "username": "user2",
+    "password": "password2",
+    "role": "CUSTOMER",
+    "firstName": "Jane",
+    "lastName": "Smith"
+  },
+  {
+    "id": "4bb31161-5d7e-4c1b-9bab-0588c9898428",
+    "username": "user3",
+    "password": "password3",
+    "role": "EMPLOYEE",
+    "firstName": "Alice",
+    "lastName": "Johnson"
+  },
+  {
+    "id": "462c7324-df4d-4121-bb73-1ca7923c0b66",
+    "username": "user4",
+    "password": "password4",
+    "role": "ADMIN",
+    "firstName": "Bob",
+    "lastName": "Brown"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "username": "user5",
+    "password": "password5",
+    "role": "EMPLOYEE",
+    "firstName": "Charlie",
+    "lastName": "White"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-44665544000e",
+    "username": "user6",
+    "password": "password6",
+    "role": "ADMIN",
+    "firstName": "Emily",
+    "lastName": "Green"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-44665544000f",
+    "username": "user7",
+    "password": "password7",
+    "role": "EMPLOYEE",
+    "firstName": "David",
+    "lastName": "Black"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "username": "user8",
+    "password": "password8",
+    "role": "CUSTOMER",
+    "firstName": "Sophia",
+    "lastName": "Gray"
+  },
+  {
+    "id": "5f5f9f82-fa21-4187-b141-b7c3b2b1a3e9",
+    "username": "user9",
+    "password": "password9",
+    "role": "ADMIN",
+    "firstName": "Michael",
+    "lastName": "Blue"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "username": "user10",
+    "password": "password10",
+    "role": "CUSTOMER",
+    "firstName": "Olivia",
+    "lastName": "Yellow"
+  }
+]
