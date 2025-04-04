@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.repositories.AuthorRepo;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,13 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,7 +44,32 @@ public class AuthorControllerIntegrationTests {
 
     @Test
     public void testFindAll() throws Exception {
-
+        mockMvc.perform(get("/authors/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()")
+                        .value(10))
+                .andExpect(jsonPath("$[*].firstName",
+                        Matchers.containsInAnyOrder(
+                                "John", "Jane", "Alex", "Emily", "Michael",
+                                "Sophia", "David", "Olivia", "Ethan", "Charlotte"
+                        )))
+                .andExpect(jsonPath("$[*].lastName",
+                        Matchers.containsInAnyOrder(
+                                "Doe", "Smith", "Brown", "Davis", "Wilson",
+                                "Martinez", "Garcia", "Lee", "Nguyen", "Chen"
+                        )))
+                .andExpect(jsonPath("$[*].alias",
+                        Matchers.containsInAnyOrder(
+                                "J.D.", "J.S.", "A.B.", "E.D.", "M.W.",
+                                "S.M.", "D.G.", "O.L.", "E.N.", "C.C."
+                        )))
+                .andExpect(jsonPath("$[*].nationality",
+                        Matchers.containsInAnyOrder(
+                                "American", "British", "Canadian", "Australian", "Spanish",
+                                "Mexican", "Vietnamese", "Korean", "Chinese", "Irish"
+                        )))
+                .andExpect(jsonPath("$[*].books",
+                        Matchers.everyItem(Matchers.is(Collections.emptyList()))));
     }
 
     @Test
@@ -82,12 +114,10 @@ public class AuthorControllerIntegrationTests {
 
     private void seedDatabase() {
         try {
-            String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "author_seed.json");
+            String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "author_seed0.json");
             List<Author> authors = MAPPER.readValue(seedDataJSON, new TypeReference<>() {});
-
-            // Hash passwords before saving
-            //users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
             authors.forEach(author -> author.setId(null));
+
             repo.saveAll(authors);
             System.out.println("Database successfully seeded with author data.");
         } catch (IOException e) {

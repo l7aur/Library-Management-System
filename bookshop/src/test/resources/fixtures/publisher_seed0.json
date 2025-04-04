@@ -1,0 +1,72 @@
+[
+  {
+    "id": "",
+    "name": "Penguin Random House",
+    "location": "New York, USA",
+    "foundingYear": 1927,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "HarperCollins",
+    "location": "London, UK",
+    "foundingYear": 1817,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Simon & Schuster",
+    "location": "New York, USA",
+    "foundingYear": 1924,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Hachette Livre",
+    "location": "Paris, France",
+    "foundingYear": 1826,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Macmillan Publishers",
+    "location": "London, UK",
+    "foundingYear": 1843,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Scholastic",
+    "location": "New York, USA",
+    "foundingYear": 1920,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Pearson Education",
+    "location": "London, UK",
+    "foundingYear": 1844,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Oxford University Press",
+    "location": "Oxford, UK",
+    "foundingYear": 1586,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Cambridge University Press",
+    "location": "Cambridge, UK",
+    "foundingYear": 1534,
+    "books": []
+  },
+  {
+    "id": "",
+    "name": "Wiley",
+    "location": "Hoboken, USA",
+    "foundingYear": 1807,
+    "books": []
+  }
+]

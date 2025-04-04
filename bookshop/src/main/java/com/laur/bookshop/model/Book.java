@@ -1,6 +1,8 @@
 package com.laur.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "book")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +30,6 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    @JsonManagedReference
     private List<Author> authors;
 
     @Column(name = "publish_year")
@@ -38,7 +40,6 @@ public class Book {
             name = "publisher_id",
             nullable = false
     )
-    @JsonManagedReference
     private Publisher publisher;
 
     @Column(name = "price", nullable = false)

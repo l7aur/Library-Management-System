@@ -117,7 +117,7 @@ public class AppUserControllerIntegrationTests {
 
     private void seedDatabase() {
         try {
-            String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "app_user_seed.json");
+            String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "app_user_seed0.json");
             List<AppUser> users = MAPPER.readValue(seedDataJSON, new TypeReference<>() {});
 
             // Hash passwords before saving

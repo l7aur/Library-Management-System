@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laur.bookshop.model.Publisher;
 import com.laur.bookshop.repositories.PublisherRepo;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,12 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,7 +43,27 @@ public class PublisherControllerIntegrationTests {
 
     @Test
     public void testFindAll() throws Exception {
-
+        mockMvc.perform(get("/publishers/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()")
+                        .value(10))
+                .andExpect(jsonPath("$[*].name",
+                        Matchers.containsInAnyOrder(
+                                "Penguin Random House", "HarperCollins", "Simon & Schuster", "Hachette Livre", "Macmillan Publishers",
+                                "Scholastic", "Pearson Education", "Oxford University Press", "Cambridge University Press", "Wiley"
+                        )))
+                .andExpect(jsonPath("$[*].location",
+                        Matchers.containsInAnyOrder(
+                                "New York, USA", "London, UK", "New York, USA", "Paris, France", "London, UK",
+                                "New York, USA", "London, UK", "Oxford, UK", "Cambridge, UK", "Hoboken, USA"
+                        )))
+                .andExpect(jsonPath("$[*].foundingYear",
+                        Matchers.containsInAnyOrder(
+                                1927, 1817, 1924, 1826, 1843,
+                                1920, 1844, 1586, 1534, 1807
+                        )))
+                .andExpect(jsonPath("$[*].books",
+                        Matchers.everyItem(Matchers.is(Collections.emptyList()))));
     }
 
     @Test
@@ -82,12 +108,10 @@ public class PublisherControllerIntegrationTests {
 
     private void seedDatabase() throws Exception {
         try {
-            String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "publisher_seed.json");
+            String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "publisher_seed0.json");
             List<Publisher> publishers = MAPPER.readValue(seedDataJSON, new TypeReference<>() {});
-
-            // Hash passwords before saving
-            //users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
             publishers.forEach(publisher -> publisher.setId(null));
+
             repo.saveAll(publishers);
             System.out.println("Database successfully seeded with publisher data.");
         } catch (IOException e) {

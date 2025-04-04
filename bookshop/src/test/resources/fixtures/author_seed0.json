@@ -1,0 +1,82 @@
+[
+  {
+    "id": "dddf3daf-f06a-4fcd-8a21-838e8891b58b",
+    "firstName": "John",
+    "lastName": "Doe",
+    "alias": "J.D.",
+    "nationality": "American",
+    "books": []
+  },
+  {
+    "id": "c03a5feb-afe4-4eaa-b8a2-a5034c767066",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "alias": "J.S.",
+    "nationality": "British",
+    "books": []
+  },
+  {
+    "id": "83f5ed20-a5f9-422b-b29e-ad3571dc5253",
+    "firstName": "Alex",
+    "lastName": "Brown",
+    "alias": "A.B.",
+    "nationality": "Canadian",
+    "books": []
+  },
+  {
+    "id": "7979dfb2-6076-460d-bd0f-95f4703c3897",
+    "firstName": "Emily",
+    "lastName": "Davis",
+    "alias": "E.D.",
+    "nationality": "Australian",
+    "books": []
+  },
+  {
+    "id": "219d05a8-cc22-41bc-9ea4-ba69db68b6d9",
+    "firstName": "Michael",
+    "lastName": "Wilson",
+    "alias": "M.W.",
+    "nationality": "Irish",
+    "books": []
+  },
+  {
+    "id": "2da1beba-730c-4de9-bc07-47f0cac8b5ad",
+    "firstName": "Sophia",
+    "lastName": "Martinez",
+    "alias": "S.M.",
+    "nationality": "Spanish",
+    "books": []
+  },
+  {
+    "id": "53c0e4fc-ccac-4cf9-a01a-cb1aaf18b450",
+    "firstName": "David",
+    "lastName": "Garcia",
+    "alias": "D.G.",
+    "nationality": "Mexican",
+    "books": []
+  },
+  {
+    "id": "c2f7983c-eae9-4ff5-a6ea-7ad9f651b04b",
+    "firstName": "Olivia",
+    "lastName": "Lee",
+    "alias": "O.L.",
+    "nationality": "Korean",
+    "books": []
+  },
+  {
+    "id": "b6ac1d63-7ec3-48d1-bd92-cb639f6e5f45",
+    "firstName": "Ethan",
+    "lastName": "Nguyen",
+    "alias": "E.N.",
+    "nationality": "Vietnamese",
+    "books": []
+  },
+  {
+    "id": "1dce3e1d-8ab5-4efb-ae4c-d85b365222a4",
+    "firstName": "Charlotte",
+    "lastName": "Chen",
+    "alias": "C.C.",
+    "nationality": "Chinese",
+    "books": []
+  }
+]
