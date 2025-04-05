@@ -23,13 +23,12 @@ public class AppUserServiceTests {
 
     @Mock
     private AppUserRepo repo;
-    
+    private static final Integer NUMBER_OF_USERS = 10;
+
     @InjectMocks
     private AppUserService service;
 
     private AutoCloseable autoCloseable;
-
-    private static final Integer NUMBER_OF_USERS = 10;
 
     @BeforeEach
     public void setUp() {

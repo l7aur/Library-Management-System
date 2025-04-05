@@ -3,6 +3,7 @@ package com.laur.bookshop.services;
 import com.laur.bookshop.config.exceptions.AuthorNotFoundException;
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
 import com.laur.bookshop.config.dto.AuthorDTO;
+import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.repositories.AuthorRepo;
@@ -26,6 +27,9 @@ public class AuthorService {
     }
 
     public Author addAuthor(AuthorDTO a) {
+        if(authorRepo.findByFullName(a.getFirstName(), a.getLastName()).isPresent())
+            throw new DuplicateException(a.getFirstName() + " " + a.getLastName() + " already exists!");
+
         List<Book> books = new ArrayList<>();
         for (String title : a.getBooks()) {
             books.add(bookRepo.findByTitle(title).orElseThrow(

@@ -1,6 +1,7 @@
 package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
+import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.config.exceptions.PublisherNotFoundException;
 import com.laur.bookshop.config.dto.PublisherDTO;
 import com.laur.bookshop.model.Book;
@@ -26,6 +27,9 @@ public class PublisherService {
     }
 
     public Publisher addPublisher(PublisherDTO p) {
+        if(publisherRepo.findByName(p.getName()).isPresent())
+            throw new DuplicateException(p.getName() + " already exists!");
+
         List<Book> books = new ArrayList<>();
         for(String title : p.getBooks()) {
             books.add(bookRepo.findByTitle(title).orElseThrow(

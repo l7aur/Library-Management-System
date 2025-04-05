@@ -1,6 +1,7 @@
 package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.exceptions.AppUserNotFoundException;
+import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.config.exceptions.InvalidPassword;
 import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
@@ -24,7 +25,7 @@ public class AppUserService {
 
     public AppUser addAppUser(AppUserDTO u) {
         if (appUserRepo.findByUsername(u.getUsername()).isPresent())
-            throw new AppUserNotFoundException(u.getUsername() + " already exists!");
+            throw new DuplicateException(u.getUsername() + " already exists!");
         AppUser user = new AppUser();
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());
@@ -44,7 +45,7 @@ public class AppUserService {
 
     public AppUser updateAppUser(AppUser u) {
         AppUser user = appUserRepo.findById(u.getId()).orElseThrow(
-                () -> new AppUserNotFoundException(u.getUsername() + " does not exist!")
+                () -> new AppUserNotFoundException(u.getUsername() + " reference does not exist!")
         );
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());

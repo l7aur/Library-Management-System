@@ -19,13 +19,12 @@ public class PublisherServiceTests {
 
     @Mock
     private PublisherRepo repo;
+    private static final Integer NUMBER_OF_PUBLISHERS = 10;
 
     @InjectMocks
     private PublisherService service;
 
     private AutoCloseable autoCloseable;
-
-    private static final Integer NUMBER_OF_PUBLISHERS = 10;
 
     @BeforeEach
     public void setUp() {

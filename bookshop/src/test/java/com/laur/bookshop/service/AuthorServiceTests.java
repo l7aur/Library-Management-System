@@ -19,13 +19,12 @@ public class AuthorServiceTests {
 
     @Mock
     private AuthorRepo repo;
+    private static final Integer NUMBER_OF_AUTHORS = 10;
 
     @InjectMocks
     private AuthorService service;
 
     private AutoCloseable autoCloseable;
-
-    private static final Integer NUMBER_OF_AUTHORS = 10;
 
     @BeforeEach
     public void setUp() {

@@ -68,7 +68,6 @@ public class PublisherControllerIntegrationTests {
 
     @Test
     public void testAdd_ValidPayload() throws Exception {
-
     }
 
     @Test
