@@ -1,7 +1,9 @@
 package com.laur.bookshop.service;
 
+import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.model.Publisher;
+import com.laur.bookshop.repositories.AuthorRepo;
 import com.laur.bookshop.repositories.BookRepo;
 import com.laur.bookshop.repositories.PublisherRepo;
 import com.laur.bookshop.services.BookService;
@@ -15,23 +17,39 @@ import org.mockito.MockitoAnnotations;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 public class BookServiceTests {
 
     @Mock
     private BookRepo repo;
+    private static final Integer NUMBER_OF_BOOKS = 10;
 
     @Mock
     private PublisherRepo publisherRepo;
+    private static final Integer NUMBER_OF_PUBLISHERS = 10;
+    
+    @Mock
+    private AuthorRepo authorRepo;
+    private static final Integer NUMBER_OF_AUTHORS = 10;
 
     @InjectMocks
     private BookService service;
 
     private AutoCloseable autoCloseable;
-
-    private static final Integer NUMBER_OF_BOOKS = 10;
-    private static final Integer NUMBER_OF_PUBLISHERS = 10;
+    private static final List<String> isbnList = List.of(
+            "978-1-234567-89-1",
+            "978-0-987654-32-1",
+            "978-3-456789-12-3",
+            "978-4-567890-11-2",
+            "978-2-345678-90-4",
+            "978-5-678901-23-6",
+            "978-6-789012-34-5",
+            "978-7-890123-45-7",
+            "978-8-901234-56-8",
+            "978-9-012345-67-9"
+    );
 
     @BeforeEach
     public void setUp() {
@@ -59,9 +77,10 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testAdd() {
+    public void testAddAuthorsPublisher() {
         // given
         setupPublisherRepo();
+        setupAuthorRepo();
         List<Book> books = generateBooks();
         Book newBook = createNewBook();
         books.add(newBook);
@@ -76,7 +95,7 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testDeleteOne1() {
+    public void testDeleteFirstNoAuthorNoPublisher() {
         // given
         List<Book> books = generateBooks();
         Book deletedBook = books.getFirst();
@@ -93,7 +112,7 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testDeleteOne2() {
+    public void testDeleteLastNoAuthorNoPublisher() {
         // given
         List<Book> books = generateBooks();
         Book deletedBook = books.getLast();
@@ -110,7 +129,45 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testDeleteMany() {
+    public void testDeleteFirstSingleAuthorPublisher() {
+        // given
+        setupAuthorRepo();
+        setupPublisherRepo();
+        List<Book> books = generateBooksSingleAuthor(authorRepo, publisherRepo);
+        Book deletedBook = books.getFirst();
+        books.remove(deletedBook);
+
+        // when
+        doNothing().when(repo).deleteById(deletedBook.getId());
+        service.deleteByIds(List.of(deletedBook.getId()));
+        when(repo.findAll()).thenReturn(books);
+
+        // then
+        verify(repo, times(1)).deleteById(deletedBook.getId());
+        assertEquals(repo.findAll(), books);
+    }
+
+    @Test
+    public void testDeleteOneMultipleAuthorsPublisher() {
+        // given
+        setupAuthorRepo();
+        setupPublisherRepo();
+        List<Book> books = generateBooksMultipleAuthors(authorRepo, publisherRepo);
+        Book deletedBook = books.getFirst();
+        books.remove(deletedBook);
+
+        // when
+        doNothing().when(repo).deleteById(deletedBook.getId());
+        service.deleteByIds(List.of(deletedBook.getId()));
+        when(repo.findAll()).thenReturn(books);
+
+        // then
+        verify(repo, times(1)).deleteById(deletedBook.getId());
+        assertEquals(repo.findAll(), books);
+    }
+
+    @Test
+    public void testDeleteManyNoAuthorNoPublisher() {
         // given
         List<Book> books = generateBooks();
         List<Book> deletedBooks = List.of(
@@ -135,7 +192,7 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testUpdate() {
+    public void testUpdateNoAuthorNoPublisher() {
         // given
         setupPublisherRepo();
         UUID bookId = UUID.randomUUID();
@@ -155,18 +212,7 @@ public class BookServiceTests {
 
     private List<Book> generateBooks() {
         List<Book> books = new ArrayList<>();
-        List<String> isbnList = List.of(
-                "978-1-234567-89-1",
-                "978-0-987654-32-1",
-                "978-3-456789-12-3",
-                "978-4-567890-11-2",
-                "978-2-345678-90-4",
-                "978-5-678901-23-6",
-                "978-6-789012-34-5",
-                "978-7-890123-45-7",
-                "978-8-901234-56-8",
-                "978-9-012345-67-9"
-        );
+        
         for (int i = 0; i < NUMBER_OF_BOOKS; i++) {
             Book book = new Book();
             book.setId(UUID.randomUUID());
@@ -177,6 +223,28 @@ public class BookServiceTests {
             book.setPublisher(new Publisher());
             book.setPrice((i + 10) * 10.99);
             book.setPublishYear(i + 1000);
+            books.add(book);
+        }
+        return books;
+    }
+
+    private List<Book> generateBooksMultipleAuthors(AuthorRepo authorRepo, PublisherRepo publisherRepo) {
+        List<Book> books = new ArrayList<>();
+        List<Publisher> publishers = publisherRepo.findAll();
+        List<Author> authors = authorRepo.findAll();
+        for (int i = 0; i < NUMBER_OF_BOOKS - 1; i++) {
+            Book book = createNewBook(i, publishers.get(i), List.of(authors.get(i), authors.get(i+1)));
+            books.add(book);
+        }
+        return books;
+    }
+
+    private List<Book> generateBooksSingleAuthor(AuthorRepo authorRepo, PublisherRepo publisherRepo) {
+        List<Book> books = new ArrayList<>();
+        List<Publisher> publishers = publisherRepo.findAll();
+        List<Author> authors = authorRepo.findAll();
+        for (int i = 0; i < NUMBER_OF_BOOKS; i++) {
+            Book book = createNewBook(i, publishers.get(i), List.of(authors.get(i)));
             books.add(book);
         }
         return books;
@@ -196,6 +264,24 @@ public class BookServiceTests {
         when(publisherRepo.findAll()).thenReturn(publishers);
         for(int i = 0; i < NUMBER_OF_PUBLISHERS; i++) {
             when(publisherRepo.findById(publishers.get(i).getId())).thenReturn(Optional.of(publishers.get(i)));
+        }
+    }
+
+    private void setupAuthorRepo() {
+        List<Author> authors = new ArrayList<>();
+        for(int i = 0; i < NUMBER_OF_AUTHORS; i++) {
+            Author author = new Author();
+            author.setId(UUID.randomUUID());
+            author.setNationality("Nationality " + i);
+            author.setAlias("Alias " + i);
+            author.setFirstName("FirstName" + i);
+            author.setLastName("LastName" + i);
+            author.setBooks(Collections.emptyList());
+            authors.add(author);
+        }
+        when(authorRepo.findAll()).thenReturn(authors);
+        for(int i = 0; i < NUMBER_OF_AUTHORS; i++) {
+            when(authorRepo.findById(authors.get(i).getId())).thenReturn(Optional.of(authors.get(i)));
         }
     }
 
@@ -222,6 +308,19 @@ public class BookServiceTests {
         updatedBook.setPrice(10.92);
         updatedBook.setPublishYear(2000);
         return updatedBook;
+    }
+
+    private Book createNewBook(int x, Publisher p, List<Author> as) {
+        Book newBook = new Book();
+        newBook.setId(UUID.randomUUID());
+        newBook.setIsbn(isbnList.get(x));
+        newBook.setTitle("Title" + x);
+        newBook.setStock(x + 100);
+        newBook.setAuthors(as);
+        newBook.setPublisher(p);
+        newBook.setPrice((x + 10) * 10.99);
+        newBook.setPublishYear(x + 1000);
+        return newBook;
     }
 
     private Book createExistingBook(UUID bookId) {
