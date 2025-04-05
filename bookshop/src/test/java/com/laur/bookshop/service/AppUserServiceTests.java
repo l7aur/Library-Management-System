@@ -44,7 +44,7 @@ public class AppUserServiceTests {
     @Test
     public void testFindAll() {
         // given
-        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        List<AppUser> appUsers = generateAppUsers();
 
         // when
         when(repo.findAll()).thenReturn(appUsers);
@@ -59,14 +59,8 @@ public class AppUserServiceTests {
     @Test
     public void testAdd() {
         // given
-        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
-
-        AppUser newAppUser = new AppUser();
-        newAppUser.setUsername("user" + NUMBER_OF_USERS);
-        newAppUser.setPassword("Password!" + NUMBER_OF_USERS);
-        newAppUser.setRole(Role.CUSTOMER);
-        newAppUser.setFirstName("FirstName" + NUMBER_OF_USERS);
-        newAppUser.setLastName("LastName" + NUMBER_OF_USERS);
+        List<AppUser> appUsers = generateAppUsers();
+        AppUser newAppUser = createNewAppUser();
         appUsers.add(newAppUser);
 
         // when
@@ -78,11 +72,10 @@ public class AppUserServiceTests {
         assertEquals(newAppUser, result);
     }
 
-
     @Test
     public void testDeleteOne1() {
         // given
-        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        List<AppUser> appUsers = generateAppUsers();
         AppUser deletedAppUser = appUsers.getFirst();
         appUsers.remove(deletedAppUser);
 
@@ -99,7 +92,7 @@ public class AppUserServiceTests {
     @Test
     public void testDeleteOne2() {
         // given
-        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        List<AppUser> appUsers = generateAppUsers();
         AppUser deletedAppUser = appUsers.getLast();
         appUsers.remove(deletedAppUser);
 
@@ -116,7 +109,7 @@ public class AppUserServiceTests {
     @Test
     public void testDeleteMany() {
         // given
-        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        List<AppUser> appUsers = generateAppUsers();
         List<AppUser> deletedAppUsers = List.of(
                 appUsers.getFirst(),
                 appUsers.getLast(),
@@ -142,26 +135,12 @@ public class AppUserServiceTests {
     public void testUpdateAppUser() {
         // given
         UUID userId = UUID.randomUUID();
-        AppUser existingUser = new AppUser();
-        existingUser.setId(userId);
-        existingUser.setUsername("oldUsername");
-        existingUser.setPassword("oldPassword!1");
-        existingUser.setRole(Role.ADMIN);
-        existingUser.setFirstName("OldFirstName");
-        existingUser.setLastName("OldLastName");
-
-        AppUser updatedUser = new AppUser();
-        updatedUser.setId(userId);
-        updatedUser.setUsername("newUsername");
-        updatedUser.setPassword("newPassword!1");
-        updatedUser.setRole(Role.ADMIN);
-        updatedUser.setFirstName("NewFirstName");
-        updatedUser.setLastName("NewLastName");
-
-        when(repo.findById(userId)).thenReturn(Optional.of(existingUser));
-        when(repo.save(updatedUser)).thenReturn(updatedUser);
+        AppUser existingUser = createNewAppUser(userId);
+        AppUser updatedUser = createUpdatedUser(userId);
 
         // when
+        when(repo.findById(userId)).thenReturn(Optional.of(existingUser));
+        when(repo.save(updatedUser)).thenReturn(updatedUser);
         AppUser result = service.updateAppUser(updatedUser);
 
         // then
@@ -170,9 +149,9 @@ public class AppUserServiceTests {
         assertEquals(updatedUser, result);
     }
 
-    private List<AppUser> generateAppUsers(int howMany) {
+    private List<AppUser> generateAppUsers() {
         List<AppUser> users = new ArrayList<>();
-        for (int i = 0; i < howMany; i++) {
+        for (int i = 0; i < NUMBER_OF_USERS; i++) {
             AppUser user = new AppUser();
             user.setId(UUID.randomUUID());
             user.setUsername("user" + i);
@@ -183,5 +162,37 @@ public class AppUserServiceTests {
             users.add(user);
         }
         return users;
+    }
+
+    private AppUser createNewAppUser() {
+        AppUser newAppUser = new AppUser();
+        newAppUser.setUsername("user" + NUMBER_OF_USERS);
+        newAppUser.setPassword("Password!" + NUMBER_OF_USERS);
+        newAppUser.setRole(Role.CUSTOMER);
+        newAppUser.setFirstName("FirstName" + NUMBER_OF_USERS);
+        newAppUser.setLastName("LastName" + NUMBER_OF_USERS);
+        return newAppUser;
+    }
+
+    private AppUser createNewAppUser(UUID userId) {
+        AppUser existingUser = new AppUser();
+        existingUser.setId(userId);
+        existingUser.setUsername("oldUsername");
+        existingUser.setPassword("oldPassword!1");
+        existingUser.setRole(Role.ADMIN);
+        existingUser.setFirstName("OldFirstName");
+        existingUser.setLastName("OldLastName");
+        return existingUser;
+    }
+
+    private AppUser createUpdatedUser(UUID userId) {
+        AppUser updatedUser = new AppUser();
+        updatedUser.setId(userId);
+        updatedUser.setUsername("newUsername");
+        updatedUser.setPassword("newPassword!1");
+        updatedUser.setRole(Role.ADMIN);
+        updatedUser.setFirstName("NewFirstName");
+        updatedUser.setLastName("NewLastName");
+        return updatedUser;
     }
 }

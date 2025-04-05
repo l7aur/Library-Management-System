@@ -1,8 +1,8 @@
 package com.laur.bookshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.laur.bookshop.config.dto.BookDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -47,4 +47,16 @@ public class Book {
 
     @Column(name = "stock", nullable = false)
     private Integer stock;
+
+    public BookDTO toDTO() {
+        BookDTO dto = new BookDTO();
+        dto.setIsbn(this.isbn);
+        dto.setTitle(this.title);
+        dto.setStock(this.stock);
+        dto.setPublishYear(this.publishYear);
+        dto.setPrice(this.price);
+        dto.setAuthorIds(this.authors.stream().map(Author::getId).toList());
+        dto.setPublisherId(this.publisher.getId());
+        return dto;
+    }
 }

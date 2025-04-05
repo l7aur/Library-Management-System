@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -25,7 +25,7 @@ public class PublisherServiceTests {
 
     private AutoCloseable autoCloseable;
 
-    private static Integer NUMBER_OF_PUBLISHERS = 10;
+    private static final Integer NUMBER_OF_PUBLISHERS = 10;
 
     @BeforeEach
     public void setUp() {
@@ -55,62 +55,137 @@ public class PublisherServiceTests {
     @Test
     public void testAdd() {
         // given
+        List<Publisher> publishers = generatePublishers();
+
+        Publisher newPublisher = createNewPublisher();
+        publishers.add(newPublisher);
 
         // when
+        when(repo.save(newPublisher)).thenReturn(newPublisher);
+        Publisher result = service.addPublisher(newPublisher.toDTO());
 
         // then
+        verify(repo, times(1)).save(newPublisher);
+        assertEquals(newPublisher, result);
     }
 
     @Test
-    public void testDeleteOne() {
+    public void testDeleteOne1() {
         // given
+        List<Publisher> publishers = generatePublishers();
+        Publisher deletedPublisher = publishers.getFirst();
+        publishers.remove(deletedPublisher);
 
         // when
+        doNothing().when(repo).deleteById(deletedPublisher.getId());
+        service.deleteByIds(List.of(deletedPublisher.getId()));
+        when(repo.findAll()).thenReturn(publishers);
 
         // then
+        verify(repo, times(1)).deleteById(deletedPublisher.getId());
+        assertEquals(repo.findAll(), publishers);
+    }
+
+    @Test
+    public void testDeleteOne2() {
+        // given
+        List<Publisher> publishers = generatePublishers();
+        Publisher deletedPublisher = publishers.getLast();
+        publishers.remove(deletedPublisher);
+
+        // when
+        doNothing().when(repo).deleteById(deletedPublisher.getId());
+        service.deleteByIds(List.of(deletedPublisher.getId()));
+        when(repo.findAll()).thenReturn(publishers);
+
+        // then
+        verify(repo, times(1)).deleteById(deletedPublisher.getId());
+        assertEquals(repo.findAll(), publishers);
     }
 
     @Test
     public void testDeleteMany() {
         // given
+        List<Publisher> publishers = generatePublishers();
+        List<Publisher> deletedPublishers = List.of(
+                publishers.getFirst(),
+                publishers.getLast(),
+                publishers.get(5)
+        );
+        publishers.removeAll(deletedPublishers);
 
         // when
+        for(Publisher publisher : deletedPublishers) {
+            doNothing().when(repo).deleteById(publisher.getId());
+        }
+        service.deleteByIds(deletedPublishers.stream().map(Publisher::getId).toList());
+        when(repo.findAll()).thenReturn(publishers);
 
         // then
+        for (Publisher deleted : deletedPublishers) {
+            verify(repo, times(1)).deleteById(deleted.getId());
+        }
+        assertEquals(publishers, repo.findAll());
     }
 
     @Test
     public void testUpdate() {
         // given
+        UUID publisherId = UUID.randomUUID();
+        Publisher existingPublisher = createNewPublisher(publisherId);
+        Publisher updatedPublisher = createUpdatedPublisher(publisherId);
 
         // when
+        when(repo.findById(publisherId)).thenReturn(Optional.of(existingPublisher));
+        when(repo.save(updatedPublisher)).thenReturn(updatedPublisher);
+        Publisher result = service.updatePublisher(updatedPublisher);
 
         // then
+        verify(repo, times(1)).findById(publisherId);
+        verify(repo, times(1)).save(updatedPublisher);
+        assertEquals(updatedPublisher, result);
     }
 
     private List<Publisher> generatePublishers() {
-        NUMBER_OF_PUBLISHERS = 10;
-        return List.of(
-                // 1
-                new Publisher(),
-                // 2
-                new Publisher(),
-                // 3
-                new Publisher(),
-                // 4
-                new Publisher(),
-                // 5
-                new Publisher(),
-                // 6
-                new Publisher(),
-                // 7
-                new Publisher(),
-                // 8
-                new Publisher(),
-                // 9
-                new Publisher(),
-                // 10
-                new Publisher()
-        );
+        List<Publisher> publishers = new ArrayList<>();
+        for(int i = 0; i < NUMBER_OF_PUBLISHERS; i++) {
+            Publisher publisher = new Publisher();
+            publisher.setId(UUID.randomUUID());
+            publisher.setName("Publisher " + i);
+            publisher.setLocation("Location " + i);
+            publisher.setBooks(Collections.emptyList());
+            publisher.setFoundingYear(i);
+            publishers.add(publisher);
+        }
+        return publishers;
+    }
+
+    private Publisher createNewPublisher() {
+        Publisher newPublisher = new Publisher();
+        newPublisher.setLocation("Location" + NUMBER_OF_PUBLISHERS);
+        newPublisher.setName("Name" + NUMBER_OF_PUBLISHERS);
+        newPublisher.setBooks(Collections.emptyList());
+        newPublisher.setFoundingYear(NUMBER_OF_PUBLISHERS);
+        return newPublisher;
+    }
+
+    private Publisher createNewPublisher(UUID publisherId) {
+        Publisher existingPublisher = new Publisher();
+        existingPublisher.setId(publisherId);
+        existingPublisher.setLocation("Location" + 0);
+        existingPublisher.setName("Name" + 0);
+        existingPublisher.setBooks(Collections.emptyList());
+        existingPublisher.setFoundingYear(0);
+        return existingPublisher;
+    }
+
+    private Publisher createUpdatedPublisher(UUID publisherId) {
+        Publisher updatedPublisher = new Publisher();
+        updatedPublisher.setId(publisherId);
+        updatedPublisher.setLocation("Location" + 1);
+        updatedPublisher.setName("Name" + 1);
+        updatedPublisher.setBooks(Collections.emptyList());
+        updatedPublisher.setFoundingYear(1);
+        return updatedPublisher;
     }
 }

@@ -2,6 +2,7 @@ package com.laur.bookshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.laur.bookshop.config.dto.PublisherDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -32,4 +33,13 @@ public class Publisher {
             orphanRemoval = true
     )
     private List<Book> books;
+
+    public PublisherDTO toDTO() {
+        PublisherDTO publisherDTO = new PublisherDTO();
+        publisherDTO.setLocation(this.location);
+        publisherDTO.setName(this.name);
+        publisherDTO.setFoundingYear(this.foundingYear);
+        publisherDTO.setBooks(this.books.stream().map(Book::toString).toList());
+        return publisherDTO;
+    }
 }
