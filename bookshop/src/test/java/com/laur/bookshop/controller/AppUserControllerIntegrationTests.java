@@ -155,21 +155,9 @@ public class AppUserControllerIntegrationTests {
     @Test
     @Transactional
     public void testDelete_ValidIds() throws Exception {
-        AppUser user1 = new AppUser();
-        user1.setUsername("test.user1");
-        user1.setFirstName("Test");
-        user1.setLastName("User1");
-        user1.setPassword("Password123!");
-        user1.setRole(ADMIN);
-        repo.save(user1);
-
-        AppUser user2 = new AppUser();
-        user2.setUsername("test.user2");
-        user2.setFirstName("Test");
-        user2.setLastName("User2");
-        user2.setPassword("AnotherPwd!");
-        user2.setRole(ADMIN);
-        repo.save(user2);
+        List<AppUser> users = repo.findAll();
+        AppUser user1 = users.getFirst();
+        AppUser user2 = users.getLast();
 
         List<String> idsToDelete = Arrays.asList(user1.getId().toString(), user2.getId().toString());
 
@@ -189,21 +177,9 @@ public class AppUserControllerIntegrationTests {
     @Test
     @Transactional
     public void testDelete_InvalidIds1() throws Exception {
-        AppUser user1 = new AppUser();
-        user1.setUsername("test.user1");
-        user1.setFirstName("Test");
-        user1.setLastName("User1");
-        user1.setPassword("Password123!");
-        user1.setRole(ADMIN);
-        repo.save(user1);
-
-        AppUser user2 = new AppUser();
-        user2.setUsername("test.user2");
-        user2.setFirstName("Test");
-        user2.setLastName("User2");
-        user2.setPassword("AnotherPwd!");
-        user2.setRole(ADMIN);
-        repo.save(user2);
+        List<AppUser> users = repo.findAll();
+        AppUser user1 = users.getFirst();
+        AppUser user2 = users.getLast();
 
         List<String> idsToDelete = List.of("00000000-0000-0000-0000-000000000000");
 
@@ -222,21 +198,9 @@ public class AppUserControllerIntegrationTests {
     @Test
     @Transactional
     public void testDelete_InvalidIds2() throws Exception {
-        AppUser user1 = new AppUser();
-        user1.setUsername("test.user1");
-        user1.setFirstName("Test");
-        user1.setLastName("User1");
-        user1.setPassword("Password123!");
-        user1.setRole(ADMIN);
-        repo.save(user1);
-
-        AppUser user2 = new AppUser();
-        user2.setUsername("test.user2");
-        user2.setFirstName("Test");
-        user2.setLastName("User2");
-        user2.setPassword("AnotherPwd!");
-        user2.setRole(ADMIN);
-        repo.save(user2);
+        List<AppUser> users = repo.findAll();
+        AppUser user1 = users.getFirst();
+        AppUser user2 = users.getLast();
 
         List<String> idsToDelete = Collections.emptyList();
 
@@ -255,13 +219,7 @@ public class AppUserControllerIntegrationTests {
 
     @Test
     public void update_ValidPayload() throws Exception {
-        AppUser initialUser = new AppUser();
-        initialUser.setUsername("test.user1");
-        initialUser.setFirstName("Test");
-        initialUser.setLastName("User1");
-        initialUser.setPassword("Password123!");
-        initialUser.setRole(ADMIN);
-        repo.save(initialUser);
+        AppUser initialUser = repo.findAll().getFirst();
 
         AppUser updatedUser = new AppUser();
         updatedUser.setId(initialUser.getId());
@@ -286,13 +244,7 @@ public class AppUserControllerIntegrationTests {
 
     @Test
     public void update_InvalidPayload() throws Exception {
-        AppUser initialUser = new AppUser();
-        initialUser.setUsername("test.user1");
-        initialUser.setFirstName("Test");
-        initialUser.setLastName("User1");
-        initialUser.setPassword("Password123!");
-        initialUser.setRole(ADMIN);
-        repo.save(initialUser);
+        AppUser initialUser = repo.findAll().getFirst();
 
         AppUser updatedUser = new AppUser();
         updatedUser.setId(UUID.randomUUID());
@@ -314,71 +266,53 @@ public class AppUserControllerIntegrationTests {
     @Test
     @Transactional
     public void login_ValidPayload() throws Exception {
-        AppUser initialUser = new AppUser();
-        initialUser.setUsername("test.user1");
-        initialUser.setFirstName("Test");
-        initialUser.setLastName("User1");
-        initialUser.setPassword("Password123!");
-        initialUser.setRole(ADMIN);
-        repo.save(initialUser);
+        AppUser user = repo.findAll().getFirst();
 
-        LoginRequest lr = new LoginRequest(initialUser.getUsername(), initialUser.getPassword());
+        LoginRequest lr = new LoginRequest(user.getUsername(), user.getPassword());
 
-        assertTrue(repo.existsById(initialUser.getId()));
+        assertTrue(repo.existsById(user.getId()));
         mockMvc.perform(post("/app_users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(initialUser.getUsername()))
-                .andExpect(jsonPath("$.password").value(initialUser.getPassword()))
-                .andExpect(jsonPath("$.firstName").value(initialUser.getFirstName()))
-                .andExpect(jsonPath("$.lastName").value(initialUser.getLastName()))
-                .andExpect(jsonPath("$.role").value(initialUser.getRole().toString()));
-        assertTrue(repo.existsById(initialUser.getId()));
+                .andExpect(jsonPath("$.username").value(user.getUsername()))
+                .andExpect(jsonPath("$.password").value(user.getPassword()))
+                .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(user.getLastName()))
+                .andExpect(jsonPath("$.role").value(user.getRole().toString()));
+        assertTrue(repo.existsById(user.getId()));
     }
 
     @Test
     @Transactional
     public void login_InvalidPassword() throws Exception {
-        AppUser initialUser = new AppUser();
-        initialUser.setUsername("test.user1");
-        initialUser.setFirstName("Test");
-        initialUser.setLastName("User1");
-        initialUser.setPassword("Password123!");
-        initialUser.setRole(ADMIN);
-        repo.save(initialUser);
+        AppUser user = repo.findAll().getFirst();
 
-        LoginRequest lr = new LoginRequest(initialUser.getUsername(), "a.wrong.password");
+        LoginRequest lr = new LoginRequest(user.getUsername(), "a.wrong.password");
 
-        assertTrue(repo.existsById(initialUser.getId()));
+        assertTrue(repo.existsById(user.getId()));
         mockMvc.perform(post("/app_users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isUnauthorized())
                         .andExpect(content().string("Wrong password for username: '" + lr.getUsername() + "'"));
-        assertTrue(repo.existsById(initialUser.getId()));
+        assertTrue(repo.existsById(user.getId()));
     }
 
     @Test
     @Transactional
     public void login_InvalidUsername() throws Exception {
-        AppUser initialUser = new AppUser();
-        initialUser.setUsername("test.user1");
-        initialUser.setFirstName("Test");
-        initialUser.setLastName("User1");
-        initialUser.setPassword("Password123!");
-        initialUser.setRole(ADMIN);
-        repo.save(initialUser);
+        AppUser user = repo.findAll().getFirst();
 
         LoginRequest lr = new LoginRequest("a.wrong.username", "a.wrong.password");
 
-        assertTrue(repo.existsById(initialUser.getId()));
+        assertTrue(repo.existsById(user.getId()));
         mockMvc.perform(post("/app_users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("No user found with username: '" + lr.getUsername() + "'"));
-        assertTrue(repo.existsById(initialUser.getId()));
+        assertTrue(repo.existsById(user.getId()));
     }
 
     private void seedDatabase() {
