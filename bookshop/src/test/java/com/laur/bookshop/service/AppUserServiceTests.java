@@ -1,5 +1,6 @@
 package com.laur.bookshop.service;
 
+import com.laur.bookshop.config.enums.Role;
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.repositories.AppUserRepo;
 import com.laur.bookshop.services.AppUserService;
@@ -10,7 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -25,7 +29,7 @@ public class AppUserServiceTests {
 
     private AutoCloseable autoCloseable;
 
-    private static Integer NUMBER_OF_USERS = 10;
+    private static final Integer NUMBER_OF_USERS = 10;
 
     @BeforeEach
     public void setUp() {
@@ -40,7 +44,7 @@ public class AppUserServiceTests {
     @Test
     public void testFindAll() {
         // given
-        List<AppUser> appUsers = generateAppUsers();
+        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
 
         // when
         when(repo.findAll()).thenReturn(appUsers);
@@ -55,72 +59,129 @@ public class AppUserServiceTests {
     @Test
     public void testAdd() {
         // given
+        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+
+        AppUser newAppUser = new AppUser();
+        newAppUser.setUsername("user" + NUMBER_OF_USERS);
+        newAppUser.setPassword("Password!" + NUMBER_OF_USERS);
+        newAppUser.setRole(Role.CUSTOMER);
+        newAppUser.setFirstName("FirstName" + NUMBER_OF_USERS);
+        newAppUser.setLastName("LastName" + NUMBER_OF_USERS);
+        appUsers.add(newAppUser);
 
         // when
+        when(repo.save(newAppUser)).thenReturn(newAppUser);
+        AppUser result = service.addAppUser(newAppUser.toDTO());
 
         // then
+        verify(repo, times(1)).save(newAppUser);
+        assertEquals(newAppUser, result);
     }
 
 
     @Test
-    public void testDeleteOne() {
+    public void testDeleteOne1() {
         // given
+        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        AppUser deletedAppUser = appUsers.getFirst();
+        appUsers.remove(deletedAppUser);
 
         // when
+        doNothing().when(repo).deleteById(deletedAppUser.getId());
+        service.deleteByIds(List.of(deletedAppUser.getId()));
+        when(repo.findAll()).thenReturn(appUsers);
 
         // then
+        verify(repo, times(1)).deleteById(deletedAppUser.getId());
+        assertEquals(repo.findAll(), appUsers);
+    }
+
+    @Test
+    public void testDeleteOne2() {
+        // given
+        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        AppUser deletedAppUser = appUsers.getLast();
+        appUsers.remove(deletedAppUser);
+
+        // when
+        doNothing().when(repo).deleteById(deletedAppUser.getId());
+        service.deleteByIds(List.of(deletedAppUser.getId()));
+        when(repo.findAll()).thenReturn(appUsers);
+
+        // then
+        verify(repo, times(1)).deleteById(deletedAppUser.getId());
+        assertEquals(repo.findAll(), appUsers);
     }
 
     @Test
     public void testDeleteMany() {
         // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    public void testUpdate() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    @Test
-    public void testLogin() {
-        // given
-
-        // when
-
-        // then
-    }
-
-    private List<AppUser> generateAppUsers() {
-        NUMBER_OF_USERS = 10;
-        return List.of(
-                // 1
-                new AppUser(),
-                // 2
-                new AppUser(),
-                // 3
-                new AppUser(),
-                // 4
-                new AppUser(),
-                // 5
-                new AppUser(),
-                // 6
-                new AppUser(),
-                // 7
-                new AppUser(),
-                // 8
-                new AppUser(),
-                // 9
-                new AppUser(),
-                // 10
-                new AppUser()
+        List<AppUser> appUsers = generateAppUsers(NUMBER_OF_USERS);
+        List<AppUser> deletedAppUsers = List.of(
+                appUsers.getFirst(),
+                appUsers.getLast(),
+                appUsers.get(3)
         );
+        appUsers.removeAll(deletedAppUsers);
+
+        // when
+        for(AppUser appUser : deletedAppUsers) {
+            doNothing().when(repo).deleteById(appUser.getId());
+        }
+        service.deleteByIds(deletedAppUsers.stream().map(AppUser::getId).toList());
+        when(repo.findAll()).thenReturn(appUsers);
+
+        // then
+        for (AppUser deleted : deletedAppUsers) {
+            verify(repo, times(1)).deleteById(deleted.getId());
+        }
+        assertEquals(appUsers, repo.findAll());
+    }
+
+    @Test
+    public void testUpdateAppUser() {
+        // given
+        UUID userId = UUID.randomUUID();
+        AppUser existingUser = new AppUser();
+        existingUser.setId(userId);
+        existingUser.setUsername("oldUsername");
+        existingUser.setPassword("oldPassword!1");
+        existingUser.setRole(Role.ADMIN);
+        existingUser.setFirstName("OldFirstName");
+        existingUser.setLastName("OldLastName");
+
+        AppUser updatedUser = new AppUser();
+        updatedUser.setId(userId);
+        updatedUser.setUsername("newUsername");
+        updatedUser.setPassword("newPassword!1");
+        updatedUser.setRole(Role.ADMIN);
+        updatedUser.setFirstName("NewFirstName");
+        updatedUser.setLastName("NewLastName");
+
+        when(repo.findById(userId)).thenReturn(Optional.of(existingUser));
+        when(repo.save(updatedUser)).thenReturn(updatedUser);
+
+        // when
+        AppUser result = service.updateAppUser(updatedUser);
+
+        // then
+        verify(repo, times(1)).findById(userId);
+        verify(repo, times(1)).save(updatedUser);
+        assertEquals(updatedUser, result);
+    }
+
+    private List<AppUser> generateAppUsers(int howMany) {
+        List<AppUser> users = new ArrayList<>();
+        for (int i = 0; i < howMany; i++) {
+            AppUser user = new AppUser();
+            user.setId(UUID.randomUUID());
+            user.setUsername("user" + i);
+            user.setPassword("Password!" + i);
+            user.setRole(Role.CUSTOMER);
+            user.setFirstName("FirstName" + i);
+            user.setLastName("LastName" + i);
+            users.add(user);
+        }
+        return users;
     }
 }

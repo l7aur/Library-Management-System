@@ -1,5 +1,6 @@
 package com.laur.bookshop.model;
 
+import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.config.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,4 +30,14 @@ public class AppUser {
 
     @Column(name = "last_name")
     private String lastName;
+
+    public AppUserDTO toDTO() {
+        AppUserDTO dto = new AppUserDTO();
+        dto.setFirstName(this.firstName);
+        dto.setLastName(this.lastName);
+        dto.setPassword(this.password);
+        dto.setRole(this.role.toString());
+        dto.setUsername(this.username);
+        return dto;
+    }
 }
