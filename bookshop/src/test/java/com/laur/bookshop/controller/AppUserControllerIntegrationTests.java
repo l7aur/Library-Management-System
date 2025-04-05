@@ -143,6 +143,7 @@ public class AppUserControllerIntegrationTests {
         existingUser.setPassword("ExistingPassword1!");
         existingUser.setRole(ADMIN);
         repo.save(existingUser);
+        assertTrue(repo.existsById(existingUser.getId()));
 
         AppUserDTO dto = existingUser.toDTO();
         mockMvc.perform(post("/app_users/add")
@@ -150,6 +151,7 @@ public class AppUserControllerIntegrationTests {
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$").value("john.smith.1 already exists!"));
+        assertTrue(repo.existsById(existingUser.getId()));
     }
 
     @Test

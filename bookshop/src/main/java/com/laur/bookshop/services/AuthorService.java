@@ -31,9 +31,9 @@ public class AuthorService {
             throw new DuplicateException(a.getFirstName() + " " + a.getLastName() + " already exists!");
 
         List<Book> books = new ArrayList<>();
-        for (String title : a.getBooks()) {
-            books.add(bookRepo.findByTitle(title).orElseThrow(
-                    () -> new BookNotFoundException(title + " not found!")
+        for (String id : a.getBooks()) {
+            books.add(bookRepo.findByTitle(id).orElseThrow(
+                    () -> new BookNotFoundException(id + " not found!")
             ));
         }
         Author author = new Author();

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,9 +32,9 @@ public class PublisherService {
             throw new DuplicateException(p.getName() + " already exists!");
 
         List<Book> books = new ArrayList<>();
-        for(String title : p.getBooks()) {
-            books.add(bookRepo.findByTitle(title).orElseThrow(
-                    () -> new BookNotFoundException(title + " not found!")
+        for(String id : p.getBooks()) {
+            books.add(bookRepo.findByTitle(id).orElseThrow(
+                    () -> new BookNotFoundException(id + " not found!")
             ));
         }
         Publisher publisher = new Publisher();
@@ -49,12 +50,10 @@ public class PublisherService {
             return ResponseEntity.badRequest().body("No IDs provided!");
         for(UUID i : ids)
             publisherRepo.deleteById(i);
-        return ResponseEntity.ok("Publisher deleted successfully!");
+        return ResponseEntity.ok("Publishers deleted successfully!");
     }
 
     public Publisher updatePublisher(Publisher p) {
-        if(p.getId() == null)
-            throw new PublisherNotFoundException("Publisher not found!");
         Publisher publisher = publisherRepo.findById(p.getId()).orElseThrow(
                 () -> new PublisherNotFoundException(p.getName() + " not found!")
         );

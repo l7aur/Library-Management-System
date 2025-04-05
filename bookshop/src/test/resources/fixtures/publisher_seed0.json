@@ -1,69 +1,69 @@
 [
   {
-    "id": "",
+    "id": "1a2b3c4d-1234-5678-9abc-def123456789",
     "name": "Penguin Random House",
     "location": "New York, USA",
     "foundingYear": 1927,
     "books": []
   },
   {
-    "id": "",
+    "id": "2b3c4d5e-2345-6789-0bcd-ef234567890a",
     "name": "HarperCollins",
     "location": "London, UK",
     "foundingYear": 1817,
     "books": []
   },
   {
-    "id": "",
+    "id": "3c4d5e6f-3456-7890-1cde-f345678901ab",
     "name": "Simon & Schuster",
     "location": "New York, USA",
     "foundingYear": 1924,
     "books": []
   },
   {
-    "id": "",
+    "id": "4d5e6f70-4567-8901-2def-345678901234",
     "name": "Hachette Livre",
     "location": "Paris, France",
     "foundingYear": 1826,
     "books": []
   },
   {
-    "id": "",
+    "id": "5e6f7890-5678-9012-3ef0-456789012345",
     "name": "Macmillan Publishers",
     "location": "London, UK",
     "foundingYear": 1843,
     "books": []
   },
   {
-    "id": "",
+    "id": "6f789012-6789-0123-4f01-567890123456",
     "name": "Scholastic",
     "location": "New York, USA",
     "foundingYear": 1920,
     "books": []
   },
   {
-    "id": "",
+    "id": "78901234-7890-1234-5e12-678901234567 ",
     "name": "Pearson Education",
     "location": "London, UK",
     "foundingYear": 1844,
     "books": []
   },
   {
-    "id": "",
+    "id": "89012345-8901-2345-6a23-789012345678",
     "name": "Oxford University Press",
     "location": "Oxford, UK",
     "foundingYear": 1586,
     "books": []
   },
   {
-    "id": "",
+    "id": "90123456-9012-3456-7a34-890123456789",
     "name": "Cambridge University Press",
     "location": "Cambridge, UK",
     "foundingYear": 1534,
     "books": []
   },
   {
-    "id": "",
+    "id": "01234567-0123-4567-8a45-901234567890",
     "name": "Wiley",
     "location": "Hoboken, USA",
     "foundingYear": 1807,
