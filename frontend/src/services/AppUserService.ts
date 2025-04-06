@@ -2,9 +2,11 @@ import {AppUserType} from "../types/AppUserType.tsx";
 import {
     APP_USER_DELETE_ENDPOINT,
     APP_USERS_ADD_ENDPOINT,
-    APP_USERS_UPDATE_ENDPOINT,
-    APP_USERS_GET_ALL_ENDPOINT
+    APP_USERS_GET_ALL_ENDPOINT,
+    APP_USERS_LOGIN_ENDPOINT,
+    APP_USERS_UPDATE_ENDPOINT
 } from "../constants/API.ts";
+import LoginType from "../types/LoginType.tsx";
 
 export const findAll = async (): Promise<AppUserType[]> => {
     const response = await fetch(APP_USERS_GET_ALL_ENDPOINT);
@@ -43,3 +45,20 @@ export const update = async (user: AppUserType): Promise<AppUserType> => {
     });
     return response.json();
 }
+
+export const login = async (lr: LoginType): Promise<AppUserType | { message: string }> => {
+    const response = await fetch(APP_USERS_LOGIN_ENDPOINT, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(lr),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok)
+        return { message: data?.message || "Login failed with an unknown error." };
+
+    return data as AppUserType;
+};

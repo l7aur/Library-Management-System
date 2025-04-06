@@ -52,8 +52,8 @@ public class AppUserService {
         AppUser user = appUserRepo.findById(u.getId()).orElseThrow(
                 () -> new AppUserNotFoundException(USER_NOT_FOUND_MESSAGE)
         );
-        user.setUsername(u.getUsername());
         user.setPassword(passwordEncoder.encode(u.getPassword()));
+        user.setUsername(u.getUsername());
         user.setFirstName(u.getFirstName());
         user.setLastName(u.getLastName());
         user.setRole(Role.valueOf(u.getRole()));

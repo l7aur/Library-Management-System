@@ -112,7 +112,7 @@ public class AppUserControllerIntegrationTests {
                     .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(dto.getUsername()))
-                .andExpect(jsonPath("$.role").value(dto.getRole().toString()))
+                .andExpect(jsonPath("$.role").value(dto.getRole()))
                 .andExpect(jsonPath("$.firstName").value(dto.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(dto.getLastName()))
                 .andExpect(jsonPath("$.password").exists()).andReturn();

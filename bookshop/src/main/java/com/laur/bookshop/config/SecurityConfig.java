@@ -20,14 +20,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless APIs (optional, depending on your needs)
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/app_users/login").permitAll() // Allow unauthenticated access to login
-                        .requestMatchers("/app_users/add").permitAll() // Allow unauthenticated access to add user (if intended)
-                        .requestMatchers("/app_users/all").permitAll() // Require authentication for getting all users
-                        .requestMatchers("/app_users/delete").authenticated() // Require authentication for deleting users
-                        .requestMatchers("/app_users/edit").authenticated()   // Require authentication for editing users
-                        .anyRequest().authenticated() // All other requests require authentication
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll()
                 )
                 .httpBasic(withDefaults());
         return http.build();

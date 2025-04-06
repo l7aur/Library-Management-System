@@ -12,8 +12,7 @@ interface Props {
 }
 
 const CreateAppUserForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmitUpdate}) => {
-    const [formData, setFormData] = useState(
-        {
+    const [formData, setFormData] = useState({
             id: data.id,
             username: data.username,
             password: data.password,
