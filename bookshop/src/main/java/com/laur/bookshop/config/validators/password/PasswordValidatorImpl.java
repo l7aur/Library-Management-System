@@ -12,7 +12,7 @@ public class PasswordValidatorImpl implements ConstraintValidator<PasswordValida
     private static final String SMALL = "abcdefghijklmnopqrstuvwxyz";
     private static final String SPECIAL = ".,;'[]-=`/+_)(*&^%$#@!~<>?:{}|";
     private static final int MIN_LENGTH = 4;
-    private static final int MAX_LENGTH = 20;
+    private static final int MAX_LENGTH = 255;
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {

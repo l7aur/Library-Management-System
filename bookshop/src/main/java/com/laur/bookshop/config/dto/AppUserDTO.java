@@ -1,7 +1,6 @@
 package com.laur.bookshop.config.dto;
 
 import com.laur.bookshop.config.validators.password.PasswordValidator;
-import com.laur.bookshop.config.enums.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -31,7 +30,7 @@ public class AppUserDTO {
     @Size(min = 2, max = 50, message = "Last name must have between 2 and 50 characters!")
     private String lastName;
 
-    public Role getRole() throws IllegalArgumentException {
-        return Role.valueOf(role.toUpperCase());
+    public String getRole() {
+        return role.toUpperCase();
     }
 }

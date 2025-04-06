@@ -2,6 +2,7 @@ package com.laur.bookshop.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.model.LoginRequest;
@@ -14,8 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
 import java.util.*;
@@ -29,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
+@WithMockUser
 public class AppUserControllerIntegrationTests {
 
     @Autowired
@@ -39,6 +44,8 @@ public class AppUserControllerIntegrationTests {
 
     private static final String FIXTURE_PATH = "src/test/resources/fixtures/";
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void setUp() {
@@ -50,20 +57,15 @@ public class AppUserControllerIntegrationTests {
     @Test
     @Transactional
     public void testFindAll() throws Exception {
-        mockMvc.perform(get("/app_users/all"))
+        List<String> users = List.of(
+                "user1", "user2", "user3", "user4", "user5",
+                "user6", "user7", "user8", "user9", "user10");
+        MvcResult result = mockMvc.perform(get("/app_users/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()")
                         .value(10))
                 .andExpect(jsonPath("$[*].username",
-                        Matchers.containsInAnyOrder(
-                                "user1", "user2", "user3", "user4", "user5",
-                                "user6", "user7", "user8", "user9", "user10"
-                        )))
-                .andExpect(jsonPath("$[*].password",
-                        Matchers.containsInAnyOrder(
-                                "password1", "password2", "password3", "password4", "password5",
-                                "password6", "password7", "password8", "password9", "password10"
-                        )))
+                        Matchers.oneOf(users)))
                 .andExpect(jsonPath("$[*].role",
                         Matchers.containsInAnyOrder(
                                 "ADMIN", "ADMIN", "ADMIN", "ADMIN", "EMPLOYEE",
@@ -78,7 +80,22 @@ public class AppUserControllerIntegrationTests {
                         Matchers.containsInAnyOrder(
                                 "Doe", "Smith", "Johnson", "Brown", "White",
                                 "Green", "Black", "Gray", "Blue", "Yellow"
-                        )));
+                        )))
+                .andExpect(jsonPath("$[*].password").exists()).andReturn();
+        String responseContent = result.getResponse().getContentAsString();
+        List<String> actualPasswords = JsonPath.read(responseContent, "$[*].password");
+        List<String> clearPasswords = List.of("password1", "password2", "password3", "password4", "password5", "password6", "password7", "password8", "password9", "password10");
+        for(String expected : clearPasswords) {
+            boolean found = false;
+            for(String p : actualPasswords) {
+                if(passwordEncoder.matches(expected, p)) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found)
+                throw new AssertionError("Passwords don't match");
+        }
     }
 
     @Test
@@ -90,15 +107,18 @@ public class AppUserControllerIntegrationTests {
         dto.setUsername("john.smith.1");
         dto.setPassword("Password!1");
         dto.setRole("ADMIN");
-        mockMvc.perform(post("/app_users/add")
+        MvcResult result = mockMvc.perform(post("/app_users/add")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("john.smith.1"))
-                .andExpect(jsonPath("$.password").value("Password!1"))
-                .andExpect(jsonPath("$.role").value("ADMIN"))
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Smith"));
+                .andExpect(jsonPath("$.username").value(dto.getUsername()))
+                .andExpect(jsonPath("$.role").value(dto.getRole().toString()))
+                .andExpect(jsonPath("$.firstName").value(dto.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(dto.getLastName()))
+                .andExpect(jsonPath("$.password").exists()).andReturn();
+        String responseContent = result.getResponse().getContentAsString();
+        String actualPassword = JsonPath.read(responseContent, "$.password");
+        assertTrue(passwordEncoder.matches(dto.getPassword(), actualPassword));
     }
 
     @Test
@@ -237,17 +257,18 @@ public class AppUserControllerIntegrationTests {
         updatedUser.setPassword("newPassword123!");
         updatedUser.setRole(CUSTOMER);
 
-        mockMvc.perform(put("/app_users/edit")
+        MvcResult result = mockMvc.perform(put("/app_users/edit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedUser.toDTO())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(updatedUser.getUsername()))
-                .andExpect(jsonPath("$.password").value(updatedUser.getPassword()))
                 .andExpect(jsonPath("$.firstName").value(updatedUser.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(updatedUser.getLastName()))
-                .andExpect(jsonPath("$.role").value(updatedUser.getRole().toString()));
-
-        assertTrue(repo.existsById(updatedUser.getId()));
+                .andExpect(jsonPath("$.role").value(updatedUser.getRole().toString()))
+                .andExpect(jsonPath("$.password").exists()).andReturn();
+        String responseContent = result.getResponse().getContentAsString();
+        String actualPassword = JsonPath.read(responseContent, "$.password");
+        assertTrue(passwordEncoder.matches(updatedUser.getPassword(), actualPassword));
     }
 
     @Test
@@ -294,19 +315,19 @@ public class AppUserControllerIntegrationTests {
     public void login_ValidPayload() throws Exception {
         AppUser user = repo.findAll().getFirst();
 
-        LoginRequest lr = new LoginRequest(user.getUsername(), user.getPassword());
-
-        assertTrue(repo.existsById(user.getId()));
-        mockMvc.perform(post("/app_users/login")
+        LoginRequest lr = new LoginRequest("user1", "password1");
+        MvcResult result = mockMvc.perform(post("/app_users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(user.getUsername()))
-                .andExpect(jsonPath("$.password").value(user.getPassword()))
                 .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(user.getLastName()))
-                .andExpect(jsonPath("$.role").value(user.getRole().toString()));
-        assertTrue(repo.existsById(user.getId()));
+                .andExpect(jsonPath("$.role").value(user.getRole().toString()))
+                .andExpect(jsonPath("$.password").exists()).andReturn();
+        String responseContent = result.getResponse().getContentAsString();
+        String actualPassword = JsonPath.read(responseContent, "$.password");
+        assertTrue(passwordEncoder.matches(lr.getPassword(), actualPassword));
     }
 
     @Test
@@ -346,8 +367,7 @@ public class AppUserControllerIntegrationTests {
             String seedDataJSON = Util.loadFixture(FIXTURE_PATH, "app_user_seed0.json");
             List<AppUser> users = MAPPER.readValue(seedDataJSON, new TypeReference<>() {});
 
-            // Hash passwords before saving
-            //users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
+            users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
             users.forEach(user -> user.setId(null));
             repo.saveAll(users);
         } catch (IOException e) {

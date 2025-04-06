@@ -1,5 +1,6 @@
 package com.laur.bookshop.services;
 
+import com.laur.bookshop.config.enums.Role;
 import com.laur.bookshop.config.exceptions.AppUserNotFoundException;
 import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.config.exceptions.InvalidPassword;
@@ -9,6 +10,7 @@ import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.repositories.AppUserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import static com.laur.bookshop.config.enums.AppMessages.*;
 @AllArgsConstructor
 public class AppUserService {
     private final AppUserRepo appUserRepo;
+    private final PasswordEncoder passwordEncoder;
 
     public List<AppUser> findAllUsers() {
         return appUserRepo.findAll();
@@ -30,10 +33,10 @@ public class AppUserService {
             throw new DuplicateException(USER_DUPLICATE_MESSAGE);
         AppUser user = new AppUser();
         user.setUsername(u.getUsername());
-        user.setPassword(u.getPassword());
+        user.setPassword(passwordEncoder.encode(u.getPassword()));
         user.setFirstName(u.getFirstName());
         user.setLastName(u.getLastName());
-        user.setRole(u.getRole());
+        user.setRole(Role.valueOf(u.getRole()));
         return appUserRepo.save(user);
     }
 
@@ -50,10 +53,10 @@ public class AppUserService {
                 () -> new AppUserNotFoundException(USER_NOT_FOUND_MESSAGE)
         );
         user.setUsername(u.getUsername());
-        user.setPassword(u.getPassword());
+        user.setPassword(passwordEncoder.encode(u.getPassword()));
         user.setFirstName(u.getFirstName());
         user.setLastName(u.getLastName());
-        user.setRole(u.getRole());
+        user.setRole(Role.valueOf(u.getRole()));
         return appUserRepo.save(user);
     }
 
@@ -61,7 +64,7 @@ public class AppUserService {
         AppUser appUser = appUserRepo.findByUsername(lr.getUsername()).orElseThrow(
                 () -> new AppUserNotFoundException(USER_NOT_FOUND_MESSAGE)
         );
-        if(!appUser.getPassword().equals(lr.getPassword()))
+        if(!passwordEncoder.matches(lr.getPassword(), appUser.getPassword()))
             throw new InvalidPassword(WRONG_PASSWORD_MESSAGE);
         return appUser;
     }

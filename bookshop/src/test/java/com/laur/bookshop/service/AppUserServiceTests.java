@@ -1,5 +1,6 @@
 package com.laur.bookshop.service;
 
+import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.config.enums.Role;
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.repositories.AppUserRepo;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,9 @@ public class AppUserServiceTests {
     @Mock
     private AppUserRepo repo;
     private static final Integer NUMBER_OF_USERS = 10;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private AppUserService service;
@@ -58,17 +64,30 @@ public class AppUserServiceTests {
     @Test
     public void testAdd() {
         // given
-        List<AppUser> appUsers = generateAppUsers();
         AppUser newAppUser = createNewAppUser();
-        appUsers.add(newAppUser);
+        AppUserDTO newAppUserDTO = newAppUser.toDTO();
+        String encodedPassword = "encodedPassword";
 
         // when
-        when(repo.save(newAppUser)).thenReturn(newAppUser);
-        AppUser result = service.addAppUser(newAppUser.toDTO());
+        when(repo.findByUsername(newAppUserDTO.getUsername())).thenReturn(Optional.empty());
+        when(passwordEncoder.encode(newAppUserDTO.getPassword())).thenReturn(encodedPassword);
+        when(repo.save(any(AppUser.class))).thenAnswer(invocation -> {
+            AppUser savedUser = invocation.getArgument(0);
+            assertEquals(encodedPassword, savedUser.getPassword());
+            savedUser.setId(UUID.randomUUID());
+            return savedUser;
+        });
+
+        AppUser result = service.addAppUser(newAppUserDTO);
 
         // then
-        verify(repo, times(1)).save(newAppUser);
-        assertEquals(newAppUser, result);
+        verify(repo, times(1)).save(any(AppUser.class));
+        assertEquals(newAppUserDTO.getUsername(), result.getUsername());
+        assertEquals(encodedPassword, result.getPassword());
+        assertEquals(newAppUserDTO.getFirstName(), result.getFirstName());
+        assertEquals(newAppUserDTO.getLastName(), result.getLastName());
+        assertEquals(newAppUserDTO.getRole(), result.getRole());
+        // You might not be able to directly assert the ID if it's generated on save
     }
 
     @Test
@@ -136,15 +155,22 @@ public class AppUserServiceTests {
         UUID userId = UUID.randomUUID();
         AppUser existingUser = createNewAppUser(userId);
         AppUser updatedUser = createUpdatedUser(userId);
+        AppUserDTO updatedUserDTO = updatedUser.toDTO();
+        String encodedPassword = "encodedUpdatedPassword"; // Define the expected encoded password
 
         // when
         when(repo.findById(existingUser.getId())).thenReturn(Optional.of(existingUser));
-        when(repo.save(updatedUser)).thenReturn(updatedUser);
-        AppUser result = service.updateAppUser(updatedUser.toDTO());
+        when(passwordEncoder.encode(updatedUserDTO.getPassword())).thenReturn(encodedPassword);
+        when(repo.save(any(AppUser.class))).thenAnswer(invocation -> {
+            AppUser savedUser = invocation.getArgument(0);
+            assertEquals(encodedPassword, savedUser.getPassword());
+            return updatedUser;
+        });
+        AppUser result = service.updateAppUser(updatedUserDTO);
 
         // then
         verify(repo, times(1)).findById(userId);
-        verify(repo, times(1)).save(updatedUser);
+        verify(repo, times(1)).save(any(AppUser.class));
         assertEquals(updatedUser, result);
     }
 
@@ -159,6 +185,7 @@ public class AppUserServiceTests {
             user.setFirstName("FirstName" + i);
             user.setLastName("LastName" + i);
             users.add(user);
+            when(repo.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         }
         return users;
     }
