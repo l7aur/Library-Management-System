@@ -86,8 +86,7 @@ public class AppUserServiceTests {
         assertEquals(encodedPassword, result.getPassword());
         assertEquals(newAppUserDTO.getFirstName(), result.getFirstName());
         assertEquals(newAppUserDTO.getLastName(), result.getLastName());
-        assertEquals(newAppUserDTO.getRole(), result.getRole());
-        // You might not be able to directly assert the ID if it's generated on save
+        assertEquals(newAppUserDTO.getRole(), result.getRole().toString());
     }
 
     @Test
