@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.io.IOException;
 import java.util.*;
 
+import static com.laur.bookshop.config.enums.AppMessages.*;
 import static com.laur.bookshop.config.enums.Role.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,6 +48,7 @@ public class AppUserControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testFindAll() throws Exception {
         mockMvc.perform(get("/app_users/all"))
                 .andExpect(status().isOk())
@@ -80,6 +82,7 @@ public class AppUserControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testAdd_ValidPayload() throws Exception {
         AppUserDTO dto = new AppUserDTO();
         dto.setFirstName("John");
@@ -88,8 +91,8 @@ public class AppUserControllerIntegrationTests {
         dto.setPassword("Password!1");
         dto.setRole("ADMIN");
         mockMvc.perform(post("/app_users/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(MAPPER.writeValueAsString(dto)))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("john.smith.1"))
                 .andExpect(jsonPath("$.password").value("Password!1"))
@@ -99,6 +102,7 @@ public class AppUserControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testAdd_InvalidPayload1() throws Exception {
         AppUserDTO dto = new AppUserDTO();
         dto.setFirstName("John");
@@ -109,16 +113,17 @@ public class AppUserControllerIntegrationTests {
         mockMvc.perform(post("/app_users/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
-                .andExpect(status().isBadGateway())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.password").value(Matchers.oneOf(
-                                "Password must contain at least one special character",
-                                "Password must contain at least one digit"
+                                PASSWORD_VALIDATOR_ERROR_MESSAGE_SPECIAL,
+                                PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT
                         )
                 ))
         ;
     }
 
     @Test
+    @Transactional
     public void testAdd_InvalidPayload2() throws Exception {
         AppUserDTO dto = new AppUserDTO();
         dto.setFirstName("John");
@@ -129,12 +134,12 @@ public class AppUserControllerIntegrationTests {
         mockMvc.perform(post("/app_users/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
-                .andExpect(status().isBadGateway())
-                .andExpect(jsonPath("$.password").value("Password must contain at least one digit"));
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password").value(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT));
     }
 
-    @Transactional
     @Test
+    @Transactional
     public void testAdd_InvalidPayload3() throws Exception {
         AppUser existingUser = new AppUser();
         existingUser.setUsername("john.smith.1");
@@ -150,7 +155,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$").value("john.smith.1 already exists!"));
+                .andExpect(jsonPath("$").value(USER_DUPLICATE_MESSAGE));
         assertTrue(repo.existsById(existingUser.getId()));
     }
 
@@ -170,7 +175,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("App User deleted successfully!"));
+                .andExpect(content().string(USER_DELETE_SUCCESS_MESSAGE));
 
         assertFalse(repo.existsById(user1.getId()));
         assertFalse(repo.existsById(user2.getId()));
@@ -192,7 +197,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("App User deleted successfully!"));
+                .andExpect(content().string(USER_DELETE_SUCCESS_MESSAGE));
         assertTrue(repo.existsById(user1.getId()));
         assertTrue(repo.existsById(user2.getId()));
     }
@@ -213,13 +218,14 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().is4xxClientError())
-                .andExpect(content().string("No IDs provided!"));
+                .andExpect(content().string(USER_DELETE_ERROR_MESSAGE));
 
         assertTrue(repo.existsById(user1.getId()));
         assertTrue(repo.existsById(user2.getId()));
     }
 
     @Test
+    @Transactional
     public void update_ValidPayload() throws Exception {
         AppUser initialUser = repo.findAll().getFirst();
 
@@ -233,7 +239,7 @@ public class AppUserControllerIntegrationTests {
 
         mockMvc.perform(put("/app_users/edit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(MAPPER.writeValueAsString(updatedUser)))
+                        .content(MAPPER.writeValueAsString(updatedUser.toDTO())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(updatedUser.getUsername()))
                 .andExpect(jsonPath("$.password").value(updatedUser.getPassword()))
@@ -245,7 +251,8 @@ public class AppUserControllerIntegrationTests {
     }
 
     @Test
-    public void update_InvalidPayload() throws Exception {
+    @Transactional
+    public void update_InvalidPayload1() throws Exception {
         AppUser initialUser = repo.findAll().getFirst();
 
         AppUser updatedUser = new AppUser();
@@ -258,11 +265,28 @@ public class AppUserControllerIntegrationTests {
 
         mockMvc.perform(put("/app_users/edit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(MAPPER.writeValueAsString(updatedUser)))
+                        .content(MAPPER.writeValueAsString(updatedUser.toDTO())))
                 .andExpect(status().isNotFound())
-                        .andExpect(content().string("new.test.user1 reference does not exist!"));
+                        .andExpect(content().string(USER_NOT_FOUND_MESSAGE));
         assertTrue(repo.existsById(initialUser.getId()));
         assertFalse(repo.existsById(updatedUser.getId()));
+    }
+
+    @Test
+    @Transactional
+    public void update_InvalidPayload2() throws Exception {
+        AppUser updatedUser = repo.findAll().getFirst();
+        updatedUser.setUsername("new.test.user1");
+        updatedUser.setFirstName("UpdatedTest");
+        updatedUser.setLastName("UpdatedUser1");
+        updatedUser.setPassword("newPassword!");
+        updatedUser.setRole(CUSTOMER);
+
+        mockMvc.perform(put("/app_users/edit")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(MAPPER.writeValueAsString(updatedUser.toDTO())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password").value(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT));
     }
 
     @Test
@@ -297,7 +321,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isUnauthorized())
-                        .andExpect(content().string("Wrong password for username: '" + lr.getUsername() + "'"));
+                        .andExpect(content().string(WRONG_PASSWORD_MESSAGE));
         assertTrue(repo.existsById(user.getId()));
     }
 
@@ -313,7 +337,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("No user found with username: '" + lr.getUsername() + "'"));
+                .andExpect(content().string(USER_NOT_FOUND_MESSAGE));
         assertTrue(repo.existsById(user.getId()));
     }
 
@@ -324,13 +348,12 @@ public class AppUserControllerIntegrationTests {
 
             // Hash passwords before saving
             //users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
-            users.forEach(user -> user.setId(null)); // Ensure entities are new before saving
+            users.forEach(user -> user.setId(null));
             repo.saveAll(users);
-            System.out.println("Database successfully seeded with user data.");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load seed data JSON file.", e);
+            throw new RuntimeException(FAILED_LOADING_JSON_DATA_MESSAGE, e);
         } catch (Exception e) {
-            throw new RuntimeException("An error occurred while seeding the database.", e);
+            throw new RuntimeException(FAILED_SEEDING_DATABASE_MESSAGE, e);
         }
     }
 

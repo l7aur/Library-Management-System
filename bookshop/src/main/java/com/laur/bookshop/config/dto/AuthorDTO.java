@@ -5,23 +5,28 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
+
+import static com.laur.bookshop.config.enums.AppMessages.*;
 
 @Data
 public class AuthorDTO {
-    @NotBlank(message = "First name is mandatory!")
-    @Size(min = 2, max = 50, message = "First name should be between 2 and 50 characters!")
+    private UUID id;
+
+    @NotBlank(message = AUTHOR_FIRST_NAME_MISSING_MESSAGE)
+    @Size(min = AUTHOR_FIRST_NAME_MIN_LENGTH, max = AUTHOR_FIRST_NAME_MAX_LENGTH, message = AUTHOR_FIRST_NAME_NOT_VALID_MESSAGE)
     private String firstName;
 
-    @NotBlank(message = "Las name is mandatory!")
-    @Size(min = 2, max = 50, message = "Last name should be between 2 and 50 characters!")
+    @NotBlank(message = AUTHOR_LAST_NAME_MISSING_MESSAGE)
+    @Size(min = AUTHOR_LAST_NAME_MIN_LENGTH, max = AUTHOR_LAST_NAME_MAX_LENGTH, message = AUTHOR_LAST_NAME_NOT_VALID_MESSAGE)
     private String lastName;
 
-    @Size(max = 50, message = "Alias cannot exceed 50 characters!")
+    @Size(max = AUTHOR_ALIAS_MAX_LENGTH, message = AUTHOR_ALIAS_NOT_VALID_MESSAGE)
     private String alias;
 
-    @NotBlank(message = "Nationality is mandatory!")
-    @Size(min = 2, max = 50, message = "Nationality should be between 2 and 50 characters!")
+    @NotBlank(message = AUTHOR_NATIONALITY_MISSING_MESSAGE)
+    @Size(min = AUTHOR_NATIONALITY_MIN_LENGTH, max = AUTHOR_NATIONALITY_MAX_LENGTH, message = AUTHOR_NATIONALITY_NOT_VALID_MESSAGE)
     private String nationality;
 
-    List<String> books;
+    List<String> bookIDs;
 }

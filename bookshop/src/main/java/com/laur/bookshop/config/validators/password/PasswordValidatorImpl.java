@@ -3,6 +3,8 @@ package com.laur.bookshop.config.validators.password;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import static com.laur.bookshop.config.enums.AppMessages.*;
+
 public class PasswordValidatorImpl implements ConstraintValidator<PasswordValidator, String> {
 
     private static final String CAPITALS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -15,7 +17,7 @@ public class PasswordValidatorImpl implements ConstraintValidator<PasswordValida
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         if (password == null || password.isBlank()) {
-            addConstraintViolation(context, "Password cannot be empty");
+            addConstraintViolation(context, PASSWORD_VALIDATOR_ERROR_MESSAGE_MISSING);
             return false;
         }
 
@@ -25,22 +27,22 @@ public class PasswordValidatorImpl implements ConstraintValidator<PasswordValida
         }
 
         if (notContains(password, CAPITALS)) {
-            addConstraintViolation(context, "Password must contain at least one uppercase letter");
+            addConstraintViolation(context, PASSWORD_VALIDATOR_ERROR_MESSAGE_UPPERCASE);
             return false;
         }
 
         if (notContains(password, SMALL)) {
-            addConstraintViolation(context, "Password must contain at least one lowercase letter");
+            addConstraintViolation(context, PASSWORD_VALIDATOR_ERROR_MESSAGE_LOWERCASE);
             return false;
         }
 
         if (notContains(password, DIGITS)) {
-            addConstraintViolation(context, "Password must contain at least one digit");
+            addConstraintViolation(context, PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT);
             return false;
         }
 
         if (notContains(password, SPECIAL)) {
-            addConstraintViolation(context, "Password must contain at least one special character");
+            addConstraintViolation(context, PASSWORD_VALIDATOR_ERROR_MESSAGE_SPECIAL);
             return false;
         }
 

@@ -35,11 +35,12 @@ public class Publisher {
     private List<Book> books;
 
     public PublisherDTO toDTO() {
-        PublisherDTO publisherDTO = new PublisherDTO();
-        publisherDTO.setLocation(this.location);
-        publisherDTO.setName(this.name);
-        publisherDTO.setFoundingYear(this.foundingYear);
-        publisherDTO.setBooks(this.books.stream().map(Book::toString).toList());
-        return publisherDTO;
+        PublisherDTO dto = new PublisherDTO();
+        dto.setId(this.id);
+        dto.setLocation(this.location);
+        dto.setName(this.name);
+        dto.setFoundingYear(this.foundingYear);
+        dto.setBookIds(this.books.stream().map(b -> String.valueOf(b.getId())).toList());
+        return dto;
     }
 }

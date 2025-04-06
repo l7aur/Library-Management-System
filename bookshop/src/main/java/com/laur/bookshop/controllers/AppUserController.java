@@ -36,7 +36,7 @@ public class AppUserController {
     }
 
     @PutMapping("/app_users/edit")
-    public AppUser updateAppUser(@RequestBody AppUser appUser) {
+    public AppUser updateAppUser(@Valid @RequestBody AppUserDTO appUser) {
         return service.updateAppUser(appUser);
     }
 

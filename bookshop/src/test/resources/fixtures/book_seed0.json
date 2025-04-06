@@ -1,122 +1,35 @@
 [
   {
-    "id": "",
-    "isbn": "978-3-16-148410-0",
-    "title": "The Great Adventure",
-    "authors": [],
-    "publishYear": 2020,
-    "publisher": {
-      "id": 1
-    },
-    "price": 19.99,
-    "stock": 100
-  },
-  {
-    "id": "",
+    "id": "89012345-8901-2345-6f23-789012345678",
     "isbn": "978-0-12-345678-9",
     "title": "Learning Java",
-    "authors": [],
+    "authors": [
+      {
+        "id": "83f5ed20-a5f9-422b-b29e-ad3571dc5253",
+        "firstName": "Alex",
+        "lastName": "Brown",
+        "alias": "A.B.",
+        "nationality": "Canadian",
+        "books": []
+      },
+      {
+        "id": "7979dfb2-6076-460d-bd0f-95f4703c3897",
+        "firstName": "Emily",
+        "lastName": "Davis",
+        "alias": "E.D.",
+        "nationality": "Australian",
+        "books": []
+      }
+    ],
     "publishYear": 2018,
     "publisher": {
-      "id": 1
+      "id": "90123456-9012-3456-7a34-890123456789",
+      "name": "Cambridge University Press",
+      "location": "Cambridge, UK",
+      "foundingYear": 1534,
+      "books": []
     },
     "price": 29.99,
     "stock": 50
-  },
-  {
-    "id": "",
-    "isbn": "978-1-234-56789-7",
-    "title": "AI for Beginners",
-    "authors": [],
-    "publishYear": 2021,
-    "publisher": {
-      "id": 1
-    },
-    "price": 24.99,
-    "stock": 75
-  },
-  {
-    "id": "",
-    "isbn": "978-9-87-654321-0",
-    "title": "Exploring Space",
-    "authors": [],
-    "publishYear": 2017,
-    "publisher": {
-      "id": 1
-    },
-    "price": 34.99,
-    "stock": 120
-  },
-  {
-    "id": "",
-    "isbn": "978-4-56-789012-3",
-    "title": "History of Europe",
-    "authors": [],
-    "publishYear": 2019,
-    "publisher": {
-      "id": 1
-    },
-    "price": 22.99,
-    "stock": 90
-  },
-  {
-    "id": "",
-    "isbn": "978-7-89-123456-0",
-    "title": "Science Experiments",
-    "authors": [],
-    "publishYear": 2022,
-    "publisher": {
-      "id": 1
-    },
-    "price": 16.99,
-    "stock": 60
-  },
-  {
-    "id": "",
-    "isbn": "978-5-43-210987-6",
-    "title": "The Art of Cooking",
-    "authors": [],
-    "publishYear": 2015,
-    "publisher": {
-      "id": 1
-    },
-    "price": 27.99,
-    "stock": 80
-  },
-  {
-    "id": "",
-    "isbn": "978-8-65-432109-3",
-    "title": "Travel Destinations",
-    "authors": [],
-    "publishYear": 2016,
-    "publisher": {
-      "id": 1
-    },
-    "price": 32.99,
-    "stock": 40
-  },
-  {
-    "id": "",
-    "isbn": "978-2-10-987654-3",
-    "title": "Programming in Python",
-    "authors": [],
-    "publishYear": 2023,
-    "publisher": {
-      "id": 1
-    },
-    "price": 39.99,
-    "stock": 70
-  },
-  {
-    "id": "",
-    "isbn": "978-6-54-321098-7",
-    "title": "Gardening Tips",
-    "authors": [],
-    "publishYear": 2021,
-    "publisher": {
-      "id": 1
-    },
-    "price": 14.99,
-    "stock": 200
   }
 ]

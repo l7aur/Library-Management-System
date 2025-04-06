@@ -33,6 +33,7 @@ public class AppUser {
 
     public AppUserDTO toDTO() {
         AppUserDTO dto = new AppUserDTO();
+        dto.setId(this.id);
         dto.setFirstName(this.firstName);
         dto.setLastName(this.lastName);
         dto.setPassword(this.password);

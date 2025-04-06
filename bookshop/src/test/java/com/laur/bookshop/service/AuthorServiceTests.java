@@ -136,7 +136,7 @@ public class AuthorServiceTests {
         // when
         when(repo.findById(authorId)).thenReturn(Optional.of(existingAuthor));
         when(repo.save(updatedAuthor)).thenReturn(updatedAuthor);
-        Author result = service.updateAuthor(updatedAuthor);
+        Author result = service.updateAuthor(updatedAuthor.toDTO());
 
         // then
         verify(repo, times(1)).findById(authorId);

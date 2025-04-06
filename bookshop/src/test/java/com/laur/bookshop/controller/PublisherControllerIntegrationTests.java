@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.io.IOException;
 import java.util.*;
 
+import static com.laur.bookshop.config.enums.AppMessages.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,6 +47,7 @@ public class PublisherControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testFindAll() throws Exception {
         mockMvc.perform(get("/publishers/all"))
                 .andExpect(status().isOk())
@@ -71,12 +73,13 @@ public class PublisherControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testAdd_ValidPayload() throws Exception {
         PublisherDTO dto = new PublisherDTO();
         dto.setName("test");
         dto.setFoundingYear(1999);
         dto.setLocation("location");
-        dto.setBooks(Collections.emptyList());
+        dto.setBookIds(Collections.emptyList());
 
         mockMvc.perform(post("/publishers/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -103,22 +106,23 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$").value(dto.getName() + " already exists!"));
+                .andExpect(jsonPath("$").value(PUBLISHER_DUPLICATE_MESSAGE));
     }
 
     @Test
+    @Transactional
     public void testAdd_InvalidPayload2() throws Exception {
         PublisherDTO dto = new PublisherDTO();
         dto.setName("test");
         dto.setFoundingYear(1999);
         dto.setLocation("location");
-        dto.setBooks(List.of("78901234-7890-1234-5b12-678901234567"));
+        dto.setBookIds(List.of("78901234-7890-1234-5b12-678901234567"));
 
         mockMvc.perform(post("/publishers/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value( "78901234-7890-1234-5b12-678901234567 not found!"));
+                .andExpect(jsonPath("$").value(BOOK_NOT_FOUND_MESSAGE));
     }
 
     @Test
@@ -137,7 +141,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Publishers deleted successfully!"));
+                .andExpect(content().string(PUBLISHER_DELETE_SUCCESS_MESSAGE));
 
         assertFalse(repo.existsById(publisher1.getId()));
         assertFalse(repo.existsById(publisher2.getId()));
@@ -159,7 +163,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Publishers deleted successfully!"));
+                .andExpect(content().string(PUBLISHER_DELETE_SUCCESS_MESSAGE));
 
         assertTrue(repo.existsById(publisher1.getId()));
         assertTrue(repo.existsById(publisher2.getId()));
@@ -181,7 +185,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().is4xxClientError())
-                .andExpect(content().string("No IDs provided!"));
+                .andExpect(content().string(PUBLISHER_DELETE_ERROR_MESSAGE));
 
         assertTrue(repo.existsById(publisher1.getId()));
         assertTrue(repo.existsById(publisher2.getId()));
@@ -221,9 +225,9 @@ public class PublisherControllerIntegrationTests {
 
         mockMvc.perform(put("/publishers/edit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(MAPPER.writeValueAsString(updatedPublisher)))
+                        .content(MAPPER.writeValueAsString(updatedPublisher.toDTO())))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(updatedPublisher.getName() + " not found!"));
+                .andExpect(content().string(PUBLISHER_NOT_FOUND_MESSAGE));
 
         assertFalse(repo.existsById(updatedPublisher.getId()));
     }
@@ -235,11 +239,10 @@ public class PublisherControllerIntegrationTests {
             publishers.forEach(publisher -> publisher.setId(null));
 
             repo.saveAll(publishers);
-            System.out.println("Database successfully seeded with publisher data.");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load seed data JSON file.", e);
+            throw new RuntimeException(FAILED_LOADING_JSON_DATA_MESSAGE, e);
         } catch (Exception e) {
-            throw new RuntimeException("An error occurred while seeding the database.", e);
+            throw new RuntimeException(FAILED_SEEDING_DATABASE_MESSAGE, e);
         }
     }
 

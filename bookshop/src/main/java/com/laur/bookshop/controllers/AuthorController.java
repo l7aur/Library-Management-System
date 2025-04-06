@@ -33,7 +33,7 @@ public class AuthorController {
     }
 
     @PutMapping("/authors/edit")
-    public Author updateAuthor(@RequestBody Author author) {
+    public Author updateAuthor(@Valid @RequestBody AuthorDTO author) {
         return service.updateAuthor(author);
     }
 }

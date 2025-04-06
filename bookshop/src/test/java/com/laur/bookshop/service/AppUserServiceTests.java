@@ -131,16 +131,16 @@ public class AppUserServiceTests {
     }
 
     @Test
-    public void testUpdateAppUser() {
+    public void testUpdate() {
         // given
         UUID userId = UUID.randomUUID();
         AppUser existingUser = createNewAppUser(userId);
         AppUser updatedUser = createUpdatedUser(userId);
 
         // when
-        when(repo.findById(userId)).thenReturn(Optional.of(existingUser));
+        when(repo.findById(existingUser.getId())).thenReturn(Optional.of(existingUser));
         when(repo.save(updatedUser)).thenReturn(updatedUser);
-        AppUser result = service.updateAppUser(updatedUser);
+        AppUser result = service.updateAppUser(updatedUser.toDTO());
 
         // then
         verify(repo, times(1)).findById(userId);

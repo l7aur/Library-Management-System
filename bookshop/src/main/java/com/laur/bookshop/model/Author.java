@@ -6,13 +6,15 @@ import com.laur.bookshop.config.dto.AuthorDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "author")
+@Table(
+        name = "author",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"first_name", "last_name"})
+)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Author {
     @Id
@@ -36,11 +38,12 @@ public class Author {
 
     public AuthorDTO toDTO() {
         AuthorDTO dto = new AuthorDTO();
+        dto.setId(this.id);
         dto.setAlias(this.alias);
         dto.setFirstName(this.firstName);
         dto.setLastName(this.lastName);
         dto.setNationality(this.nationality);
-        dto.setBooks(Collections.emptyList());
+        dto.setBookIDs(this.books.stream().map(b -> String.valueOf(b.getId())).toList());
         return dto;
     }
 }

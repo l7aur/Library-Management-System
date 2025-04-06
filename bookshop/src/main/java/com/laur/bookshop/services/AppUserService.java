@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static com.laur.bookshop.config.enums.AppMessages.*;
+
 @Service
 @AllArgsConstructor
 public class AppUserService {
@@ -25,7 +27,7 @@ public class AppUserService {
 
     public AppUser addAppUser(AppUserDTO u) {
         if (appUserRepo.findByUsername(u.getUsername()).isPresent())
-            throw new DuplicateException(u.getUsername() + " already exists!");
+            throw new DuplicateException(USER_DUPLICATE_MESSAGE);
         AppUser user = new AppUser();
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());
@@ -37,15 +39,15 @@ public class AppUserService {
 
     public ResponseEntity<String> deleteByIds(List<UUID> ids) {
         if (ids == null || ids.isEmpty())
-            return ResponseEntity.badRequest().body("No IDs provided!");
+            return ResponseEntity.badRequest().body(USER_DELETE_ERROR_MESSAGE);
         for (UUID i : ids)
             appUserRepo.deleteById(i);
-        return ResponseEntity.ok("App User deleted successfully!");
+        return ResponseEntity.ok(USER_DELETE_SUCCESS_MESSAGE);
     }
 
-    public AppUser updateAppUser(AppUser u) {
+    public AppUser updateAppUser(AppUserDTO u) {
         AppUser user = appUserRepo.findById(u.getId()).orElseThrow(
-                () -> new AppUserNotFoundException(u.getUsername() + " reference does not exist!")
+                () -> new AppUserNotFoundException(USER_NOT_FOUND_MESSAGE)
         );
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());
@@ -57,10 +59,10 @@ public class AppUserService {
 
     public AppUser login(LoginRequest lr) {
         AppUser appUser = appUserRepo.findByUsername(lr.getUsername()).orElseThrow(
-                () -> new AppUserNotFoundException("No user found with username: '" + lr.getUsername() + "'")
+                () -> new AppUserNotFoundException(USER_NOT_FOUND_MESSAGE)
         );
         if(!appUser.getPassword().equals(lr.getPassword()))
-            throw new InvalidPassword("Wrong password for username: '" + lr.getUsername() + "'");
+            throw new InvalidPassword(WRONG_PASSWORD_MESSAGE);
         return appUser;
     }
 }

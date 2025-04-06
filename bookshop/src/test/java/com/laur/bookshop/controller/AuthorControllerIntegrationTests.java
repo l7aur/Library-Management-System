@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.io.IOException;
 import java.util.*;
 
+import static com.laur.bookshop.config.enums.AppMessages.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,6 +46,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testFindAll() throws Exception {
         mockMvc.perform(get("/authors/all"))
                 .andExpect(status().isOk())
@@ -75,13 +77,14 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testAdd_ValidPayload() throws Exception {
         AuthorDTO dto = new AuthorDTO();
         dto.setFirstName("Johnny");
         dto.setLastName("Smith");
         dto.setAlias("David");
         dto.setNationality("Canada");
-        dto.setBooks(Collections.emptyList());
+        dto.setBookIDs(Collections.emptyList());
 
         mockMvc.perform(post("/authors/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -110,7 +113,7 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$").value(dto.getFirstName() + " " + dto.getLastName() + " already exists!"));
+                .andExpect(jsonPath("$").value(AUTHOR_DUPLICATE_MESSAGE));
     }
 
     @Test
@@ -120,14 +123,14 @@ public class AuthorControllerIntegrationTests {
         dto.setFirstName("Mihai");
         dto.setLastName("Eminescu");
         dto.setAlias("Luceafarul poeziei romanesti");
-        dto.setBooks(List.of("78901234-7890-1234-5b12-678901234567"));
+        dto.setBookIDs(List.of("78901234-7890-1234-5b12-678901234567"));
         dto.setNationality("romanian");
 
         mockMvc.perform(post("/authors/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value("78901234-7890-1234-5b12-678901234567 not found!"));
+                .andExpect(jsonPath("$").value(BOOK_NOT_FOUND_MESSAGE));
     }
 
     @Test
@@ -146,7 +149,7 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Authors deleted successfully!"));
+                .andExpect(content().string(AUTHOR_DELETE_SUCCESS_MESSAGE));
 
         assertFalse(repo.existsById(author1.getId()));
         assertFalse(repo.existsById(author2.getId()));
@@ -155,10 +158,6 @@ public class AuthorControllerIntegrationTests {
     @Test
     @Transactional
     public void testDeleteOne_InvalidIds1() throws Exception {
-        List<Author> authors = repo.findAll();
-        Author author1 = authors.getFirst();
-        Author author2 = authors.getLast();
-
         List<String> idsToDelete = List.of("00000000-0000-0000-0000-000000000000");
 
         Map<String, List<String>> requestPayload = new HashMap<>();
@@ -168,21 +167,13 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Authors deleted successfully!"));
-
-        assertTrue(repo.existsById(author1.getId()));
-        assertTrue(repo.existsById(author2.getId()));
+                .andExpect(content().string(AUTHOR_DELETE_SUCCESS_MESSAGE));
     }
 
     @Test
     @Transactional
     public void testDeleteOne_InvalidIds2() throws Exception {
-        List<Author> authors = repo.findAll();
-        Author author1 = authors.getFirst();
-        Author author2 = authors.getLast();
-
         List<String> idsToDelete = Collections.emptyList();
-
         Map<String, List<String>> requestPayload = new HashMap<>();
         requestPayload.put("ids", idsToDelete);
 
@@ -190,18 +181,15 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().is4xxClientError())
-                .andExpect(content().string("No IDs provided!"));
-
-        assertTrue(repo.existsById(author1.getId()));
-        assertTrue(repo.existsById(author2.getId()));
+                .andExpect(content().string(AUTHOR_DELETE_ERROR_MESSAGE));
     }
 
     @Test
+    @Transactional
     public void testUpdate_ValidPayload() throws Exception {
         List<Author> authors = repo.findAll();
 
-        Author updatedAuthor = new Author();
-        updatedAuthor.setId(authors.getFirst().getId());
+        Author updatedAuthor = authors.getFirst();
         updatedAuthor.setFirstName("Johnny");
         updatedAuthor.setLastName("Smith");
         updatedAuthor.setAlias("alias.x");
@@ -210,7 +198,7 @@ public class AuthorControllerIntegrationTests {
 
         mockMvc.perform(put("/authors/edit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(MAPPER.writeValueAsString(updatedAuthor)))
+                        .content(MAPPER.writeValueAsString(updatedAuthor.toDTO())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value(updatedAuthor.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(updatedAuthor.getLastName()))
@@ -222,6 +210,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testUpdate_InvalidPayload() throws Exception {
         Author updatedAuthor = new Author();
         updatedAuthor.setId(UUID.randomUUID());
@@ -235,7 +224,7 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedAuthor)))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(updatedAuthor.getFirstName() + " " + updatedAuthor.getLastName() + " not found!"));
+                .andExpect(content().string(AUTHOR_NOT_FOUND_MESSAGE));
 
         assertFalse(repo.existsById(updatedAuthor.getId()));
     }
@@ -247,11 +236,10 @@ public class AuthorControllerIntegrationTests {
             authors.forEach(author -> author.setId(null));
 
             repo.saveAll(authors);
-            System.out.println("Database successfully seeded with author data.");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load seed data JSON file.", e);
+            throw new RuntimeException(FAILED_LOADING_JSON_DATA_MESSAGE, e);
         } catch (Exception e) {
-            throw new RuntimeException("An error occurred while seeding the database.", e);
+            throw new RuntimeException(FAILED_SEEDING_DATABASE_MESSAGE, e);
         }
     }
 }

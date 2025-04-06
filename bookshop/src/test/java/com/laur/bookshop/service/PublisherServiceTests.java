@@ -137,7 +137,7 @@ public class PublisherServiceTests {
         // when
         when(repo.findById(publisherId)).thenReturn(Optional.of(existingPublisher));
         when(repo.save(updatedPublisher)).thenReturn(updatedPublisher);
-        Publisher result = service.updatePublisher(updatedPublisher);
+        Publisher result = service.updatePublisher(updatedPublisher.toDTO());
 
         // then
         verify(repo, times(1)).findById(publisherId);

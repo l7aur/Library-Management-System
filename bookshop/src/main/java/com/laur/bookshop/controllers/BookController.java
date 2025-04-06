@@ -34,7 +34,7 @@ public class BookController {
         return service.deleteByIds(idList);
     }
     @PutMapping("/books/edit")
-    public Book updateBook(@RequestBody Book book) {
+    public Book updateBook(@Valid @RequestBody BookDTO book) {
         return service.updateBook(book);
     }
 }

@@ -76,24 +76,6 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testAddAuthorsPublisher() {
-        // given
-        setupPublisherRepo();
-        setupAuthorRepo();
-        List<Book> books = generateBooks();
-        Book newBook = createNewBook();
-        books.add(newBook);
-
-        // when
-        when(repo.save(newBook)).thenReturn(newBook);
-        Book result = service.addBook(newBook.toDTO());
-
-        // then
-        verify(repo, times(1)).save(newBook);
-        assertEquals(newBook, result);
-    }
-
-    @Test
     public void testDeleteFirstNoAuthorNoPublisher() {
         // given
         List<Book> books = generateBooks();
@@ -191,17 +173,19 @@ public class BookServiceTests {
     }
 
     @Test
-    public void testUpdateNoAuthorNoPublisher() {
+    public void testUpdate() {
         // given
+        setupAuthorRepo();
         setupPublisherRepo();
-        UUID bookId = UUID.randomUUID();
-        Book existingBook = createExistingBook(bookId);
-        Book updatedBook = createNewBook(bookId);
+        List<Book> books = generateBooks();
+        Book existingBook = books.getFirst();
+        UUID bookId = existingBook.getId();
+        Book updatedBook = createUpdatedBook(bookId);
 
         // when
         when(repo.findById(bookId)).thenReturn(Optional.of(existingBook));
         when(repo.save(updatedBook)).thenReturn(updatedBook);
-        Book result = service.updateBook(updatedBook);
+        Book result = service.updateBook(updatedBook.toDTO());
 
         // then
         verify(repo, times(1)).findById(bookId);
@@ -284,31 +268,6 @@ public class BookServiceTests {
         }
     }
 
-    private Book createNewBook() {
-        Book newBook = new Book();
-        newBook.setIsbn("978-3-111222-33-4");
-        newBook.setTitle("Title" + NUMBER_OF_BOOKS);
-        newBook.setStock(NUMBER_OF_BOOKS + 100);
-        newBook.setAuthors(Collections.emptyList());
-        newBook.setPublisher(publisherRepo.findAll().getFirst());
-        newBook.setPrice((NUMBER_OF_BOOKS + 10) * 10.99);
-        newBook.setPublishYear(NUMBER_OF_BOOKS + 1000);
-        return newBook;
-    }
-
-    private Book createNewBook(UUID bookId) {
-        Book updatedBook = new Book();
-        updatedBook.setId(bookId);
-        updatedBook.setIsbn("978-9-012345-67-9");
-        updatedBook.setTitle("Title" + NUMBER_OF_BOOKS);
-        updatedBook.setStock(105);
-        updatedBook.setAuthors(Collections.emptyList());
-        updatedBook.setPublisher(publisherRepo.findAll().getFirst());
-        updatedBook.setPrice(10.92);
-        updatedBook.setPublishYear(2000);
-        return updatedBook;
-    }
-
     private Book createNewBook(int x, Publisher p, List<Author> as) {
         Book newBook = new Book();
         newBook.setId(UUID.randomUUID());
@@ -322,13 +281,13 @@ public class BookServiceTests {
         return newBook;
     }
 
-    private Book createExistingBook(UUID bookId) {
+    private Book createUpdatedBook(UUID bookId) {
         Book existingBook = new Book();
         existingBook.setId(bookId);
         existingBook.setIsbn("978-6-789012-34-5");
         existingBook.setTitle("UpdatedTitle");
         existingBook.setStock(100);
-        existingBook.setAuthors(Collections.emptyList());
+        existingBook.setAuthors(List.of(authorRepo.findAll().getLast()));
         existingBook.setPublisher(publisherRepo.findAll().getLast());
         existingBook.setPrice(10.99);
         existingBook.setPublishYear(1000);

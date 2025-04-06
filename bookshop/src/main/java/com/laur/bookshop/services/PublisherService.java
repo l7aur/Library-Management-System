@@ -13,9 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import static com.laur.bookshop.config.enums.AppMessages.*;
 
 @Service
 @AllArgsConstructor
@@ -29,12 +30,12 @@ public class PublisherService {
 
     public Publisher addPublisher(PublisherDTO p) {
         if(publisherRepo.findByName(p.getName()).isPresent())
-            throw new DuplicateException(p.getName() + " already exists!");
+            throw new DuplicateException(PUBLISHER_DUPLICATE_MESSAGE);
 
         List<Book> books = new ArrayList<>();
-        for(String id : p.getBooks()) {
+        for(String id : p.getBookIds()) {
             books.add(bookRepo.findByTitle(id).orElseThrow(
-                    () -> new BookNotFoundException(id + " not found!")
+                    () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
             ));
         }
         Publisher publisher = new Publisher();
@@ -47,15 +48,15 @@ public class PublisherService {
 
     public ResponseEntity<String> deleteByIds(List<UUID> ids) {
         if (ids == null || ids.isEmpty())
-            return ResponseEntity.badRequest().body("No IDs provided!");
+            return ResponseEntity.badRequest().body(PUBLISHER_DELETE_ERROR_MESSAGE);
         for(UUID i : ids)
             publisherRepo.deleteById(i);
-        return ResponseEntity.ok("Publishers deleted successfully!");
+        return ResponseEntity.ok(PUBLISHER_DELETE_SUCCESS_MESSAGE);
     }
 
-    public Publisher updatePublisher(Publisher p) {
+    public Publisher updatePublisher(PublisherDTO p) {
         Publisher publisher = publisherRepo.findById(p.getId()).orElseThrow(
-                () -> new PublisherNotFoundException(p.getName() + " not found!")
+                () -> new PublisherNotFoundException(PUBLISHER_NOT_FOUND_MESSAGE)
         );
         publisher.setName(p.getName());
         publisher.setLocation(p.getLocation());
@@ -65,7 +66,7 @@ public class PublisherService {
 
     public Publisher findPublisherByName(String name) {
         return publisherRepo.findByName(name).orElseThrow(
-                () -> new PublisherNotFoundException(name + " not found!")
+                () -> new PublisherNotFoundException(PUBLISHER_NOT_FOUND_MESSAGE)
          );
     }
 }

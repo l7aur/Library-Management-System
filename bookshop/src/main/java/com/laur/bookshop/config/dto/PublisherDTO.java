@@ -7,20 +7,25 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
+
+import static com.laur.bookshop.config.enums.AppMessages.*;
 
 @Data
 public class PublisherDTO {
-    @NotEmpty(message = "Publisher name is mandatory!")
-    @Size(min = 2, max = 50, message = "Publisher name must be between 2 and 50 characters!")
+    private UUID id;
+
+    @NotEmpty(message = PUBLISHER_NAME_MISSING_MESSAGE)
+    @Size(min = PUBLISHER_NAME_LENGTH_MIN, max = PUBLISHER_NAME_LENGTH_MAX, message = PUBLISHER_NAME_LENGTH_NOT_VALID_MESSAGE)
     private String name;
 
-    @NotEmpty(message = "Publisher location is mandatory!")
-    @Size(min = 2, max = 50, message = "Publisher location must be between 2 and 50 characters!")
+    @NotEmpty(message = PUBLISHER_LOCATION_MISSING_MESSAGE)
+    @Size(min = PUBLISHER_LOCATION_LENGTH_MIN, max = PUBLISHER_LOCATION_LENGTH_MAX, message = PUBLISHER_LOCATION_LENGTH_NOT_VALID_MESSAGE)
     private String location;
 
-    @Min(value = 1000, message = "No publisher can be that old!")
-    @Max(value = 2025, message = "No publisher could have been found in the future!")
+    @Min(value = PUBLISHER_FOUNDING_YEAR_MIN, message = PUBLISHER_FOUNDING_YEAR_NOT_VALID_MESSAGE)
+    @Max(value = PUBLISHER_FOUNDING_YEAR_MAX, message = PUBLISHER_FOUNDING_YEAR_NOT_VALID_MESSAGE)
     private Integer foundingYear;
 
-    private List<String> books;
+    private List<String> bookIds;
 }

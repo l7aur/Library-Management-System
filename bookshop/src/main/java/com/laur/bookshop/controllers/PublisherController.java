@@ -35,7 +35,7 @@ public class PublisherController {
     }
 
     @PutMapping("/publishers/edit")
-    public Publisher updatePublisher(@RequestBody Publisher publisher) {
+    public Publisher updatePublisher(@Valid @RequestBody PublisherDTO publisher) {
         return service.updatePublisher(publisher);
     }
 

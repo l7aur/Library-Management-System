@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static com.laur.bookshop.config.enums.AppMessages.*;
 
 @Service
 @AllArgsConstructor
@@ -31,17 +34,24 @@ public class BookService {
     }
 
     public Book addBook(BookDTO b) {
-        Publisher publisher = publisherRepo.findById(b.getPublisherId()).orElseThrow(
-                () -> new PublisherNotFoundException("Publisher " + b.getPublisherId() + " not found!")
+        Publisher publisher = publisherRepo.findById(UUID.fromString(b.getPublisherId())).orElseThrow(
+                () -> new PublisherNotFoundException(PUBLISHER_NOT_FOUND_MESSAGE)
         );
+        if(publisher == null)
+            throw new PublisherNotFoundException(PUBLISHER_NOT_FOUND_MESSAGE);
+
         List<Author> authors = new ArrayList<>();
-        for(UUID id : b.getAuthorIds()) {
-            authors.add(authorRepo.findById(id).orElseThrow(
-                    () -> new AuthorNotFoundException("Author " + id + " not found!")
+        for(String id : b.getAuthorIds()) {
+            authors.add(authorRepo.findById(UUID.fromString(id)).orElseThrow(
+                    () -> new AuthorNotFoundException(AUTHOR_NOT_FOUND_MESSAGE)
             ));
         }
+        if(authors.isEmpty())
+            throw new AuthorNotFoundException(AUTHOR_NOT_FOUND_MESSAGE);
+
         if(bookRepo.findByIsbn(b.getIsbn()).isPresent())
-            throw new DuplicateException("Book with ISBN " + b.getIsbn() +" already exists!");
+            throw new DuplicateException(BOOK_DUPLICATE_MESSAGE);
+
         Book book = new Book();
         book.setIsbn(b.getIsbn());
         book.setTitle(b.getTitle());
@@ -55,23 +65,26 @@ public class BookService {
 
     public ResponseEntity<String> deleteByIds(List<UUID> ids) {
         if (ids == null || ids.isEmpty())
-            return ResponseEntity.badRequest().body("No IDs provided!");
+            return ResponseEntity.badRequest().body(BOOK_DELETE_ERROR_MESSAGE);
         for(UUID i : ids)
             bookRepo.deleteById(i);
-        return ResponseEntity.ok("Books deleted successfully!");
+        return ResponseEntity.ok(BOOK_DELETE_SUCCESS_MESSAGE);
     }
 
-    public Book updateBook(Book b) {
+    public Book updateBook(BookDTO b) {
         Book book = bookRepo.findById(b.getId()).orElseThrow(
-                () -> new BookNotFoundException("Book " + b.getId() + " not found!")
+                () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
         );
         book.setTitle(b.getTitle());
-        book.setAuthors(b.getAuthors());
+        book.setAuthors(b.getAuthorIds().stream().map(id -> authorRepo.findById(UUID.fromString(id))
+                        .orElseThrow(() -> new AuthorNotFoundException(AUTHOR_NOT_FOUND_MESSAGE)))
+                .collect(Collectors.toList()));
         book.setStock(b.getStock());
         book.setIsbn(b.getIsbn());
         book.setPrice(b.getPrice());
         book.setPublishYear(b.getPublishYear());
-        book.setPublisher(b.getPublisher());
+        book.setPublisher(publisherRepo.findById(UUID.fromString(b.getPublisherId())).
+                orElseThrow( () -> new PublisherNotFoundException(PUBLISHER_NOT_FOUND_MESSAGE)));
         return bookRepo.save(book);
     }
 }

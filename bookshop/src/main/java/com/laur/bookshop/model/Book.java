@@ -50,13 +50,14 @@ public class Book {
 
     public BookDTO toDTO() {
         BookDTO dto = new BookDTO();
+        dto.setId(this.id);
         dto.setIsbn(this.isbn);
         dto.setTitle(this.title);
         dto.setStock(this.stock);
         dto.setPublishYear(this.publishYear);
         dto.setPrice(this.price);
-        dto.setAuthorIds(this.authors.stream().map(Author::getId).toList());
-        dto.setPublisherId(this.publisher.getId());
+        dto.setAuthorIds(this.authors.stream().map(a -> String.valueOf(a.getId())).toList());
+        dto.setPublisherId(String.valueOf(this.publisher.getId()));
         return dto;
     }
 }
