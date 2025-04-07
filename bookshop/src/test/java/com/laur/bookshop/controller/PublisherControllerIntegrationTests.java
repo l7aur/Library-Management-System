@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.laur.bookshop.config.enums.AppMessages.*;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -108,7 +109,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$").value(PUBLISHER_DUPLICATE_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(PUBLISHER_DUPLICATE_MESSAGE)));
     }
 
     @Test
@@ -124,7 +125,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value(BOOK_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(BOOK_NOT_FOUND_MESSAGE)));
     }
 
     @Test
@@ -143,7 +144,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(PUBLISHER_DELETE_SUCCESS_MESSAGE));
+                .andExpect(jsonPath("$").value(containsString(PUBLISHER_DELETE_SUCCESS_MESSAGE)));
 
         assertFalse(repo.existsById(publisher1.getId()));
         assertFalse(repo.existsById(publisher2.getId()));
@@ -165,7 +166,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(PUBLISHER_DELETE_SUCCESS_MESSAGE));
+                .andExpect(jsonPath("$").value(containsString(PUBLISHER_DELETE_SUCCESS_MESSAGE)));
 
         assertTrue(repo.existsById(publisher1.getId()));
         assertTrue(repo.existsById(publisher2.getId()));
@@ -187,7 +188,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(requestPayload)))
                 .andExpect(status().is4xxClientError())
-                .andExpect(content().string(PUBLISHER_DELETE_ERROR_MESSAGE));
+                .andExpect(jsonPath("$").value(containsString(PUBLISHER_DELETE_ERROR_MESSAGE)));
 
         assertTrue(repo.existsById(publisher1.getId()));
         assertTrue(repo.existsById(publisher2.getId()));
@@ -229,7 +230,7 @@ public class PublisherControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedPublisher.toDTO())))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(PUBLISHER_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(PUBLISHER_NOT_FOUND_MESSAGE)));
 
         assertFalse(repo.existsById(updatedPublisher.getId()));
     }

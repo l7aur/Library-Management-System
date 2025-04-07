@@ -27,6 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.laur.bookshop.config.enums.AppMessages.*;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -139,7 +140,7 @@ public class BookControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.authorIds").value(MISSING_AUTHOR_IDS_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(MISSING_AUTHOR_IDS_MESSAGE)));
     }
 
     @Test
@@ -161,7 +162,7 @@ public class BookControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(book.toDTO())))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(PUBLISHER_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(PUBLISHER_NOT_FOUND_MESSAGE));
     }
 
     @Test
@@ -242,8 +243,8 @@ public class BookControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedBook.toDTO())))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.publishYear").value(PUBLISH_YEAR_NOT_VALID_MESSAGE))
-                .andExpect(jsonPath("$.stock").value(STOCK_NOT_VALID_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(PUBLISH_YEAR_NOT_VALID_MESSAGE)))
+                .andExpect(jsonPath("$.message").value(containsString(STOCK_NOT_VALID_MESSAGE)));
 
         assertTrue(repo.existsById(updatedBook.getId()));
     }

@@ -115,7 +115,7 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$").value(AUTHOR_DUPLICATE_MESSAGE));
+                .andExpect(jsonPath("$.message").value(AUTHOR_DUPLICATE_MESSAGE));
     }
 
     @Test
@@ -132,7 +132,7 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$").value(BOOK_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(BOOK_NOT_FOUND_MESSAGE));
     }
 
     @Test
@@ -226,7 +226,7 @@ public class AuthorControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedAuthor)))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(AUTHOR_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(AUTHOR_NOT_FOUND_MESSAGE));
 
         assertFalse(repo.existsById(updatedAuthor.getId()));
     }

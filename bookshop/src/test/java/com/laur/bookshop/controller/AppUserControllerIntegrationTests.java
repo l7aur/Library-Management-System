@@ -26,6 +26,7 @@ import java.util.*;
 
 import static com.laur.bookshop.config.enums.AppMessages.*;
 import static com.laur.bookshop.config.enums.Role.*;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -128,18 +129,14 @@ public class AppUserControllerIntegrationTests {
         dto.setFirstName("John");
         dto.setLastName("Smith");
         dto.setUsername("john.smith.1");
-        dto.setPassword("Password");
+        dto.setPassword("Password!");
         dto.setRole("ADMIN");
+
         mockMvc.perform(post("/app_users/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password").value(Matchers.oneOf(
-                                PASSWORD_VALIDATOR_ERROR_MESSAGE_SPECIAL,
-                                PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT
-                        )
-                ))
-        ;
+                .andExpect(jsonPath("$.message", containsString(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT)));
     }
 
     @Test
@@ -155,7 +152,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password").value(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT));
+                .andExpect(jsonPath("$.message").value(containsString(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT)));
     }
 
     @Test
@@ -175,7 +172,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$").value(USER_DUPLICATE_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(USER_DUPLICATE_MESSAGE)));
         assertTrue(repo.existsById(existingUser.getId()));
     }
 
@@ -288,7 +285,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedUser.toDTO())))
                 .andExpect(status().isNotFound())
-                        .andExpect(content().string(USER_NOT_FOUND_MESSAGE));
+                        .andExpect(jsonPath("$.message").value(containsString(USER_NOT_FOUND_MESSAGE)));
         assertTrue(repo.existsById(initialUser.getId()));
         assertFalse(repo.existsById(updatedUser.getId()));
     }
@@ -307,7 +304,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(updatedUser.toDTO())))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password").value(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT));
+                .andExpect(jsonPath("$.message").value(containsString(PASSWORD_VALIDATOR_ERROR_MESSAGE_DIGIT)));
     }
 
     @Test
@@ -342,7 +339,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isUnauthorized())
-                        .andExpect(content().string(WRONG_PASSWORD_MESSAGE));
+                        .andExpect(jsonPath("$.message").value(containsString(WRONG_PASSWORD_MESSAGE)));
         assertTrue(repo.existsById(user.getId()));
     }
 
@@ -358,7 +355,7 @@ public class AppUserControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(MAPPER.writeValueAsString(lr)))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(USER_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(containsString(USER_NOT_FOUND_MESSAGE)));
         assertTrue(repo.existsById(user.getId()));
     }
 

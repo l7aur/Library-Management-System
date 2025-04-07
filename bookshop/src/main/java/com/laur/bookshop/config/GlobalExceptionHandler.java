@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.View;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +29,6 @@ public class GlobalExceptionHandler {
             AuthorNotFoundException.class, BookNotFoundException.class,
             PublisherNotFoundException.class, AppUserNotFoundException.class
     })
-
     public ResponseEntity<Map<String, String>> handleNotFoundExceptions(RuntimeException ex) {
         log.error("Entity not found: {}", ex.getMessage());
         Map<String, String> errorResponse = new HashMap<>();
