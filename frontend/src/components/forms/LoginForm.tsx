@@ -2,10 +2,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../config/globalState";
 import LoginType from "../../types/LoginType.tsx";
-import { login } from "../../services/AppUserService.ts";
+import { login1 } from "../../services/AppUserService.ts";
 import { HOME_PATH } from "../../constants/Paths";
+import {useAuth} from "../../config/globalState.tsx";
 
 const LoginForm: React.FC<LoginType> = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const LoginForm: React.FC<LoginType> = () => {
         password: ""
     });
     const [error, setError] = useState<string>("");
-    const { dispatch } = useAuth();
+    const {login} = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,23 +23,18 @@ const LoginForm: React.FC<LoginType> = () => {
     const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
         setError("");
-        dispatch({ type: 'AUTH_REQUEST' });
 
         try {
-            const result = await login(formData);
+            const result = await login1(formData);
 
             if ('message' in result) {
                 setError(result.message);
-                dispatch({ type: 'AUTH_FAILURE', payload: result.message });
             } else {
-                console.log('Login successful:', result);
-                dispatch({ type: 'LOGIN_SUCCESS', payload: result });
+                login(result);
                 navigate(HOME_PATH);
             }
         } catch (err) {
-            console.error('An unexpected error occurred:', err);
-            setError('An unexpected error occurred during login.');
-            dispatch({ type: 'AUTH_FAILURE', payload: 'An unexpected error occurred during login.' });
+            setError('An unexpected error occurred during login: ' + err);
         }
     };
 

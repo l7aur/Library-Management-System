@@ -1,117 +1,71 @@
-import React, { createContext, useContext, useReducer, Dispatch, ReactNode, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { LOGIN_PATH } from '../constants/Paths';
+// authStore.js
+import {useState, createContext, useContext, ReactNode} from 'react';
 import {AppUserType} from "../types/AppUserType.tsx";
+import * as React from "react";
 
-// 1. Define the State Type
-interface AuthState {
+// Create the Auth Context
+const AuthContext = createContext<{
     isAuthenticated: boolean;
     user: AppUserType | null;
-    loading: boolean;
-    error: string | null;
-}
+    login: (userData : AppUserType) => void;
+    logout: () => void;
+}>({
+    isAuthenticated: false,
+    user: null,
+    login: () => {}, // Removed unused userData here
+    logout: () => {},       // Removed unused userData here (it doesn't have one anyway)
+});
 
-// 2. Define Action Types
-type AuthAction =
-    | { type: 'LOGIN_SUCCESS'; payload: AppUserType }
-    | { type: 'LOGOUT' }
-    | { type: 'AUTH_REQUEST' }
-    | { type: 'AUTH_FAILURE'; payload: string | null }
-    | { type: 'SET_AUTH_FROM_STORAGE'; payload: { isAuthenticated: boolean; user: AppUserType | null } }; // For initial load
-
-// 3. Define the Reducer Function
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-    switch (action.type) {
-        case 'AUTH_REQUEST':
-            return { ...state, loading: true, error: null };
-        case 'LOGIN_SUCCESS':
-            return { ...state, isAuthenticated: true, user: action.payload, loading: false, error: null };
-        case 'LOGOUT':
-            return { ...state, isAuthenticated: false, user: null, loading: false, error: null };
-        case 'AUTH_FAILURE':
-            return { ...state, isAuthenticated: false, user: null, loading: false, error: action.payload };
-        case 'SET_AUTH_FROM_STORAGE':
-            return { ...state, isAuthenticated: action.payload.isAuthenticated, user: action.payload.user, loading: false, error: null };
-        default:
-            return state;
-    }
-};
-
-// 4. Create the Contexts
-interface AuthStateContextProps {
-    state: AuthState;
-    dispatch: Dispatch<AuthAction>;
-}
-const AuthStateContext = createContext<AuthStateContextProps | undefined>(undefined);
-
-// 5. Create the Provider Component
 interface AuthProviderProps {
     children: ReactNode;
 }
+
+// Auth Provider Component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    // In AuthProvider
-    const [state, dispatch] = useReducer(authReducer, {
-        isAuthenticated: false,
-        user: null,
-        loading: false,
-        error: null,
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        // Initialize from localStorage
+        const storedAuth = localStorage.getItem('isAuthenticated');
+        return storedAuth === 'true';
     });
-    console.log('AuthProvider initial state:', state);
 
-    useEffect(() => {
-        const storedAuth = localStorage.getItem('auth');
-        console.log('AuthProvider - Retrieved from localStorage:', storedAuth);
-        if (storedAuth) {
-            try {
-                const parsedAuth = JSON.parse(storedAuth);
-                console.log('AuthProvider - Parsed auth:', parsedAuth);
-                console.log('AuthProvider - Dispatching SET_AUTH_FROM_STORAGE', parsedAuth);
-                dispatch({ type: 'SET_AUTH_FROM_STORAGE', payload: parsedAuth });
-            } catch (error) {
-                console.error('AuthProvider - Error parsing auth from storage:', error);
-                localStorage.removeItem('auth');
-            }
-        }
-    }, []);
+    const [user, setUser] = useState(() => {
+        // Initialize user data from localStorage (if you store it)
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
 
-    useEffect(() => {
-        console.log('AuthProvider - State updated:', state);
-        localStorage.setItem('auth', JSON.stringify(state));
-    }, [state]);
+    // Function to log in
+    const login = (userData: AppUserType) => {
+        setIsAuthenticated(true);
+        setUser(userData);
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('user', JSON.stringify(userData));
+    };
+
+    // Function to log out
+    const logout = () => {
+        setIsAuthenticated(false);
+        setUser(null);
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('user');
+    };
+
+    // Value passed to the context provider
+    const authContextValue = {
+        isAuthenticated,
+        user,
+        login,
+        logout,
+    };
 
     return (
-        <AuthStateContext.Provider value={{ state, dispatch }}>
+        <AuthContext.Provider value={authContextValue}>
             {children}
-        </AuthStateContext.Provider>
+        </AuthContext.Provider>
     );
 };
 
-// 6. Create a Custom Hook to Use the Context
+// Custom hook to use the auth context
 export const useAuth = () => {
-    const context = useContext(AuthStateContext);
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-};
-
-// 7. Create a ProtectedRoute Component
-interface ProtectedRouteProps {
-    children: ReactNode;
-}
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-    const { state } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!state.isAuthenticated && !state.loading) {
-            navigate(LOGIN_PATH);
-        }
-    }, [state.isAuthenticated, state.loading, navigate]);
-
-    if (!state.isAuthenticated && !state.loading) {
-        return null;
-    }
-
-    return <>{children}</>;
+    return useContext(AuthContext);
 };

@@ -46,7 +46,7 @@ export const update = async (user: AppUserType): Promise<AppUserType> => {
     return response.json();
 }
 
-export const login = async (lr: LoginType): Promise<AppUserType | { message: string }> => {
+export const login1 = async (lr: LoginType): Promise<AppUserType | { message: string }> => {
     const response = await fetch(APP_USERS_LOGIN_ENDPOINT, {
         method: "POST",
         headers: {

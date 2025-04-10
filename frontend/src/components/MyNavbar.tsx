@@ -3,8 +3,11 @@ import {
     LOGIN_PATH, PUBLISHERS_PATH, REGISTER_PATH
 } from "../constants/Paths.ts";
 import "./MyNavbar.css"
+import {useAuth} from "../config/globalState.tsx";
 
 const MyNavbar = () => {
+    const {logout} = useAuth();
+
     return (
         <ul className="my_navbar_container">
             <li>
@@ -30,6 +33,9 @@ const MyNavbar = () => {
             </li>
             <li>
                 <a href={REGISTER_PATH}>Register</a>
+            </li>
+            <li>
+                <a onClick={logout}>Log out</a>
             </li>
         </ul>
     );
