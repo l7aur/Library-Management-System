@@ -3,6 +3,7 @@ package com.laur.bookshop.controllers;
 import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.model.LoginRequest;
+import com.laur.bookshop.repositories.AppUserRepo;
 import com.laur.bookshop.services.AppUserService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @CrossOrigin
 public class AppUserController {
     private final AppUserService service;
+    private final AppUserRepo appUserRepo;
 
     @PermitAll
     @GetMapping("/app_users/all")
@@ -51,4 +53,13 @@ public class AppUserController {
         return service.login(request);
     }
 
+    @PermitAll
+    @GetMapping("app_users/filter")
+    public List<AppUser> filterUsers(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return service.findUsersByCriteria(username, role, firstName, lastName);
+    }
 }

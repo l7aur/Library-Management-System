@@ -6,7 +6,8 @@ import "./Page.css"
 import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import CreateAppUserForm from "../components/forms/CreateAppUserForm.tsx";
 import UserFormDataType from "../types/UserFormDataType.tsx";
-import {add, del, update} from "../services/AppUserService.ts";
+import {add, del, findFiltered, update} from "../services/AppUserService.ts";
+import UsernameRoleSearchBar from "../components/UsernameRoleSearchBar.tsx";
 
 const AppUsersPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllAppUsers();
@@ -32,7 +33,6 @@ const AppUsersPage = () => {
             && Boolean(user.password)
             && Boolean(user.id)
     };
-
     const handleCreate = (newUser: UserFormDataType) => {
         setError([]);
         setOkays([]);
@@ -73,11 +73,16 @@ const AppUsersPage = () => {
                 setError(err);
             });
     };
-
     const handleRead = () => {
         refetch().then(r => console.log(r));
     };
-
+    const handleFilteredSearch = (username: string, role: string, firstName: string, lastName: string) => {
+        setFData([]);
+        setError([]);
+        findFiltered(username, role, firstName, lastName)
+            .then(response => setFData(response))
+            .catch((error) => {setError([error])})
+    };
     const handleUpdate = (newUserData: UserFormDataType) => {
         setError([]);
         setOkays([]);
@@ -143,13 +148,15 @@ const AppUsersPage = () => {
                 setFData((prevFData) => prevFData.filter((item) => !ids.includes(item.id)));
             });
     }
-
     const onRowSelect = (state: { selectedRows: AppUserType[] }) => {
         setSelectedAppUsers(state.selectedRows);
     };
 
     return (
         <div className="page_container">
+            <UsernameRoleSearchBar
+                onSearch={handleFilteredSearch}
+            />
             <AppUsersTable
                 data={fData}
                 loading={fLoading}

@@ -9,6 +9,7 @@ import com.laur.bookshop.model.AppUser;
 import com.laur.bookshop.model.LoginRequest;
 import com.laur.bookshop.repositories.AppUserRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,5 +68,24 @@ public class AppUserService {
         if(!passwordEncoder.matches(lr.getPassword(), appUser.getPassword()))
             throw new InvalidPassword(WRONG_PASSWORD_MESSAGE);
         return appUser;
+    }
+
+    public List<AppUser> findUsersByCriteria(String username, String role, String firstName, String lastName) {
+        Specification<AppUser> spec = Specification.where(null); // Start with a null specification
+
+        if (username != null && !username.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("username"), username));
+        }
+        if (role != null && !role.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("role"), role));
+        }
+        if (firstName != null && !firstName.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("firstName"), firstName));
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("lastName"), lastName));
+        }
+
+        return appUserRepo.findAll(spec);
     }
 }
