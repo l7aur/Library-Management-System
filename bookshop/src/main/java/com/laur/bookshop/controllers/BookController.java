@@ -43,4 +43,12 @@ public class BookController {
     public Book updateBook(@Valid @RequestBody BookDTO book) {
         return service.updateBook(book);
     }
+
+    @PermitAll
+    @GetMapping("books/filter")
+    public List<Book> filterUsers(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Integer stock) {
+        return service.findUsersByCriteria(title, stock);
+    }
 }

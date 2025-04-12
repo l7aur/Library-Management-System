@@ -6,7 +6,7 @@
 }
 
 .input_container {
-    width: 20vw; /* Full width input */
+    width: 30vw; /* Full width input */
     padding: 10px; /* Adds space inside the input */
     margin: 10px 0; /* Adds space above and below the input */
     border: 1px solid #ccc; /* Light grey border */
@@ -45,7 +45,7 @@
 
 .select_container {
     display: block; /* Ensures the select aligns vertically */
-    width: 22vw; /* Full width */
+    width: 32vw; /* Full width */
     padding: 10px; /* Adds space inside the input */
     margin: 10px 0; /* Adds space above and below the input */
     border: 1px solid #ccc; /* Light grey border */

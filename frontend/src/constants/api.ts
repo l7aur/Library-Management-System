@@ -27,3 +27,4 @@ export const APP_USERS_UPDATE_ENDPOINT = `${APP_USERS_ENDPOINT}/edit`;
 
 export const APP_USERS_LOGIN_ENDPOINT = `${APP_USERS_ENDPOINT}/login`;
 export const APP_USERS_FILTER_ENDPOINT =`${APP_USERS_ENDPOINT}/filter`;
+export const BOOKS_FILTER_ENDPOINT = `${BOOKS_ENDPOINT}/filter`;

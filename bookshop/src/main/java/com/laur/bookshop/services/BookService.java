@@ -12,6 +12,7 @@ import com.laur.bookshop.repositories.AuthorRepo;
 import com.laur.bookshop.repositories.BookRepo;
 import com.laur.bookshop.repositories.PublisherRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -86,5 +87,17 @@ public class BookService {
         book.setPublisher(publisherRepo.findById(UUID.fromString(b.getPublisherId())).
                 orElseThrow( () -> new PublisherNotFoundException(PUBLISHER_NOT_FOUND_MESSAGE)));
         return bookRepo.save(book);
+    }
+
+    public List<Book> findUsersByCriteria(String title, Integer stock) {
+        Specification<Book> spec = Specification.where(null); // Start with a null specification
+
+        if (title != null && !title.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("title"), title));
+        }
+        if (stock != null) {
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("stock"), stock));
+        }
+        return bookRepo.findAll(spec);
     }
 }

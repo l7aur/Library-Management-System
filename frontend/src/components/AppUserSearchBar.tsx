@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import "./UsernameRoleSearchBar.css"
+import "./FilterSearchBar.css"
 import * as React from "react";
 
 type UsernameRoleSearchBarProps = {
     onSearch: (username: string, role: string, firstName: string, lastName: string) => void;
 };
 
-function UsernameRoleSearchBar({ onSearch } : UsernameRoleSearchBarProps) {
+function AppUserSearchBar({ onSearch } : UsernameRoleSearchBarProps) {
     const [username, setUsername] = useState('');
     const [role, setRole] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -74,4 +74,4 @@ function UsernameRoleSearchBar({ onSearch } : UsernameRoleSearchBarProps) {
     );
 }
 
-export default UsernameRoleSearchBar;
+export default AppUserSearchBar;

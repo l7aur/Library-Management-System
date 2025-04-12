@@ -7,7 +7,7 @@ import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import CreateAppUserForm from "../components/forms/CreateAppUserForm.tsx";
 import AppUserFormDataType from "../types/FormDataType.tsx";
 import {add, del, findFiltered, update} from "../services/AppUserService.ts";
-import UsernameRoleSearchBar from "../components/UsernameRoleSearchBar.tsx";
+import AppUserSearchBar from "../components/AppUserSearchBar.tsx";
 
 const AppUsersPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllAppUsers();
@@ -154,7 +154,7 @@ const AppUsersPage = () => {
 
     return (
         <div className="page_container">
-            <UsernameRoleSearchBar
+            <AppUserSearchBar
                 onSearch={handleFilteredSearch}
             />
             <AppUsersTable
