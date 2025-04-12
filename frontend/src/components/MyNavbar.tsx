@@ -5,8 +5,8 @@ import {
 import "./MyNavbar.css"
 import {useAuth} from "../config/globalState.tsx";
 
-const MyNavbar = () => {
-    const {logout} = useAuth();
+function MyNavbar () {
+    const {isAuthenticated, user, logout} = useAuth();
 
     return (
         <ul className="my_navbar_container">
@@ -22,21 +22,31 @@ const MyNavbar = () => {
             <li>
                 <a href={PUBLISHERS_PATH}>Publishers</a>
             </li>
-            <li>
-                <a href={APP_USERS_PATH}>Users</a>
-            </li>
-            <li>
-                <a href={CART_PATH}>Cart</a>
-            </li>
-            <li>
-                <a href={LOGIN_PATH}>Login</a>
-            </li>
-            <li>
-                <a href={REGISTER_PATH}>Register</a>
-            </li>
-            <li>
-                <a onClick={logout}>Log out</a>
-            </li>
+            {(isAuthenticated && user != null && user.role == "ADMIN") &&
+                <li>
+                    <a href={APP_USERS_PATH}>Users</a>
+                </li>
+            }
+            {isAuthenticated && user != null && user.role != "ADMIN" &&
+                <li>
+                    <a href={CART_PATH}>Cart</a>
+                </li>
+            }
+            {(!isAuthenticated) &&
+                <li>
+                    <a href={LOGIN_PATH}>Login</a>
+                </li>
+            }
+            {(!isAuthenticated) &&
+                <li>
+                    <a href={REGISTER_PATH}>Register</a>
+                </li>
+            }
+            {(isAuthenticated) &&
+                <li>
+                    <a onClick={logout}>Log out</a>
+                </li>
+            }
         </ul>
     );
 }

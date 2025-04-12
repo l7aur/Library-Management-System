@@ -15,17 +15,14 @@ function UsernameRoleSearchBar({ onSearch } : UsernameRoleSearchBarProps) {
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
     };
-
-    const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setRole(event.target.value);
-    };
-
     const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFirstName(event.target.value);
     };
-
     const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLastName(event.target.value);
+    };
+    const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setRole(event.target.value);
     };
 
     const handleSearchClick = () => {
