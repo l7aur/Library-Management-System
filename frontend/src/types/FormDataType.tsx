@@ -1,4 +1,4 @@
-export default interface UserFormDataType {
+export default interface AppUserFormDataType {
     id: string;
     username: string
     password: string

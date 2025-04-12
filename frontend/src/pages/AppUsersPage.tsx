@@ -5,7 +5,7 @@ import useFindAllAppUsers from "../hooks/useFindAllAppUsers.tsx";
 import "./Page.css"
 import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import CreateAppUserForm from "../components/forms/CreateAppUserForm.tsx";
-import UserFormDataType from "../types/UserFormDataType.tsx";
+import AppUserFormDataType from "../types/FormDataType.tsx";
 import {add, del, findFiltered, update} from "../services/AppUserService.ts";
 import UsernameRoleSearchBar from "../components/UsernameRoleSearchBar.tsx";
 
@@ -33,7 +33,7 @@ const AppUsersPage = () => {
             && Boolean(user.password)
             && Boolean(user.id)
     };
-    const handleCreate = (newUser: UserFormDataType) => {
+    const handleCreate = (newUser: AppUserFormDataType) => {
         setError([]);
         setOkays([]);
         if (newUser.password !== newUser.confirmation) {
@@ -83,7 +83,7 @@ const AppUsersPage = () => {
             .then(response => setFData(response))
             .catch((error) => {setError([error])})
     };
-    const handleUpdate = (newUserData: UserFormDataType) => {
+    const handleUpdate = (newUserData: AppUserFormDataType) => {
         setError([]);
         setOkays([]);
         if (newUserData.password !== newUserData.confirmation) {
@@ -176,8 +176,9 @@ const AppUsersPage = () => {
                             if (selectedAppUsers && selectedAppUsers.length > 0) {
                                 setError(["Cannot update the table if users are selected!"]);
                                 setSelectedAppUsers([]);
-                            } else
+                            } else {
                                 handleRead();
+                            }
                         }}
                         onUpdate={() => {
                             setError([]);
@@ -185,8 +186,9 @@ const AppUsersPage = () => {
                             if (selectedAppUsers && selectedAppUsers.length === 1) {
                                 setIsCreateFormOpen(true);
                                 setFormFillData(selectedAppUsers[0]);
-                            } else
+                            } else {
                                 setError(["Can update just one user at a time!"]);
+                            }
                         }}
                         onDelete={handleDelete}
                     />

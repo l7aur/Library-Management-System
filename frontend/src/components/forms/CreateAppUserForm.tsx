@@ -1,14 +1,14 @@
 import "./CreateForm.css"
 import * as React from "react";
 import {useState} from "react";
-import UserFormDataType from "../../types/UserFormDataType.tsx";
+import AppUserFormDataType from "../../types/FormDataType.tsx";
 import {AppUserType} from "../../types/AppUserType.tsx";
 
 interface Props {
     data: AppUserType;
     onClose: () => void;
-    onSubmitCreate: (formData: UserFormDataType) => void;
-    onSubmitUpdate: (formData: UserFormDataType) => void;
+    onSubmitCreate: (formData: AppUserFormDataType) => void;
+    onSubmitUpdate: (formData: AppUserFormDataType) => void;
 }
 
 const CreateAppUserForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmitUpdate}) => {
