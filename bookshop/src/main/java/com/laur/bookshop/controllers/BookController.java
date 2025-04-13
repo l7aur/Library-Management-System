@@ -49,6 +49,6 @@ public class BookController {
     public List<Book> filterUsers(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Integer stock) {
-        return service.findUsersByCriteria(title, stock);
+        return service.findBooksByCriteria(title, stock);
     }
 }

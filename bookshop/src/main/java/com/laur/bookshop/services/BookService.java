@@ -89,7 +89,7 @@ public class BookService {
         return bookRepo.save(book);
     }
 
-    public List<Book> findUsersByCriteria(String title, Integer stock) {
+    public List<Book> findBooksByCriteria(String title, Integer stock) {
         Specification<Book> spec = Specification.where(null); // Start with a null specification
 
         if (title != null && !title.isEmpty()) {
