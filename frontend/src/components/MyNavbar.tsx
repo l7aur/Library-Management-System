@@ -13,15 +13,21 @@ function MyNavbar () {
             <li>
                 <a href={HOME_PATH}>Home</a>
             </li>
-            <li>
-                <a href={BOOKS_PATH}>Books</a>
-            </li>
-            <li>
-                <a href={AUTHORS_PATH}>Authors</a>
-            </li>
-            <li>
-                <a href={PUBLISHERS_PATH}>Publishers</a>
-            </li>
+            {(isAuthenticated && user != null && (user.role == "ADMIN" || user.role == "EMPLOYEE")) &&
+                <li>
+                    <a href={BOOKS_PATH}>Books</a>
+                </li>
+            }
+            {(isAuthenticated && user != null && (user.role == "ADMIN" || user.role == "EMPLOYEE")) &&
+                <li>
+                    <a href={AUTHORS_PATH}>Authors</a>
+                </li>
+            }
+            {(isAuthenticated && user != null && (user.role == "ADMIN" || user.role == "EMPLOYEE")) &&
+                <li>
+                    <a href={PUBLISHERS_PATH}>Publishers</a>
+                </li>
+            }
             {(isAuthenticated && user != null && user.role == "ADMIN") &&
                 <li>
                     <a href={APP_USERS_PATH}>Users</a>
@@ -44,7 +50,7 @@ function MyNavbar () {
             }
             {(isAuthenticated) &&
                 <li>
-                    <a onClick={logout}>Log out</a>
+                    <a onClick={logout} href={HOME_PATH}>Log out</a>
                 </li>
             }
         </ul>

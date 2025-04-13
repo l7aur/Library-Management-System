@@ -26,10 +26,10 @@ function App() {
                         <Route path={LOGIN_PATH} element={<LoginPage />} />
                         <Route path={REGISTER_PATH} element={<RegisterPage />} />
                         <Route path={NOT_FOUND_PATH} element={<NotFoundPage />} />
+                        <Route path={HOME_PATH} element={<HomePage />} />
 
                         {/* Protected Routes */}
                         <Route element={<ProtectedRoute />}>
-                            <Route path={HOME_PATH} element={<HomePage />} />
                             <Route path={BOOKS_PATH} element={<BooksPage />} />
                             <Route path={AUTHORS_PATH} element={<AuthorsPage />} />
                             <Route path={PUBLISHERS_PATH} element={<PublishersPage />} />
