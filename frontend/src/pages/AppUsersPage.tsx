@@ -48,6 +48,7 @@ const AppUsersPage = () => {
                 lastName: response.lastName,
                 username: response.username,
                 password: response.password,
+                message: response.message
             }))
             .then((formattedResponse) => {
                 if (isValidUser(formattedResponse)) {
@@ -65,6 +66,9 @@ const AppUsersPage = () => {
                             , formattedResponse.firstName
                             , formattedResponse.lastName
                         ];
+                    if(formattedResponse.message != undefined) {
+                        err.push(formattedResponse.message);
+                    }
                     throw new Error(err.filter((x) => x != undefined).join("\n"));
                 }
             })

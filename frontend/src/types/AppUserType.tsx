@@ -5,4 +5,5 @@ export interface AppUserType {
     password: string;
     role: string;
     username: string;
+    message?: string;
 }

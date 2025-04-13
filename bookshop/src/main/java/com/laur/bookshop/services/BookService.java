@@ -93,10 +93,11 @@ public class BookService {
         Specification<Book> spec = Specification.where(null); // Start with a null specification
 
         if (title != null && !title.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("title"), title));
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + title.toLowerCase() + "%"));
         }
         if (stock != null) {
-            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("stock"), stock));
+            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.lessThan(root.get("stock"), stock));
         }
         return bookRepo.findAll(spec);
     }

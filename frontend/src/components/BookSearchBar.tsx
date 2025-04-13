@@ -30,7 +30,7 @@ function BookSearchBar({ onSearch } : BookSearchBarProps) {
                         className="input_container"
                         type="text"
                         id="title"
-                        placeholder="Title"
+                        placeholder="Title containing..."
                         value={title}
                         onChange={handleTitleChange}
                     />
@@ -38,7 +38,7 @@ function BookSearchBar({ onSearch } : BookSearchBarProps) {
                         className="input_container"
                         type="number"
                         id="stock"
-                        placeholder="Stock"
+                        placeholder="Stock smaller than..."
                         value={stock}
                         onChange={handleStockChange}
                     />
