@@ -1,5 +1,6 @@
 package com.laur.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.laur.bookshop.config.dto.AuthorDTO;
@@ -34,6 +35,7 @@ public class Author {
     private String nationality;
 
     @ManyToMany(mappedBy = "authors")
+    @JsonBackReference
     private List<Book> books;
 
     public AuthorDTO toDTO() {

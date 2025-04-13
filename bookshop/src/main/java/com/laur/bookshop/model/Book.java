@@ -1,6 +1,7 @@
 package com.laur.bookshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.laur.bookshop.config.dto.BookDTO;
 import jakarta.persistence.*;
@@ -30,6 +31,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @JsonManagedReference
     private List<Author> authors;
 
     @Column(name = "publish_year")

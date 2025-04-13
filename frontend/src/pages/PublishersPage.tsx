@@ -163,7 +163,7 @@ const PublishersPage = () => {
                     data={formFillData}
                     onClose={() => {
                         setIsCreateFormOpen(false);
-                        setFormFillData({id: "", name: "", location: "", foundingYear: 0, books: []})
+                        setFormFillData({id: "", name: "", location: "", foundingYear: 0, books: [""]})
                     }}
                     onSubmitCreate={(newPublisher) => handleCreate(newPublisher)}
                     onSubmitUpdate={(newPublisher) => handleUpdate(newPublisher)}

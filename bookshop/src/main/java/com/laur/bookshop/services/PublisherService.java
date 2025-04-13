@@ -33,11 +33,12 @@ public class PublisherService {
             throw new DuplicateException(PUBLISHER_DUPLICATE_MESSAGE);
 
         List<Book> books = new ArrayList<>();
-        for(String id : p.getBookIds()) {
-            books.add(bookRepo.findByTitle(id).orElseThrow(
-                    () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
-            ));
-        }
+        if(p.getBookIds() != null)
+            for(String id : p.getBookIds()) {
+                books.add(bookRepo.findByTitle(id).orElseThrow(
+                        () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
+                ));
+            }
         Publisher publisher = new Publisher();
         publisher.setName(p.getName());
         publisher.setLocation(p.getLocation());

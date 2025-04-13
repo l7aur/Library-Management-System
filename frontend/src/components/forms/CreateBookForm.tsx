@@ -1,17 +1,17 @@
 import "./CreateForm.css"
 import * as React from "react";
 import {useEffect, useState} from "react";
-import BookType from "../../types/BookType.tsx";
 import {AUTHORS_GET_ALL_ENDPOINT, PUBLISHERS_GET_ALL_ENDPOINT} from "../../constants/API.ts";
 import PublisherType from "../../types/PublisherType.tsx";
 import {AuthorType} from "../../types/AuthorType.tsx";
-import Select, {Theme} from "react-select";
+import Select, {MultiValue, Theme} from "react-select";
+import BookTypeDTO from "../../types/BookTypeDTO.tsx";
 
 interface Props {
-    data: BookType;
+    data: BookTypeDTO;
     onClose: () => void;
-    onSubmitCreate: (formData: BookType) => void;
-    onSubmitUpdate: (formData: BookType) => void;
+    onSubmitCreate: (formData: BookTypeDTO) => void;
+    onSubmitUpdate: (formData: BookTypeDTO) => void;
 }
 
 const CreateBookForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmitUpdate}) => {
@@ -79,6 +79,11 @@ const CreateBookForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmi
         fetchAuthors()
             .catch(error => setAError(error));
     }, []);
+
+    const handleAuthorSelectChange = (selectedOptions: MultiValue<{ value: string; label: string }>) => {
+        const authorIds = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+        setFormData({ ...formData, authorIds: authorIds });
+    };
 
     const darkTheme = (theme: Theme) => ({
         ...theme,
@@ -151,9 +156,15 @@ const CreateBookForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmi
             {aError && <div>Error loading authors.</div>}
             {!aLoading && !aError && (
                 <Select
-                    defaultValue={[ {value: authors[0].id.toString(), label: authors[0].firstName + " " + authors[0].lastName } ]}
+                    defaultValue={
+                        authors
+                            .filter(a => data.authorIds.includes(a.id))
+                            .map(author => ({
+                                value: author.id.toString(),
+                                label: author.firstName+ " "+ author.lastName
+                            }))}
                     isMulti
-                    name="colors"
+                    name="authors"
                     options={authors.map(author => ({
                         value: author.id.toString(),
                         label: author.firstName + " " + author.lastName,
@@ -161,6 +172,7 @@ const CreateBookForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmi
                     className="select_container"
                     classNamePrefix="select"
                     theme={darkTheme}
+                    onChange={handleAuthorSelectChange}
                 />
             )}
             <input

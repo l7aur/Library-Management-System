@@ -1,18 +1,22 @@
 import DataTable, {TableColumn} from "react-data-table-component";
-import BookType from "../../types/BookType.tsx";
+import {BookTypeImpl} from "../../types/BookType.tsx";
 
 interface Props {
-    data: BookType[]
+    data: BookTypeImpl[]
     loading: boolean
     isError: boolean
-    onRowSelect: (state: {selectedRows: BookType[]}) => void
+    onRowSelect: (state: {selectedRows: BookTypeImpl[]}) => void
     clearSelection: boolean
 }
 
 export default function BooksTable({data, loading, isError, onRowSelect, clearSelection}: Props) {
-    const columns: TableColumn<BookType>[] = [
+    console.log("table ", data);
+    const columns: TableColumn<BookTypeImpl>[] = [
         { name: 'ISBN', selector: (row) => row.isbn, sortable: true, id: 1 },
         { name: 'Title', selector: (row) => row.title, sortable: true },
+        { name: 'Authors', selector: (row) => row.authors.map(a => a.firstName + " " + a.lastName).join(", "), sortable: true },
+        { name: 'Publication Year', selector: (row) => row.publishYear, sortable: true },
+        { name: 'Publisher', selector: (row) => row.publisher.name, sortable: true },
         { name: 'Price', selector: (row) => row.price, sortable: true },
         { name: 'Stock', selector: (row) => row.stock, sortable: true }
     ];

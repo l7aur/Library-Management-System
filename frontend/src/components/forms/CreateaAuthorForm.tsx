@@ -57,7 +57,7 @@ const CreateAuthorForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSub
             />
             <input
                 className="input_container"
-                type="number"
+                type="text"
                 name="alias"
                 placeholder="Alias (optional)"
                 value={formData.alias}
@@ -67,7 +67,7 @@ const CreateAuthorForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSub
             />
             <input
                 className="input_container"
-                type="number"
+                type="text"
                 name="nationality"
                 placeholder="Nationality"
                 value={formData.nationality}

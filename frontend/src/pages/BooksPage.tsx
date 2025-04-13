@@ -1,20 +1,21 @@
 import {useState} from "react";
-import BookType from "../types/BookType.tsx";
+import {BookType, BookTypeImpl} from "../types/BookType.tsx";
 import BooksTable from "../components/tables/BooksTable.tsx";
 import useFindAllBooks from "../hooks/useFindAllBooks.tsx";
 import {add, del, findFiltered, update} from "../services/BookService.ts";
 import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import BookSearchBar from "../components/BookSearchBar.tsx";
 import CreateBookForm from "../components/forms/CreateBookForm.tsx";
+import BookTypeDTO from "../types/BookTypeDTO.tsx";
 
 const BooksPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllBooks();
     const [clearSelection, setClearSelection] = useState<boolean>(false);
-    const [selectedBooks, setSelectedBooks] = useState<BookType[]>([]);
+    const [selectedBooks, setSelectedBooks] = useState<BookTypeImpl[]>([]);
     const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
     const [error, setError] = useState<string[]>([]);
     const [okays, setOkays] = useState<string[]>([]);
-    const [formFillData, setFormFillData] = useState<BookType>({
+    const [formFillData, setFormFillData] = useState<BookTypeDTO>({
         id: "",
         isbn: "",
         publishYear: 0,
@@ -26,30 +27,24 @@ const BooksPage = () => {
     });
 
     const isValidBook = (book: BookType): boolean => {
-        return Boolean(book.id)
-            && Boolean(book.isbn)
-            && Boolean(book.title)
-            && Boolean(book.publishYear != 0)
-            && Boolean(book.publisherId)
-            && Boolean(book.authorIds)
-            && (book.stock >= 0)
-            && Boolean(book.price > 0);
+        return Boolean(book?.isbn)
+            && Boolean(book?.title)
+            && Boolean(book?.publishYear !== undefined && book.publishYear > 0)
+            && Boolean(book?.publisher)
+            && Boolean(book?.authors && book.authors.length > 0)
+            && (book?.stock !== undefined && book.stock >= 0)
+            && Boolean(book?.price !== undefined && book.price > 0);
     };
-    const handleCreate = (newBook: BookType) => {
+    const handleCreate = (newBook: BookTypeDTO) => {
         setError([]);
         setOkays([]);
+        console.log(newBook);
         add(newBook)
-            .then((response: BookType) => ({
-                id: response.id,
-                isbn: response.isbn,
-                publishYear: response.publishYear,
-                title: response.title,
-                publisherId: response.publisherId,
-                authorIds: response.authorIds,
-                stock: response.stock,
-                price: response.price
-            }))
+            .then((response: BookType) => {
+                return response;
+            })
             .then((formattedResponse) => {
+                console.log("formatted book: ", formattedResponse);
                 if (isValidBook(formattedResponse)) {
                     setFData((prevFData) =>
                         prevFData.length > 0
@@ -62,8 +57,8 @@ const BooksPage = () => {
                             , formattedResponse.isbn
                             , formattedResponse.publishYear.toString()
                             , formattedResponse.title
-                            , formattedResponse.publisherId
-                            , formattedResponse.authorIds.join("\n")
+                            , formattedResponse.publisher.id
+                            , formattedResponse.authors.join("\n")
                             , formattedResponse.stock.toString()
                             , formattedResponse.price.toString()
                         ];
@@ -85,20 +80,15 @@ const BooksPage = () => {
             .then(response => setFData(response))
             .catch((error) => {setError([error])})
     };
-    const handleUpdate = (newBook: BookType) => {
+    const handleUpdate = (newBook: BookTypeDTO) => {
         setError([]);
         setOkays([]);
         update(newBook)
-            .then((response: BookType) => ({
-                id: response.id,
-                isbn: response.isbn,
-                publishYear: response.publishYear,
-                title: response.title,
-                publisherId: response.publisherId,
-                authorIds: response.authorIds,
-                stock: response.stock,
-                price: response.price
-            }))
+            .then((response: BookType) => {
+                {
+                    return response;
+                }
+            })
             .then((formattedResponse) => {
                 if (isValidBook(formattedResponse)) {
                     setFData((prevFData) =>
@@ -111,8 +101,8 @@ const BooksPage = () => {
                             , formattedResponse.isbn
                             , formattedResponse.publishYear.toString()
                             , formattedResponse.title
-                            , formattedResponse.publisherId
-                            , formattedResponse.authorIds.join("\n")
+                            , formattedResponse.publisher.id
+                            , formattedResponse.authors.join("\n")
                             , formattedResponse.stock.toString()
                             , formattedResponse.price.toString()
                         ];
@@ -179,7 +169,16 @@ const BooksPage = () => {
                             setOkays([]);
                             if (selectedBooks && selectedBooks.length === 1) {
                                 setIsCreateFormOpen(true);
-                                setFormFillData(selectedBooks[0]);
+                                setFormFillData({
+                                    id: selectedBooks[0].id,
+                                    isbn: selectedBooks[0].isbn,
+                                    publishYear: selectedBooks[0].publishYear,
+                                    publisherId: selectedBooks[0].publisher.id,
+                                    authorIds: selectedBooks[0].authors.map(a => a.id.toString()),
+                                    title: selectedBooks[0].title,
+                                    stock: selectedBooks[0].stock,
+                                    price: selectedBooks[0].price
+                                });
                             } else {
                                 setError(["Can update just one user at a time!"]);
                             }

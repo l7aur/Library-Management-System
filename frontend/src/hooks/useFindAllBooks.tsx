@@ -24,6 +24,5 @@ export default function useFindAllBooks() {
     useEffect(() => {
         fetchFindData().catch((error) => console.error("Error fetching data:", error));
     }, []);
-
     return { fData: data, setFData: setData, fLoading: loading, isFError: isError, refetch: fetchFindData };
 }

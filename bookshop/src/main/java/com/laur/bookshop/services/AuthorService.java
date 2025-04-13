@@ -32,11 +32,12 @@ public class AuthorService {
             throw new DuplicateException(AUTHOR_DUPLICATE_MESSAGE);
 
         List<Book> books = new ArrayList<>();
-        for (String id : a.getBookIDs()) {
-            books.add(bookRepo.findByTitle(id).orElseThrow(
-                    () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
-            ));
-        }
+        if(a.getBookIDs() != null)
+            for (String id : a.getBookIDs()) {
+                books.add(bookRepo.findByTitle(id).orElseThrow(
+                        () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
+                ));
+            }
         Author author = new Author();
         author.setBooks(books);
         author.setAlias(a.getAlias());
@@ -62,11 +63,14 @@ public class AuthorService {
         author.setLastName(a.getLastName());
         author.setNationality(a.getNationality());
         author.setAlias(a.getAlias());
-        author.setBooks(a.getBookIDs().stream()
+        if(a.getBookIDs() != null)
+            author.setBooks(a.getBookIDs().stream()
                 .map(id -> bookRepo.findById(UUID.fromString(id)))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList()));
+        else
+            author.setBooks(Collections.emptyList());
         return authorRepo.save(author);
     }
 }

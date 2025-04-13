@@ -1,10 +1,11 @@
-import BookType from "../types/BookType.tsx";
+import {BookType, BookTypeImpl} from "../types/BookType.tsx";
 import {
     BOOKS_ADD_ENDPOINT, BOOKS_DELETE_ENDPOINT, BOOKS_EDIT_ENDPOINT, BOOKS_FILTER_ENDPOINT,
     BOOKS_GET_ALL_ENDPOINT
 } from "../constants/API.ts";
+import BookTypeDTO from "../types/BookTypeDTO.tsx";
 
-export const findAll = async (): Promise<BookType[]> => {
+export const findAll = async (): Promise<BookTypeImpl[]> => {
     const response = await fetch(BOOKS_GET_ALL_ENDPOINT);
     return response.json();
 };
@@ -35,7 +36,7 @@ export const findFiltered = async (title?: string, stock?: number): Promise<Book
     }
 };
 
-export const add = async (newBook: BookType): Promise<BookType> => {
+export const add = async (newBook: BookTypeDTO): Promise<BookType> => {
     const response = await fetch(BOOKS_ADD_ENDPOINT, {
         method: "POST",
         headers: {
@@ -57,7 +58,7 @@ export const del = async (ids: string[]): Promise<number> => {
     return response.status;
 }
 
-export const update = async (book: BookType): Promise<BookType> => {
+export const update = async (book: BookTypeDTO): Promise<BookType> => {
     const response = await fetch(BOOKS_EDIT_ENDPOINT, {
         method: "PUT",
         headers: {
