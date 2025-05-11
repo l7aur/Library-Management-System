@@ -3,7 +3,7 @@ import {
     LOGIN_PATH, PUBLISHERS_PATH, REGISTER_PATH
 } from "../constants/Paths.ts";
 import "./MyNavbar.css"
-import {useAuth} from "../config/globalState.tsx";
+import {useAuth} from "../config/GlobalState.tsx";
 
 function MyNavbar () {
     const {isAuthenticated, user, logout} = useAuth();

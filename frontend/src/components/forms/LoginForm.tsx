@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginType from "../../types/LoginType.tsx";
 import { login1 } from "../../services/AppUserService.ts";
 import { HOME_PATH } from "../../constants/Paths";
-import {useAuth} from "../../config/globalState.tsx";
+import {useAuth} from "../../config/GlobalState.tsx";
 
 const LoginForm: React.FC<LoginType> = () => {
     const [formData, setFormData] = useState({
@@ -26,10 +26,9 @@ const LoginForm: React.FC<LoginType> = () => {
 
         try {
             const result = await login1(formData);
-
-            if ('message' in result) {
-                setError(result.message);
-            } else {
+            if(result.appUser === null)
+                setError("Failed to login: " + result.errorMessage);
+            else{
                 login(result);
                 navigate(HOME_PATH);
             }

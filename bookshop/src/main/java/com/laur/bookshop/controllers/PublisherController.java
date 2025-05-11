@@ -19,26 +19,22 @@ import java.util.UUID;
 public class PublisherController {
     final PublisherService service;
 
-    @PermitAll
     @GetMapping("/publishers/all")
     public List<Publisher> getAllPublishers() {
         return service.findAllPublishers();
     }
 
-    @PermitAll
     @PostMapping("/publishers/add")
     public Publisher addPublisher(@Valid @RequestBody PublisherDTO validatedPublisher) {
         return service.addPublisher(validatedPublisher);
     }
 
-    @PermitAll
     @DeleteMapping("/publishers/delete")
     public ResponseEntity<String> deletePublisher(@RequestBody Map<String, List<UUID>> ids) {
         List<UUID> idList = ids.get("ids");
         return service.deleteByIds(idList);
     }
 
-    @PermitAll
     @PutMapping("/publishers/edit")
     public Publisher updatePublisher(@Valid @RequestBody PublisherDTO publisher) {
         return service.updatePublisher(publisher);

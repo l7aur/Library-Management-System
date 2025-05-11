@@ -15,8 +15,8 @@ export default function AppUsersTable({data, loading, isError, onRowSelect, clea
         {name: 'First Name', selector: (row) => row.firstName, sortable: true, id: 1},
         {name: 'Last Name', selector: (row) => row.lastName, sortable: true},
         {name: 'Role', selector: (row) => row.role, sortable: true},
-        {name: 'Username', selector: (row) => row.username, sortable: true},
-        {name: 'Password', selector: (row) => row.password, sortable: true}
+        {name: 'Username', selector: (row) => row.username, sortable: true}
+        // {name: 'Password', selector: (row) => row.password, sortable: true}
     ];
 
     const isEmpty = data && data.length === 0;

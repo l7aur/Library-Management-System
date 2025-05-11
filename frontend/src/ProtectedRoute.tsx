@@ -1,16 +1,27 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import {useAuth} from "./config/globalState.tsx";
+import React from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from './config/GlobalState';
+import {LOGIN_PATH, UNAUTHORIZED_PATH} from './constants/Paths';
 
-function ProtectedRoute() {
-    const { isAuthenticated } = useAuth();
+interface ProtectedRouteProps {
+    allowedRoles?: string[];
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
+    const { isAuthenticated, user } = useAuth();
+    const location = useLocation();
 
     if (!isAuthenticated) {
-        // Redirect to the login page if not authenticated
-        return <Navigate to="/login" />;
+        return <Navigate to={LOGIN_PATH} state={{ from: location }} />;
     }
 
-    // If authenticated, render the child routes
+    if (allowedRoles && user && user.role) {
+        if (!allowedRoles.includes(user.role)) {
+            return <Navigate to={UNAUTHORIZED_PATH} />;
+        }
+    }
+
     return <Outlet />;
-}
+};
 
 export default ProtectedRoute;

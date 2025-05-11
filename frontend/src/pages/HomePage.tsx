@@ -1,4 +1,4 @@
-import {useAuth} from "../config/globalState.tsx";
+import {useAuth} from "../config/GlobalState.tsx";
 
 function HomePage () {
     const {isAuthenticated, user} = useAuth();

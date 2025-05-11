@@ -8,6 +8,7 @@ import CreateAppUserForm from "../components/forms/CreateAppUserForm.tsx";
 import AppUserFormDataType from "../types/FormDataType.tsx";
 import {add, del, findFiltered, update} from "../services/AppUserService.ts";
 import AppUserSearchBar from "../components/AppUserSearchBar.tsx";
+import {useAuth} from "../config/GlobalState.tsx";
 
 const AppUsersPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllAppUsers();
@@ -24,6 +25,7 @@ const AppUsersPage = () => {
         firstName: "",
         lastName: ""
     });
+    const { token } = useAuth();
 
     const isValidUser = (user: AppUserType): boolean => {
         return Boolean(user.username)
@@ -77,17 +79,17 @@ const AppUsersPage = () => {
                 setError(err);
             });
     };
-    const handleRead = () => {
-        refetch().then(r => console.log(r));
+    const HandleRead = () => {
+        refetch();
     };
-    const handleFilteredSearch = (username: string, role: string, firstName: string, lastName: string) => {
+    const HandleFilteredSearch = (username: string, role: string, firstName: string, lastName: string) => {
         setFData([]);
         setError([]);
-        findFiltered(username, role, firstName, lastName)
+        findFiltered(token, username, role, firstName, lastName)
             .then(response => setFData(response))
             .catch((error) => {setError([error])})
     };
-    const handleUpdate = (newUserData: AppUserFormDataType) => {
+    const HandleUpdate = (newUserData: AppUserFormDataType) => {
         setError([]);
         setOkays([]);
         if (newUserData.password !== newUserData.confirmation) {
@@ -102,7 +104,7 @@ const AppUsersPage = () => {
             password: newUserData.password,
             role: newUserData.role,
         }
-        update(newUser)
+        update(newUser, token)
             .then((response: AppUserType) => ({
                 id: response.id,
                 role: response.role,
@@ -134,11 +136,11 @@ const AppUsersPage = () => {
                 setError(err);
             })
     }
-    const handleDelete = () => {
+    const HandleDelete = () => {
         setError([]);
         setOkays([]);
         const ids = selectedAppUsers.map((item) => item.id);
-        del(ids)
+        del(ids, token)
             .then((r) => {
                 if (200 === r) {
                     setOkays(["Success!"]);
@@ -159,7 +161,7 @@ const AppUsersPage = () => {
     return (
         <div className="page_container">
             <AppUserSearchBar
-                onSearch={handleFilteredSearch}
+                onSearch={HandleFilteredSearch}
             />
             <AppUsersTable
                 data={fData}
@@ -181,7 +183,7 @@ const AppUsersPage = () => {
                                 setError(["Cannot update the table if users are selected!"]);
                                 setSelectedAppUsers([]);
                             } else {
-                                handleRead();
+                                HandleRead();
                             }
                         }}
                         onUpdate={() => {
@@ -194,7 +196,7 @@ const AppUsersPage = () => {
                                 setError(["Can update just one user at a time!"]);
                             }
                         }}
-                        onDelete={handleDelete}
+                        onDelete={HandleDelete}
                     />
                 )}
             {isCreateFormOpen && (
@@ -205,7 +207,7 @@ const AppUsersPage = () => {
                         setFormFillData({id: "", username: "", password: "", role: "", firstName: "", lastName: ""});
                     }}
                     onSubmitCreate={(newUserData) => handleCreate(newUserData)}
-                    onSubmitUpdate={(newUserData) => handleUpdate(newUserData)}
+                    onSubmitUpdate={(newUserData) => HandleUpdate(newUserData)}
                 />
             )}
         </div>

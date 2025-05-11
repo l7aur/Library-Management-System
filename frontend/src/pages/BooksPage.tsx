@@ -7,6 +7,7 @@ import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import BookSearchBar from "../components/BookSearchBar.tsx";
 import CreateBookForm from "../components/forms/CreateBookForm.tsx";
 import BookTypeDTO from "../types/BookTypeDTO.tsx";
+import {useAuth} from "../config/GlobalState.tsx";
 
 const BooksPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllBooks();
@@ -25,6 +26,7 @@ const BooksPage = () => {
         price: -1,
         stock: -1,
     });
+    const { token } = useAuth();
 
     const isValidBook = (book: BookType): boolean => {
         return Boolean(book?.isbn)
@@ -39,7 +41,7 @@ const BooksPage = () => {
         setError([]);
         setOkays([]);
         console.log(newBook);
-        add(newBook)
+        add(newBook, token)
             .then((response: BookType) => {
                 return response;
             })
@@ -76,14 +78,14 @@ const BooksPage = () => {
     const handleFilteredSearch = (title: string, stock: number) => {
         setFData([]);
         setError([]);
-        findFiltered(title, stock)
+        findFiltered(token, title, stock)
             .then(response => setFData(response))
             .catch((error) => {setError([error])})
     };
     const handleUpdate = (newBook: BookTypeDTO) => {
         setError([]);
         setOkays([]);
-        update(newBook)
+        update(newBook, token)
             .then((response: BookType) => {
                 {
                     return response;
@@ -118,7 +120,7 @@ const BooksPage = () => {
         setError([]);
         setOkays([]);
         const ids = selectedBooks.map((item) => item.id);
-        del(ids)
+        del(ids, token)
             .then((r) => {
                 if (200 === r) {
                     setOkays(["Success!"]);

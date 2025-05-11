@@ -5,6 +5,7 @@ import useFindAllPublishers from "../hooks/useFindAllPublishers.tsx";
 import {add, del, update} from "../services/PublisherService.ts";
 import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import CreatePublisherForm from "../components/forms/CreatePublisherForm.tsx";
+import {useAuth} from "../config/GlobalState.tsx";
 
 const PublishersPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllPublishers();
@@ -20,6 +21,7 @@ const PublishersPage = () => {
         foundingYear: 0,
         books: []
     });
+    const { token } = useAuth();
 
     const isValidPublisher = (publisher: PublisherType) : boolean => {
         return Boolean(publisher.id)
@@ -30,7 +32,7 @@ const PublishersPage = () => {
     const handleCreate = (newPublisher: PublisherType) => {
         setError([]);
         setOkays([]);
-        add(newPublisher)
+        add(newPublisher, token)
             .then((response : PublisherType) => ({
                 id: response.id,
                 name: response.name,
@@ -67,7 +69,7 @@ const PublishersPage = () => {
     const handleUpdate = (newPublisher: PublisherType) => {
         setError([]);
         setOkays([]);
-        update(newPublisher)
+        update(newPublisher, token)
             .then((response : PublisherType) => ({
                 id: response.id,
                 name: response.name,
@@ -101,7 +103,7 @@ const PublishersPage = () => {
         setError([]);
         setOkays([]);
         const ids = selectedPublishers.map((entry: PublisherType) => entry.id);
-        del(ids)
+        del(ids, token)
             .then((r) => {
                 if(200 === r) {
                     setOkays(["Success!"]);

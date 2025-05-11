@@ -5,12 +5,38 @@ import {
 } from "../constants/API.ts";
 import BookTypeDTO from "../types/BookTypeDTO.tsx";
 
-export const findAll = async (): Promise<BookTypeImpl[]> => {
-    const response = await fetch(BOOKS_GET_ALL_ENDPOINT);
+export const findAll = async (token: string | null): Promise<BookTypeImpl[]> => {
+    const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+    };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`; // Or whatever your auth scheme is
+    }
+
+    const response = await fetch(BOOKS_GET_ALL_ENDPOINT, {
+        method: 'GET', // Explicitly set the method
+        headers: headers,
+    });
+
+    if (!response.ok) {
+        // Handle errors appropriately.  This is crucial.
+        let errorMessage = `Failed to fetch users: ${response.status}`;
+        try {
+            const errorJson = await response.json();
+            if (errorJson && errorJson.message) {
+                errorMessage += ` - ${errorJson.message}`;
+            }
+        } catch (parseError) {
+            console.log(parseError);
+        }
+        throw new Error(errorMessage);
+    }
+
     return response.json();
 };
 
-export const findFiltered = async (title?: string, stock?: number): Promise<BookType[]> => {
+export const findFiltered = async (token: string | null, title?: string, stock?: number): Promise<BookType[]> => {
     try {
         let url = BOOKS_FILTER_ENDPOINT;
         const queryParams = [];
@@ -21,7 +47,16 @@ export const findFiltered = async (title?: string, stock?: number): Promise<Book
         if (queryParams.length > 0)
             url += `?${queryParams.join('&')}`;
 
-        const response = await fetch(url);
+        const headers: HeadersInit = {
+            "Content-Type": "application/json",
+        };
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`; // Add Authorization header if token exists
+        }
+
+        const response = await fetch(url, {
+            headers: headers,
+        });
 
         if (!response.ok) {
             const errorData = await response.json();
@@ -36,33 +71,36 @@ export const findFiltered = async (title?: string, stock?: number): Promise<Book
     }
 };
 
-export const add = async (newBook: BookTypeDTO): Promise<BookType> => {
+export const add = async (newBook: BookTypeDTO, token: string | null): Promise<BookType> => {
     const response = await fetch(BOOKS_ADD_ENDPOINT, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newBook),
     });
     return response.json();
 }
 
-export const del = async (ids: string[]): Promise<number> => {
+export const del = async (ids: string[], token: string | null): Promise<number> => {
     const response = await fetch(BOOKS_DELETE_ENDPOINT, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ids: ids}),
     });
     return response.status;
 }
 
-export const update = async (book: BookTypeDTO): Promise<BookType> => {
+export const update = async (book: BookTypeDTO, token: string | null): Promise<BookType> => {
     const response = await fetch(BOOKS_EDIT_ENDPOINT, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(book),
     });

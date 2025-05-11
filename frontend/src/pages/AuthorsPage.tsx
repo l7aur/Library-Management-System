@@ -5,6 +5,7 @@ import AuthorsTable from "../components/tables/AuthorsTable.tsx";
 import {add, del, update} from "../services/AuthorService.ts";
 import {CRUDMenu} from "../components/CRUDMenu.tsx";
 import CreateAuthorForm from "../components/forms/CreateaAuthorForm.tsx";
+import {useAuth} from "../config/GlobalState.tsx";
 
 const AuthorsPage = () => {
     const {fData, setFData, fLoading, isFError, refetch} = useFindAllAuthors();
@@ -21,6 +22,7 @@ const AuthorsPage = () => {
         nationality: "",
         books: []
     });
+    const { token } = useAuth();
 
     const isValidAuthor = (author: AuthorType) => {
         return Boolean(author.id)
@@ -31,7 +33,7 @@ const AuthorsPage = () => {
     const handleCreate = (newAuthor: AuthorType) => {
         setError([]);
         setOkays([]);
-        add(newAuthor)
+        add(newAuthor, token)
             .then((response : AuthorType) => ({
                 id: response.id,
                 firstName: response.firstName,
@@ -70,7 +72,7 @@ const AuthorsPage = () => {
     const handleUpdate = (newAuthor: AuthorType) => {
         setError([]);
         setOkays([]);
-        update(newAuthor)
+        update(newAuthor, token)
             .then((response : AuthorType) => ({
                 id: response.id,
                 firstName: response.firstName,
@@ -106,7 +108,7 @@ const AuthorsPage = () => {
         setError([]);
         setOkays([]);
         const ids = selectedAuthors.map((entry: AuthorType) => entry.id);
-        del(ids)
+        del(ids, token)
             .then((r) => {
                 if(200 === r) {
                     setOkays(["Success!"]);

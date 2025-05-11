@@ -19,32 +19,27 @@ import java.util.UUID;
 public class BookController {
     private final BookService service;
 
-    @PermitAll
     @GetMapping("/books/all")
     public List<Book> getAllBooks() {
         return service.findAllBooks();
     }
 
-    @PermitAll
     @PostMapping("/books/add")
     public Book addBook(@Valid @RequestBody BookDTO validatedBook) {
         return service.addBook(validatedBook);
     }
 
-    @PermitAll
     @DeleteMapping("/books/delete")
     public ResponseEntity<String> deleteBooks(@RequestBody Map<String, List<UUID>> ids) {
         List<UUID> idList = ids.get("ids");
         return service.deleteByIds(idList);
     }
 
-    @PermitAll
     @PutMapping("/books/edit")
     public Book updateBook(@Valid @RequestBody BookDTO book) {
         return service.updateBook(book);
     }
 
-    @PermitAll
     @GetMapping("books/filter")
     public List<Book> filterUsers(
             @RequestParam(required = false) String title,
