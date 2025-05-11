@@ -38,6 +38,7 @@ public class AppUserService {
         user.setFirstName(u.getFirstName());
         user.setLastName(u.getLastName());
         user.setRole(Role.valueOf(u.getRole()));
+        user.setEmail(u.getEmail());
         return appUserRepo.save(user);
     }
 

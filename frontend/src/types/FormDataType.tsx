@@ -1,5 +1,6 @@
 export default interface AppUserFormDataType {
-    id: string;
+    email: string
+    id: string
     username: string
     password: string
     role: string

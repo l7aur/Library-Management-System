@@ -23,7 +23,8 @@ const AppUsersPage = () => {
         password: "",
         role: "",
         firstName: "",
-        lastName: ""
+        lastName: "",
+        email: ""
     });
     const { token } = useAuth();
 
@@ -34,6 +35,7 @@ const AppUsersPage = () => {
             && Boolean(user.role)
             && Boolean(user.password)
             && Boolean(user.id)
+            && Boolean(user.email)
     };
     const handleCreate = (newUser: AppUserFormDataType) => {
         setError([]);
@@ -50,7 +52,8 @@ const AppUsersPage = () => {
                 lastName: response.lastName,
                 username: response.username,
                 password: response.password,
-                message: response.message
+                message: response.message,
+                email: response.email
             }))
             .then((formattedResponse) => {
                 if (isValidUser(formattedResponse)) {
@@ -67,6 +70,7 @@ const AppUsersPage = () => {
                             , formattedResponse.role
                             , formattedResponse.firstName
                             , formattedResponse.lastName
+                            , formattedResponse.email
                         ];
                     if(formattedResponse.message != undefined) {
                         err.push(formattedResponse.message);
@@ -103,6 +107,7 @@ const AppUsersPage = () => {
             username: newUserData.username,
             password: newUserData.password,
             role: newUserData.role,
+            email: newUserData.email
         }
         update(newUser, token)
             .then((response: AppUserType) => ({
@@ -112,6 +117,7 @@ const AppUsersPage = () => {
                 lastName: response.lastName,
                 username: response.username,
                 password: response.password,
+                email: response.email
             }))
             .then((formattedResponse) => {
                 if (isValidUser(formattedResponse)) {
@@ -127,6 +133,7 @@ const AppUsersPage = () => {
                             , formattedResponse.role
                             , formattedResponse.firstName
                             , formattedResponse.lastName
+                            , formattedResponse.email
                         ];
                     throw new Error(err.filter((x) => x != undefined).join("\n"));
                 }
@@ -204,7 +211,7 @@ const AppUsersPage = () => {
                     data={formFillData}
                     onClose={() => {
                         setIsCreateFormOpen(false);
-                        setFormFillData({id: "", username: "", password: "", role: "", firstName: "", lastName: ""});
+                        setFormFillData({id: "", username: "", password: "", role: "", firstName: "", lastName: "", email: ""});
                     }}
                     onSubmitCreate={(newUserData) => handleCreate(newUserData)}
                     onSubmitUpdate={(newUserData) => HandleUpdate(newUserData)}

@@ -19,7 +19,8 @@ const CreateAppUserForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSu
             role: data.role,
             firstName: data.firstName,
             lastName: data.lastName,
-            confirmation: data.password
+            confirmation: data.password,
+            email : data.email,
         });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -73,6 +74,16 @@ const CreateAppUserForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSu
                 <option value="EMPLOYEE">Employee</option>
                 <option value="CUSTOMER">Customer</option>
             </select>
+            <input
+                className="input_container"
+                type="email"
+                name="email"
+                placeholder="name@org.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                autoComplete="email"
+            />
             <input
                 className="input_container"
                 type="password"

@@ -11,11 +11,12 @@ import NotFoundPage from "./pages/NotFoundPage.tsx";
 import AppUsersPage from "./pages/AppUsersPage.tsx";
 import {
     APP_USERS_PATH, AUTHORS_PATH, BOOKS_PATH, CART_PATH, HOME_PATH,
-    LOGIN_PATH, NOT_FOUND_PATH, PUBLISHERS_PATH, REGISTER_PATH, UNAUTHORIZED_PATH
+    LOGIN_PATH, NOT_FOUND_PATH, PUBLISHERS_PATH, REGISTER_PATH, RESET_PASSWORD_PATH, UNAUTHORIZED_PATH
 } from "./constants/Paths.ts";
 import { AuthProvider } from './config/GlobalState.tsx';
 import ProtectedRoute from "./ProtectedRoute.tsx";
-import UnauthorizedPage from "./pages/UnauthorizedPage.tsx"; // Adjust the import path
+import UnauthorizedPage from "./pages/UnauthorizedPage.tsx";
+import ResetPasswordPage from "./pages/ResetPasswordPage.tsx";
 
 function    App() {
     return (
@@ -28,6 +29,7 @@ function    App() {
                         <Route path={REGISTER_PATH} element={<RegisterPage />} />
                         <Route path={NOT_FOUND_PATH} element={<NotFoundPage />} />
                         <Route path={HOME_PATH} element={<HomePage />} />
+                        <Route path={RESET_PASSWORD_PATH} element={<ResetPasswordPage />} />
 
                         {/* Protected Routes */}
                         <Route element={<ProtectedRoute />}>

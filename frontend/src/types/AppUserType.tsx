@@ -6,4 +6,5 @@ export interface AppUserType {
     role: string;
     username: string;
     message?: string;
+    email: string;
 }

@@ -31,6 +31,9 @@ public class AppUser {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "e-mail")
+    private String email;
+
     public AppUserDTO toDTO() {
         AppUserDTO dto = new AppUserDTO();
         dto.setId(this.id);
@@ -39,6 +42,7 @@ public class AppUser {
         dto.setPassword(this.password);
         dto.setRole(this.role.toString());
         dto.setUsername(this.username);
+        dto.setEmail(this.email);
         return dto;
     }
 }
