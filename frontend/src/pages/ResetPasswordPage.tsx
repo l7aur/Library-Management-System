@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import {CHANGE_PASSWORD_ENDPOINT, SEND_MAIL_ENDPOINT} from "../constants/API.ts";
+import {RESET_PASSWORD_PATH} from "../constants/Paths.ts";
 
 interface ForgotPasswordPageState {
     email: string;
     message: string;
     error: string;
-    loading: boolean;
     password: string;
     confirmation: string;
     securityCode: string;
@@ -15,52 +16,40 @@ const ForgotPasswordPage = () => {
         email: '',
         message: '',
         error: '',
-        loading: false,
         password: '',
         confirmation: '',
         securityCode: ''
     });
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const sendEmail = async (e: React.FormEvent) => {
         e.preventDefault();
-        setState(prevState => ({ ...prevState, error: '', message: '', loading: true }));
+        setState(prevState => ({ ...prevState, error: '', message: ''}));
 
         // Basic client-side validation
         if (!state.email) {
             setState(prevState => ({
                 ...prevState,
                 error: 'Please enter your email address.',
-                loading: false
             }));
             return;
         }
 
-        // Simulate sending a password reset request (replace with your actual API call)
         try {
-            // Replace this with your actual API endpoint
-            // const response = await fetch('/api/forgot-password', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({ email }),
-            // });
+            const response = await fetch(SEND_MAIL_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "to" : state.email }),
+            });
 
-            // if (!response.ok) {
-            //     const errorData = await response.json();
-            //     throw new Error(errorData.message || 'Failed to send reset email.');
-            // }
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(errorData || 'Failed to send reset email.');
+            }
 
-            // const result = await response.json();
-            // setMessage(result.message || 'Password reset email sent. Please check your inbox.');
-
-            // Simulate a successful response after 2 seconds
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setState(prevState => ({
-                ...prevState,
-                message: 'Password reset email sent. Please check your inbox.',
-            }));
-
+            const result = await response.text();
+            setState(prevState => ({ ...prevState, message: result }));
         } catch (err: unknown) {
             let errorMessage = 'An error occurred. Please try again.';
             if (err instanceof Error) {
@@ -76,6 +65,42 @@ const ForgotPasswordPage = () => {
             setState(prevState => ({ ...prevState, loading: false }));
         }
     };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setState(prevState => ({ ...prevState, error: '', message: ''}));
+
+        try {
+            const response = await fetch(CHANGE_PASSWORD_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "email" : state.email, "password" : state.password, "confirmation" : state.confirmation, "securityCode" : state.securityCode }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(errorData || 'Failed to reset password.');
+            }
+
+            const result = await response.text();
+            setState(prevState => ({ ...prevState, message: result }));
+        } catch (err: unknown) {
+            let errorMessage = 'An error occurred. Please try again.';
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            } else if (typeof err === 'string') {
+                errorMessage = err;
+            }
+            setState(prevState => ({
+                ...prevState,
+                error: errorMessage,
+            }));
+        } finally {
+            setState(prevState => ({ ...prevState, loading: false }));
+        }
+    }
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -132,10 +157,10 @@ const ForgotPasswordPage = () => {
                             <p className="text-red-500 text-sm mt-1">{state.error}</p>
                         )}
                     </div>
-                    <button type="submit" className="w-full" disabled={state.loading}>
-                        {state.loading ? 'Sending...' : 'Send Reset Link'}
+                    <button type="submit" className="w-full" onClick={sendEmail}>
+                        Send Reset Link
                     </button>
-                    <button type="submit" className="w-full">
+                    <button type="submit" className="w-full" onClick={handleSubmit}>
                         Submit
                     </button>
                 </form>

@@ -28,3 +28,6 @@ export const APP_USERS_UPDATE_ENDPOINT = `${APP_USERS_ENDPOINT}/edit`;
 export const APP_USERS_LOGIN_ENDPOINT = `${APP_USERS_ENDPOINT}/login`;
 export const APP_USERS_FILTER_ENDPOINT =`${APP_USERS_ENDPOINT}/filter`;
 export const BOOKS_FILTER_ENDPOINT = `${BOOKS_ENDPOINT}/filter`;
+
+export const CHANGE_PASSWORD_ENDPOINT = `${APP_USERS_ENDPOINT}/change_password`;
+export const SEND_MAIL_ENDPOINT = `${API_BASE_URL}/sendMail`;
