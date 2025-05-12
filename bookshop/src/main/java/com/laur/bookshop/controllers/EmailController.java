@@ -1,22 +1,22 @@
 package com.laur.bookshop.controllers;
 
+import com.laur.bookshop.model.SendEmailRequest;
 import com.laur.bookshop.services.EmailService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @CrossOrigin
 @AllArgsConstructor
 public class EmailController {
     private final EmailService emailService;
 
-    @PostMapping
-    public ResponseEntity<String> resetPassword(@RequestParam("email") String email) {
-
-        return null;
+    @PostMapping("/sendMail")
+    public Boolean sendMail(@RequestBody SendEmailRequest er)
+    {
+        return emailService.sendSimpleMail(er);
     }
 }

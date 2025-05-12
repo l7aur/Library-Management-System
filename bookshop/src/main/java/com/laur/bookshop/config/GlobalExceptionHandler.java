@@ -57,7 +57,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({
-            Exception.class
+            Exception.class,
+            EmailNotFoundException.class,
+            ExpiredSecurityCodeException.class
     })
     public ResponseEntity<Map<String, String>> handleGlobalExceptions(Exception ex) {
         log.error("Unexpected error: {}", ex.getMessage());

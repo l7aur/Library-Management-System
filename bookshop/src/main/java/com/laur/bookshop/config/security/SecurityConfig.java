@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/app_users/add", "/app_users/login").permitAll()
+                        .requestMatchers("/app_users/add", "/app_users/login", "/sendMail", "/app_users/change_password").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults());
 

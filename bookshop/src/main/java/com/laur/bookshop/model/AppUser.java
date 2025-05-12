@@ -31,7 +31,7 @@ public class AppUser {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "e-mail")
+    @Column(name = "email", unique = true)
     private String email;
 
     public AppUserDTO toDTO() {

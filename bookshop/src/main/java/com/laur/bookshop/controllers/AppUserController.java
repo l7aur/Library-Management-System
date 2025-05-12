@@ -1,11 +1,13 @@
 package com.laur.bookshop.controllers;
 
 import com.laur.bookshop.config.dto.AppUserDTO;
+import com.laur.bookshop.config.exceptions.EmailNotFoundException;
+import com.laur.bookshop.config.exceptions.ExpiredSecurityCodeException;
 import com.laur.bookshop.config.security.JwtUtil;
-import com.laur.bookshop.model.AppUser;
-import com.laur.bookshop.model.LoginRequest;
-import com.laur.bookshop.model.LoginResponse;
+import com.laur.bookshop.model.*;
+import com.laur.bookshop.repositories.AppUserRepo;
 import com.laur.bookshop.services.AppUserService;
+import com.laur.bookshop.services.EmailService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,8 +28,10 @@ import java.util.UUID;
 @CrossOrigin
 public class AppUserController {
     private final AppUserService service;
+    private final EmailService emailService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final AppUserRepo appUserRepo;
 
     @GetMapping("/app_users/all")
     public List<AppUser> getAllUsers() {
@@ -71,6 +76,23 @@ public class AppUserController {
                     .status(500)
                     .body(new LoginResponse(null, "Internal server error", null));
         }
+    }
+
+    @PostMapping("/app_users/change_password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        if(!changePasswordRequest.password().equals(changePasswordRequest.confirmation()))
+            return ResponseEntity.status(401).body("Password and confirmation mismatch!");
+        EmailDetails emailDetails = emailService.findByEmail(changePasswordRequest.email()).orElseThrow(EmailNotFoundException::new);
+        if(emailDetails.getExpirationTime().isBefore(LocalTime.now()))
+            throw new ExpiredSecurityCodeException();
+        if(!emailDetails.getCode().equals(changePasswordRequest.securityCode()))
+            throw new ExpiredSecurityCodeException();
+        AppUser user = appUserRepo.findByEmail(changePasswordRequest.email()).orElseThrow(EmailNotFoundException::new);
+        user.setPassword(changePasswordRequest.password());
+        emailService.delete(emailDetails.getId());
+        return service.updateAppUser(user.toDTO()) != null
+                ? ResponseEntity.status(200).body("ok")
+                : ResponseEntity.status(501).body("error");
     }
 
     @GetMapping("app_users/filter")

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.laur.bookshop.config.enums.AppMessages.*;
@@ -27,6 +28,10 @@ public class AppUserService {
 
     public List<AppUser> findAllUsers() {
         return appUserRepo.findAll();
+    }
+
+    public Optional<AppUser> findUserByEmail(String email) {
+        return appUserRepo.findByEmail(email);
     }
 
     public AppUser addAppUser(AppUserDTO u) {
