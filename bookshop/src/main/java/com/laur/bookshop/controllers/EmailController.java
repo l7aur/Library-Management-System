@@ -1,7 +1,8 @@
 package com.laur.bookshop.controllers;
 
-import com.laur.bookshop.model.SendEmailRequest;
+import com.laur.bookshop.config.dto.SendEmailRequest;
 import com.laur.bookshop.services.EmailService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/sendMail")
-    public Boolean sendMail(@RequestBody SendEmailRequest er)
+    public Boolean sendMail(@Valid @RequestBody SendEmailRequest er)
     {
         return emailService.sendSimpleMail(er);
     }

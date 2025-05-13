@@ -67,7 +67,7 @@ const AuthorsPage = () => {
             })
     }
     const handleRead = () => {
-        refetch().then(r => console.log(r));
+        refetch();
     }
     const handleUpdate = (newAuthor: AuthorType) => {
         setError([]);

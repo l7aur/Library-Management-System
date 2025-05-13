@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {CHANGE_PASSWORD_ENDPOINT, SEND_MAIL_ENDPOINT} from "../constants/API.ts";
-import {RESET_PASSWORD_PATH} from "../constants/Paths.ts";
+import {useNavigate} from "react-router-dom";
+import {HOME_PATH} from "../constants/Paths.ts";
 
 interface ForgotPasswordPageState {
     email: string;
@@ -20,10 +21,11 @@ const ForgotPasswordPage = () => {
         confirmation: '',
         securityCode: ''
     });
+    const navigate = useNavigate();
 
     const sendEmail = async (e: React.FormEvent) => {
         e.preventDefault();
-        setState(prevState => ({ ...prevState, error: '', message: ''}));
+        setState(prevState => ({...prevState, error: '', message: ''}));
 
         // Basic client-side validation
         if (!state.email) {
@@ -40,16 +42,16 @@ const ForgotPasswordPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ "to" : state.email }),
+                body: JSON.stringify({"to": state.email}),
             });
 
             if (!response.ok) {
-                const errorData = await response.text();
-                throw new Error(errorData || 'Failed to send reset email.');
+                const errorData = "Unable to send email! Please try again!"
+                throw new Error(errorData);
             }
 
-            const result = await response.text();
-            setState(prevState => ({ ...prevState, message: result }));
+            const result = await response.text() === "true" ? "Success!" : "Failure!";
+            setState(prevState => ({...prevState, message: result}));
         } catch (err: unknown) {
             let errorMessage = 'An error occurred. Please try again.';
             if (err instanceof Error) {
@@ -62,13 +64,12 @@ const ForgotPasswordPage = () => {
                 error: errorMessage,
             }));
         } finally {
-            setState(prevState => ({ ...prevState, loading: false }));
+            setState(prevState => ({...prevState, loading: false}));
         }
     };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setState(prevState => ({ ...prevState, error: '', message: ''}));
+        setState(prevState => ({...prevState, error: '', message: ''}));
 
         try {
             const response = await fetch(CHANGE_PASSWORD_ENDPOINT, {
@@ -76,16 +77,21 @@ const ForgotPasswordPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ "email" : state.email, "password" : state.password, "confirmation" : state.confirmation, "securityCode" : state.securityCode }),
+                body: JSON.stringify({
+                    "email": state.email,
+                    "password": state.password,
+                    "confirmation": state.confirmation,
+                    "securityCode": state.securityCode
+                }),
             });
 
             if (!response.ok) {
-                const errorData = await response.text();
-                throw new Error(errorData || 'Failed to reset password.');
+                const errorData =  "An error occurred! Failed to reset password! Please generate a new security code!";
+                throw new Error(errorData);
             }
 
-            const result = await response.text();
-            setState(prevState => ({ ...prevState, message: result }));
+            const result = await response.text() === "ok" ? "Success!" : "Failure!";
+            setState(prevState => ({...prevState, message: result}));
         } catch (err: unknown) {
             let errorMessage = 'An error occurred. Please try again.';
             if (err instanceof Error) {
@@ -98,82 +104,77 @@ const ForgotPasswordPage = () => {
                 error: errorMessage,
             }));
         } finally {
-            setState(prevState => ({ ...prevState, loading: false }));
+            setState(prevState => ({...prevState, loading: false}));
         }
+    }
+    const handleCancel = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setState(prevState => ({...prevState, error: '', message: ''}));
+        navigate(HOME_PATH)
     }
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <div className="w-[350px] p-6 bg-white rounded-lg shadow-md">
-                <h2 className="text-2xl font-semibold mb-4">Forgot Password</h2>
-                <p className="text-gray-600 mb-6">
-                    Enter your email address to receive a password reset link.
-                </p>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="Enter your email"
-                            value={state.email}
-                            onChange={(e) => setState(prevState => ({ ...prevState, email: e.target.value }))}
-                            autoComplete="email"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label htmlFor="security-code">Security Code</label>
-                        <input
-                            id="security-code"
-                            type="text"
-                            placeholder="Enter the code you received on e-mail!"
-                            value={state.securityCode}
-                            onChange={(e) => setState(prevState => ({ ...prevState, securityCode: e.target.value }))}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label htmlFor="password">New Password</label>
-
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="Enter your new password"
-                            value={state.password}
-                            onChange={(e) => setState(prevState => ({ ...prevState, password: e.target.value }))}
-                            autoComplete="current-password"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label htmlFor="confirmation">Password Confirmation</label>
-                        <input
-                            id="confirmation"
-                            type="password"
-                            placeholder="Enter your password confirmation"
-                            value={state.confirmation}
-                            onChange={(e) => setState(prevState => ({ ...prevState, confirmation: e.target.value }))}
-                            autoComplete={"new-password"}
-                        />
-                        {state.error && (
-                            <p className="text-red-500 text-sm mt-1">{state.error}</p>
-                        )}
-                    </div>
-                    <button type="submit" className="w-full" onClick={sendEmail}>
-                        Send Reset Link
-                    </button>
-                    <button type="submit" className="w-full" onClick={handleSubmit}>
-                        Submit
-                    </button>
-                </form>
-                {state.message && (
-                    <p className="text-green-500 text-sm mt-4">{state.message}</p>
-                )}
-                <div className="mt-4">
-                    {/* You might want to add a link back to the login page */}
-                    {/* <Link to="/login" className="text-blue-500 hover:underline">
-                        Back to Login
-                    </Link> */}
-                </div>
+        <div className="page_container">
+            <div className="title_container">
+                <h2>Did you forget your password?</h2>
             </div>
+            <div className="title_container">
+                Fill in your email address to receive the security code, and provide your new password!
+            </div>
+            <form onSubmit={handleSubmit} className="create_form_container">
+                <input
+                    className="input_container"
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={state.email}
+                    onChange={(e) => setState(prevState => ({...prevState, email: e.target.value}))}
+                    autoComplete="email"
+                />
+                <input
+                    className="input_container"
+                    id="security-code"
+                    type="text"
+                    placeholder="Enter the code you received on e-mail!"
+                    value={state.securityCode}
+                    onChange={(e) => setState(prevState => ({...prevState, securityCode: e.target.value}))}
+                />
+                <input
+                    className="input_container"
+                    id="password"
+                    type="password"
+                    placeholder="Enter your new password"
+                    value={state.password}
+                    onChange={(e) => setState(prevState => ({...prevState, password: e.target.value}))}
+                    autoComplete="current-password"
+                />
+                <input
+                    className="input_container"
+                    id="confirmation"
+                    type="password"
+                    placeholder="Enter your password confirmation"
+                    value={state.confirmation}
+                    onChange={(e) => setState(prevState => ({...prevState, confirmation: e.target.value}))}
+                    autoComplete={"new-password"}
+                />
+                {state.error && (
+                    <p className="text-red-500 text-sm mt-1">{state.error}</p>
+                )}
+            </form>
+            <div className="title_container">
+                <button type="submit" className="w-full" onClick={sendEmail}>
+                    Send Reset Link
+                </button>
+                <button type="submit" className="w-full" onClick={handleSubmit}>
+                    Submit
+                </button>
+                <button type="submit" className="w-full" onClick={handleCancel}>
+                    Cancel
+                </button>
+            </div>
+            {state.message && (
+                <p className="info-text">{state.message}</p>
+            )}
         </div>
     );
 };

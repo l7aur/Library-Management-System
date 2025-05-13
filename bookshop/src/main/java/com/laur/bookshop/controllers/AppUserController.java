@@ -1,6 +1,6 @@
 package com.laur.bookshop.controllers;
 
-import com.laur.bookshop.config.dto.AppUserDTO;
+import com.laur.bookshop.config.dto.*;
 import com.laur.bookshop.config.exceptions.EmailNotFoundException;
 import com.laur.bookshop.config.exceptions.ExpiredSecurityCodeException;
 import com.laur.bookshop.config.security.JwtUtil;
@@ -79,16 +79,22 @@ public class AppUserController {
     }
 
     @PostMapping("/app_users/change_password")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        if(!changePasswordRequest.password().equals(changePasswordRequest.confirmation()))
+    public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        if(!changePasswordRequest.getPassword().equals(changePasswordRequest.getConfirmation()))
             return ResponseEntity.status(401).body("Password and confirmation mismatch!");
-        EmailDetails emailDetails = emailService.findByEmail(changePasswordRequest.email()).orElseThrow(EmailNotFoundException::new);
-        if(emailDetails.getExpirationTime().isBefore(LocalTime.now()))
+        EmailDetails emailDetails = emailService
+                .findByEmail(changePasswordRequest.getEmail())
+                .orElseThrow(EmailNotFoundException::new);
+        if(emailDetails.getExpirationTime().isBefore(LocalTime.now())) {
+            emailService.delete(emailDetails.getId());
             throw new ExpiredSecurityCodeException();
-        if(!emailDetails.getCode().equals(changePasswordRequest.securityCode()))
+        }
+        if(!emailDetails.getCode().equals(changePasswordRequest.getSecurityCode()))
             throw new ExpiredSecurityCodeException();
-        AppUser user = appUserRepo.findByEmail(changePasswordRequest.email()).orElseThrow(EmailNotFoundException::new);
-        user.setPassword(changePasswordRequest.password());
+        AppUser user = appUserRepo
+                .findByEmail(changePasswordRequest.getEmail())
+                .orElseThrow(EmailNotFoundException::new);
+        user.setPassword(changePasswordRequest.getPassword());
         emailService.delete(emailDetails.getId());
         return service.updateAppUser(user.toDTO()) != null
                 ? ResponseEntity.status(200).body("ok")

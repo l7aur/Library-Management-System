@@ -1,5 +1,6 @@
 package com.laur.bookshop.config.dto;
 
+import com.laur.bookshop.config.validators.email.EmailValidator;
 import com.laur.bookshop.config.validators.password.PasswordValidator;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -31,7 +32,7 @@ public class AppUserDTO {
     private String lastName;
 
     @NotEmpty(message = "An e-mail must be provided!")
-
+    @EmailValidator
     private String email;
 
     public String getRole() {

@@ -1,4 +1,4 @@
-package com.laur.bookshop.model;
+package com.laur.bookshop.config.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

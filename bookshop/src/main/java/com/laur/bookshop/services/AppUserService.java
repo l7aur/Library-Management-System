@@ -6,7 +6,7 @@ import com.laur.bookshop.config.exceptions.DuplicateException;
 import com.laur.bookshop.config.exceptions.InvalidPassword;
 import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
-import com.laur.bookshop.model.LoginRequest;
+import com.laur.bookshop.config.dto.LoginRequest;
 import com.laur.bookshop.repositories.AppUserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

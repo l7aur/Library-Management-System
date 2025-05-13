@@ -3,6 +3,8 @@ import {AppUserType} from "../types/AppUserType.tsx";
 import AppUserFormDataType from "../types/FormDataType.tsx";
 import {add} from "../services/AppUserService.ts";
 import {useState} from "react";
+import {HOME_PATH} from "../constants/Paths.ts";
+import {useNavigate} from "react-router-dom";
 
 const RegisterPage = () => {
     const [error, setError] = useState<string[]>([]);
@@ -12,6 +14,7 @@ const RegisterPage = () => {
         username: "",
         password: "",
         role: "",
+        email: "",
         firstName: "",
         lastName: ""
     });
@@ -24,6 +27,14 @@ const RegisterPage = () => {
             && Boolean(user.password)
             && Boolean(user.id)
     };
+    const navigate = useNavigate();
+
+    const handleClose = () => {
+        setError([]);
+        setOkays([]);
+        navigate(HOME_PATH);
+    }
+
     const handleCreate = (newUser: AppUserFormDataType) => {
         setError([]);
         setOkays([]);
@@ -39,6 +50,7 @@ const RegisterPage = () => {
                 lastName: response.lastName,
                 username: response.username,
                 password: response.password,
+                email: response.email,
                 message: response.message
             }))
             .then((formattedResponse) => {
@@ -51,6 +63,7 @@ const RegisterPage = () => {
                             , formattedResponse.password
                             , formattedResponse.role
                             , formattedResponse.firstName
+                            , formattedResponse.email
                             , formattedResponse.lastName
                         ];
                     if(formattedResponse.message != undefined) {
@@ -91,7 +104,7 @@ const RegisterPage = () => {
             )}
             <CreateAppUserForm
                 data={formFillData}
-                onClose={() => {}}
+                onClose={handleClose}
                 onSubmitCreate={(newUserData) => handleCreate(newUserData)}
                 onSubmitUpdate={(newUserData) => handleCreate(newUserData)}
             />

@@ -1,4 +1,6 @@
-package com.laur.bookshop.model;
+package com.laur.bookshop.config.dto;
+
+import com.laur.bookshop.model.AppUser;
 
 public record LoginResponse(
         AppUser appUser,

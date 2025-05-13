@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailValidator {
-    String message() default "Invalid ISBN!";
+    String message() default "Invalid Email!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

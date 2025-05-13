@@ -12,7 +12,7 @@ const LoginPage = () => {
                 username=""
                 password=""
             />
-            <div className="forgot_password_link">
+            <div className="link_container">
                 <Link to={RESET_PASSWORD_PATH}>Forgot your password?</Link>
             </div>
         </div>

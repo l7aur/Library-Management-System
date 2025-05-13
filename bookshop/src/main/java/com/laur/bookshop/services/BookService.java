@@ -77,7 +77,9 @@ public class BookService {
                 () -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE)
         );
         book.setTitle(b.getTitle());
-        book.setAuthors(b.getAuthorIds().stream().map(id -> authorRepo.findById(UUID.fromString(id))
+        book.setAuthors(b.getAuthorIds()
+                .stream()
+                .map(id -> authorRepo.findById(UUID.fromString(id))
                         .orElseThrow(() -> new AuthorNotFoundException(AUTHOR_NOT_FOUND_MESSAGE)))
                 .collect(Collectors.toList()));
         book.setStock(b.getStock());

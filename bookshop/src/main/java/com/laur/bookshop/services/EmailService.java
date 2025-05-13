@@ -1,8 +1,7 @@
 package com.laur.bookshop.services;
 
-import com.laur.bookshop.model.Author;
 import com.laur.bookshop.model.EmailDetails;
-import com.laur.bookshop.model.SendEmailRequest;
+import com.laur.bookshop.config.dto.SendEmailRequest;
 import com.laur.bookshop.repositories.EmailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,10 +31,10 @@ public class EmailService {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             Integer securityCode = getSecurityCode();
             mailMessage.setFrom(from);
-            mailMessage.setTo(er.to());
+            mailMessage.setTo(er.getTo());
             mailMessage.setText("Your security code is: " + securityCode);
             mailMessage.setSubject("Password Reset Security Code");
-            saveMailDetails(er.to(), securityCode);
+            saveMailDetails(er.getTo(), securityCode);
             mailSender.send(mailMessage);
             return true;
         }

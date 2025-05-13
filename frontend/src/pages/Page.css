@@ -7,3 +7,9 @@
     text-align: center;
     display: flex;
 }
+
+.link_container {
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}

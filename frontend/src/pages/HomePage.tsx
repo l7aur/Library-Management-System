@@ -10,7 +10,7 @@ function HomePage () {
             }
             {(isAuthenticated) && (
                 <>
-                    <h1>Hello, {user?.firstName || 'User'}!</h1>
+                    <h1>Hello, {user?.username || 'User'}!</h1>
                     <p>Welcome back. We're glad you're here.</p>
                 </>
             )}

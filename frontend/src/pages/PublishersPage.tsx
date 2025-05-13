@@ -64,7 +64,7 @@ const PublishersPage = () => {
             })
     }
     const handleRead = () => {
-        refetch().then(r => console.log(r));
+        refetch();
     }
     const handleUpdate = (newPublisher: PublisherType) => {
         setError([]);

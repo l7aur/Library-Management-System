@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.model.AppUser;
-import com.laur.bookshop.model.LoginRequest;
+import com.laur.bookshop.config.dto.LoginRequest;
 import com.laur.bookshop.repositories.AppUserRepo;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;

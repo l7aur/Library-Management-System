@@ -73,7 +73,7 @@ const BooksPage = () => {
             });
     };
     const handleRead = () => {
-        refetch().then(r => console.log(r));
+        refetch();
     };
     const handleFilteredSearch = (title: string, stock: number) => {
         setFData([]);
