@@ -138,6 +138,7 @@ const ForgotPasswordPage = () => {
                     placeholder="Enter the code you received on e-mail!"
                     value={state.securityCode}
                     onChange={(e) => setState(prevState => ({...prevState, securityCode: e.target.value}))}
+                    autoComplete="securityCode"
                 />
                 <input
                     className="input_container"

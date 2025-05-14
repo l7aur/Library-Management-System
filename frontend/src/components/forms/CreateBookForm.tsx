@@ -8,13 +8,14 @@ import Select, {MultiValue, Theme} from "react-select";
 import BookTypeDTO from "../../types/BookTypeDTO.tsx";
 
 interface Props {
+    token: string | null;
     data: BookTypeDTO;
     onClose: () => void;
     onSubmitCreate: (formData: BookTypeDTO) => void;
     onSubmitUpdate: (formData: BookTypeDTO) => void;
 }
 
-const CreateBookForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmitUpdate}) => {
+const CreateBookForm: React.FC<Props> = ({token, data, onClose, onSubmitCreate, onSubmitUpdate}) => {
     const [formData, setFormData] = useState({
         id: data.id,
         isbn: data.isbn,
@@ -48,37 +49,81 @@ const CreateBookForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSubmi
 
     useEffect(() => {
         const fetchPublishers = async () => {
-            const response = await fetch(PUBLISHERS_GET_ALL_ENDPOINT);
+            setALoading(true);
+            setAError('');
+
+            const headers: HeadersInit = {
+                'Content-Type': 'application/json',
+            };
+
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(PUBLISHERS_GET_ALL_ENDPOINT, {
+                method: 'GET',
+                headers: headers,
+            });
+
             if (!response.ok) {
-                setPError(`HTTP error! status: ${response.status}`)
-                setPLoading(false);
-            } else {
-                const data = await response.json();
-                setPublishers(data);
+                let errorMessage = `HTTP error! status: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        errorMessage += ` - ${errorData.message}`;
+                    }
+                } catch (jsonError) {
+                    console.log(jsonError);
+                }
+                setPError(errorMessage);
                 setPLoading(false);
             }
-        };
 
-        fetchPublishers()
-            .catch(error => setPError(error));
-    }, []);
+            const data = await response.json();
+            setPublishers(data);
+            setPLoading(false);
+        };
+        fetchPublishers();
+    }, [token]);
 
     useEffect(() => {
         const fetchAuthors = async () => {
-            const response = await fetch(AUTHORS_GET_ALL_ENDPOINT); // Replace with your actual API endpoint
+            setALoading(true);
+            setAError('');
+
+            const headers: HeadersInit = {
+                'Content-Type': 'application/json',
+            };
+
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(AUTHORS_GET_ALL_ENDPOINT, {
+                method: 'GET',
+                headers: headers,
+            });
+
             if (!response.ok) {
-                setAError(`HTTP error! status: ${response.status}`);
-                setALoading(false);
-            } else {
-                const data = await response.json();
-                setAuthors(data);
+                let errorMessage = `HTTP error! status: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        errorMessage += ` - ${errorData.message}`;
+                    }
+                } catch (jsonError) {
+                    console.log(jsonError);
+                }
+                setAError(errorMessage);
                 setALoading(false);
             }
-        };
 
-        fetchAuthors()
-            .catch(error => setAError(error));
-    }, []);
+            const data = await response.json();
+            setAuthors(data);
+            setALoading(false);
+        };
+        fetchAuthors();
+    }, [token]);
 
     const handleAuthorSelectChange = (selectedOptions: MultiValue<{ value: string; label: string }>) => {
         const authorIds = selectedOptions ? selectedOptions.map((option) => option.value) : [];

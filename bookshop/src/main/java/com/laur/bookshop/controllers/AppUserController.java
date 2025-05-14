@@ -84,9 +84,10 @@ public class AppUserController {
             return ResponseEntity.status(401).body("Password and confirmation mismatch!");
         EmailDetails emailDetails = emailService
                 .findByEmail(changePasswordRequest.getEmail())
+                .getFirst()
                 .orElseThrow(EmailNotFoundException::new);
         if(emailDetails.getExpirationTime().isBefore(LocalTime.now())) {
-            emailService.delete(emailDetails.getId());
+            emailService.delete(emailDetails.getReceiver());
             throw new ExpiredSecurityCodeException();
         }
         if(!emailDetails.getCode().equals(changePasswordRequest.getSecurityCode()))
@@ -95,7 +96,7 @@ public class AppUserController {
                 .findByEmail(changePasswordRequest.getEmail())
                 .orElseThrow(EmailNotFoundException::new);
         user.setPassword(changePasswordRequest.getPassword());
-        emailService.delete(emailDetails.getId());
+        emailService.delete(emailDetails.getReceiver());
         return service.updateAppUser(user.toDTO()) != null
                 ? ResponseEntity.status(200).body("ok")
                 : ResponseEntity.status(501).body("error");

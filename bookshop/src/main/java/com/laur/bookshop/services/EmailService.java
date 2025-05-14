@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -44,11 +45,11 @@ public class EmailService {
         }
     }
 
-    public void delete(UUID id) {
-        repo.deleteById(id);
+    public void delete(String receiverEmail) {
+        repo.deleteByReceiver(receiverEmail);
     }
 
-    public Optional<EmailDetails> findByEmail(String email) {
+    public List<Optional<EmailDetails>> findByEmail(String email) {
         return repo.findByEmail(email);
     }
 

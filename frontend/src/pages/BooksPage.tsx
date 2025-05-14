@@ -190,6 +190,7 @@ const BooksPage = () => {
                 )}
             {isCreateFormOpen && (
                 <CreateBookForm
+                    token={token}
                     data={formFillData}
                     onClose={() => {
                         setIsCreateFormOpen(false);
