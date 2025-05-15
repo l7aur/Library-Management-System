@@ -30,7 +30,7 @@ public class EmailService {
     public Boolean sendSimpleMail(SendEmailRequest er) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            Integer securityCode = getSecurityCode();
+            String securityCode = getSecurityCode();
             mailMessage.setFrom(from);
             mailMessage.setTo(er.getTo());
             mailMessage.setText("Your security code is: " + securityCode);
@@ -50,22 +50,22 @@ public class EmailService {
     }
 
     public List<Optional<EmailDetails>> findByEmail(String email) {
-        return repo.findByEmail(email);
+        return repo.findByReceiver(email);
     }
 
-    private void saveMailDetails(String to, Integer securityCode) {
+    private void saveMailDetails(String to, String securityCode) {
         EmailDetails emailDetails = new EmailDetails();
-        emailDetails.setCode(securityCode.toString());
+        emailDetails.setCode(securityCode);
         emailDetails.setReceiver(to);
         emailDetails.setExpirationTime(LocalTime.now().plusMinutes(5));
         repo.save(emailDetails);
     }
 
-    private Integer getSecurityCode() {
+    private String getSecurityCode() {
         Random random = new Random();
-        int securityCode = 0;
+        StringBuilder securityCode = new StringBuilder();
         for(int i = 0; i < 6; i++)
-            securityCode = securityCode * 10 + random.nextInt(10);
-        return securityCode;
+            securityCode.append(random.nextInt(10));
+        return securityCode.toString();
     }
 }
