@@ -1,6 +1,6 @@
 import { useAuth } from "../config/GlobalState.tsx";
 
-function CartPage() {
+function BuyPage() {
     const { isAuthenticated, user } = useAuth();
 
     return (
@@ -13,4 +13,4 @@ function CartPage() {
     );
 }
 
-export default CartPage;
+export default BuyPage;

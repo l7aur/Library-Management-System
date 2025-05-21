@@ -1,5 +1,5 @@
 import {
-    APP_USERS_PATH, AUTHORS_PATH, BOOKS_PATH, CART_PATH, HOME_PATH,
+    APP_USERS_PATH, AUTHORS_PATH, BOOKS_PATH, CART_PATH, BUY_PATH, HOME_PATH,
     LOGIN_PATH, PUBLISHERS_PATH, REGISTER_PATH
 } from "../constants/Paths.ts";
 import "./MyNavbar.css"
@@ -16,6 +16,16 @@ function MyNavbar () {
             {(isAuthenticated && user != null && (user.role == "ADMIN" || user.role == "EMPLOYEE")) &&
                 <li>
                     <a href={BOOKS_PATH}>Books</a>
+                </li>
+            }
+            {(isAuthenticated && user != null) &&
+                <li>
+                    <a href={BUY_PATH}>Buy</a>
+                </li>
+            }
+            {(isAuthenticated && user != null) &&
+                <li>
+                    <a href={CART_PATH}>Your Cart</a>
                 </li>
             }
             {(isAuthenticated && user != null && (user.role == "ADMIN" || user.role == "EMPLOYEE")) &&
