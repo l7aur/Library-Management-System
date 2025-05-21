@@ -34,7 +34,7 @@ const CreateAppUserForm: React.FC<Props> = ({data, onClose, onSubmitCreate, onSu
         } else {
             onSubmitUpdate(formData);
         }
-        onClose();
+        // onClose();
     };
 
 

@@ -4,6 +4,7 @@ import com.laur.bookshop.config.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,19 +17,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({
-            MethodArgumentNotValidException.class
-    })
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        log.error("Validation error: {}", ex.getMessage());
+        log.error("Validation error: {}", ex.getMessage()); 
         Map<String, String> errorResponse = new HashMap<>();
-
-        AtomicInteger i = new AtomicInteger(0);
         ex.getBindingResult()
                 .getAllErrors()
-                .forEach(error -> errorResponse.put("error" + i.getAndIncrement(), error.getDefaultMessage()));
+                .forEach(error -> {
+                    String fieldName = null;
+                    if (error instanceof FieldError) {
+                        fieldName = ((FieldError) error).getField();
+                    } else {
+                        fieldName = error.getObjectName();
+                    }
+                    String errorMessage = error.getDefaultMessage();
+                    errorResponse.put(fieldName, errorMessage);
+                });
 
-        return  new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({
