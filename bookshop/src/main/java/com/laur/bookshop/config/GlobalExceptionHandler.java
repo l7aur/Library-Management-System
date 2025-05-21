@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestControllerAdvice
 @Slf4j
@@ -21,7 +22,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         log.error("Validation error: {}", ex.getMessage());
         Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("message", ex.getMessage());
+
+        AtomicInteger i = new AtomicInteger(0);
+        ex.getBindingResult()
+                .getAllErrors()
+                .forEach(error -> errorResponse.put("error" + i.getAndIncrement(), error.getDefaultMessage()));
+
         return  new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

@@ -5,6 +5,8 @@ import com.laur.bookshop.config.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +35,13 @@ public class AppUser {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @OneToMany(
+            mappedBy = "appUser",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<BookOrder> bookOrders = new ArrayList<>();
 
     public AppUserDTO toDTO() {
         AppUserDTO dto = new AppUserDTO();
