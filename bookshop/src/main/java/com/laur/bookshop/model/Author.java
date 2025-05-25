@@ -16,7 +16,7 @@ import java.util.UUID;
         name = "author",
         uniqueConstraints = @UniqueConstraint(columnNames = {"first_name", "last_name"})
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

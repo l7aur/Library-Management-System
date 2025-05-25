@@ -23,6 +23,7 @@ export default function useFindAllBooks() {
         } finally {
             setLoading(false);
         }
+        console.log(data);
     };
 
     useEffect(() => {

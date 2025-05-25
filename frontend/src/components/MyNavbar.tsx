@@ -43,11 +43,6 @@ function MyNavbar () {
                     <a href={APP_USERS_PATH}>Users</a>
                 </li>
             }
-            {isAuthenticated && user != null && user.role != "ADMIN" &&
-                <li>
-                    <a href={CART_PATH}>Cart</a>
-                </li>
-            }
             {(!isAuthenticated) &&
                 <li>
                     <a href={LOGIN_PATH}>Login</a>

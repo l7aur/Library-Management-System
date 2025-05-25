@@ -31,3 +31,8 @@ export const BOOKS_FILTER_ENDPOINT = `${BOOKS_ENDPOINT}/filter`;
 
 export const CHANGE_PASSWORD_ENDPOINT = `${APP_USERS_ENDPOINT}/change_password`;
 export const SEND_MAIL_ENDPOINT = `${API_BASE_URL}/sendMail`;
+
+export const ORDER_BASE_URL = `${API_BASE_URL}/orders`;
+export const PLACE_ORDER_ENDPOINT = `${ORDER_BASE_URL}/place`;
+export const GET_ORDER_NUMBER = `${ORDER_BASE_URL}/get_order_number`;
+export const SEND_CONF_EMAIL = `${ORDER_BASE_URL}/send_email`;

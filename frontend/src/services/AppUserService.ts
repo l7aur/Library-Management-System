@@ -122,6 +122,7 @@ export const update = async (user: AppUserType, token: string | null): Promise<A
 }
 
 export const login1 = async (lr: LoginType): Promise<LoginResponseType> => {
+    console.log(lr);
     const response = await fetch(APP_USERS_LOGIN_ENDPOINT, {
         method: "POST",
         headers: {

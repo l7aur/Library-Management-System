@@ -1,0 +1,112 @@
+/* --- Books List Section --- */
+.books_list_section {
+    flex: 3; /* Allows this section to take up more space in the main content area */
+    min-width: 300px; /* Ensures it doesn't get too small */
+    padding-right: 20px; /* Add some space to the right if next to the cart */
+}
+
+/* --- Books Grid Layout --- */
+.books_grid {
+    display: grid;
+    /* Responsive columns:
+       - minmax(250px, 1fr) means each column will be at least 250px wide,
+         but can grow to take up equal free space (1fr).
+       - repeat(auto-fill, ...) creates as many columns as can fit.
+       - You can also use repeat(auto-fit, ...) if you want columns to stretch
+         to fill the available space when there are fewer items. */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px; /* Space between grid items (books) */
+    padding: 10px; /* Padding around the entire grid */
+    background-color: #242424; /* Light background for the grid area */
+    border-radius: 8px; /* Slightly rounded corners for the grid container */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05); /* Subtle inner shadow */
+}
+
+/* --- Individual Book Card Styling --- */
+.book_card {
+    border: 1px solid #646cff; /* Lighter border */
+    border-radius: 10px; /* More rounded corners */
+    text-align: center;
+    background-color: #181818; /* White background for each card */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* More pronounced shadow for depth */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover effect */
+    display: flex;
+    flex-direction: column; /* Stack image, text, button vertically */
+    justify-content: space-between; /* Pushes content to top/bottom, good for aligning buttons */
+    padding: 15px; /* Internal padding */
+    overflow: hidden; /* Ensures no content spills out if corners are rounded */
+}
+
+.book_card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15); /* Enhance shadow on hover */
+}
+
+.book_image {
+    max-width: 100%;
+    height: 200px; /* Fixed height for consistent card size */
+    object-fit: cover; /* Ensures images cover the area without distortion */
+    border-radius: 8px; /* Rounded corners for images */
+    margin-bottom: 15px; /* Space below the image */
+    display: block; /* Removes extra space below image if it's inline */
+    margin-left: auto; /* Center image */
+    margin-right: auto; /* Center image */
+}
+
+.book_card h3 {
+    font-size: 1.3em;
+    color: white;
+    margin-bottom: 5px;
+    height: 2.6em; /* Fixed height for title to prevent layout shifts if titles vary in length */
+    overflow: hidden; /* Hide overflow if title is too long */
+    text-overflow: ellipsis; /* Add ellipsis for long titles */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show max 2 lines */
+    -webkit-box-orient: vertical;
+}
+
+.book_card p {
+    font-size: 0.95em;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.book_price {
+    font-weight: bold;
+    color: #007bff; /* A nice blue for price */
+    font-size: 1.4em; /* Larger price font */
+    margin-top: auto; /* Pushes price to the bottom before the button */
+    padding-top: 10px; /* Space above price */
+    border-top: 1px dashed #eee; /* Subtle separator */
+}
+
+.add_to_cart_button {
+    background-color: #28a745; /* Success green */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px; /* Slightly more rounded */
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 1.05em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    width: 100%; /* Make button full width of the card */
+}
+
+.add_to_cart_button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Basic responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .buy_page_content {
+        flex-direction: column; /* Stack sections vertically on small screens */
+    }
+
+    .books_list_section {
+        padding-right: 0; /* Remove right padding when stacked */
+        margin-bottom: 20px; /* Add space between stacked sections */
+    }
+}

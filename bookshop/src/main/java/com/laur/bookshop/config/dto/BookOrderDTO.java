@@ -28,4 +28,8 @@ public class BookOrderDTO {
     @NotNull(message = "Price must not be null!")
     @Positive(message = "Price must be positive!")
     private Double price;
+
+    @NotNull(message = "Quantity must be set!")
+    @Positive(message = "Quantity must be positive!")
+    private Integer quantity;
 }

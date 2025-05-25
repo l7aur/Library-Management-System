@@ -1,5 +1,6 @@
 package com.laur.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.laur.bookshop.config.dto.AppUserDTO;
 import com.laur.bookshop.config.enums.Role;
 import jakarta.persistence.*;
@@ -41,6 +42,7 @@ public class AppUser {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonManagedReference
     private List<BookOrder> bookOrders = new ArrayList<>();
 
     public AppUserDTO toDTO() {

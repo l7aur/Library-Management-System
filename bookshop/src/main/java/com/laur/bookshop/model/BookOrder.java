@@ -1,5 +1,6 @@
 package com.laur.bookshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.laur.bookshop.config.dto.BookOrderDTO;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class BookOrder {
             name = "app_user_id",
             nullable = false
     )
+    @JsonBackReference
     private AppUser appUser;
 
     @Column
@@ -34,6 +36,9 @@ public class BookOrder {
     @Column
     private Double price;
 
+    @Column
+    private Integer quantity;
+
     BookOrderDTO toDTO() {
         BookOrderDTO dto = new BookOrderDTO();
         dto.setUsername(appUser.getUsername());
@@ -41,6 +46,7 @@ public class BookOrder {
         dto.setOrderNumber(orderNumber);
         dto.setOrderDate(orderDate);
         dto.setPrice(price);
+        dto.setQuantity(quantity);
         return dto;
     }
 }

@@ -1,0 +1,207 @@
+.cartPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures footer sticks to bottom */
+}
+
+.cartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #242424;
+    border-bottom: 1px solid white;
+}
+
+.cartHeader h1 {
+    margin: 0;
+    color: white;
+}
+
+.clearCartButton {
+    background-color: #dc3545; /* Red for danger/clear */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.clearCartButton:hover {
+    background-color: #c82333;
+}
+
+.emptyCartMessage {
+    text-align: center;
+    padding: 50px 20px;
+    flex-grow: 1; /* Pushes footer down */
+    color: white;
+}
+
+.cartContent {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    justify-content: center;
+    padding: 20px;
+    gap: 30px; /* Space between items list and summary */
+    flex-grow: 1; /* Pushes footer down */
+}
+
+.cartItemsList {
+    flex: 2; /* Takes more space */
+    min-width: 300px; /* Ensures it doesn't get too small */
+    max-width: 700px;
+}
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    border: 1px solid #646cff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #242424;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.itemImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
+.itemDetails {
+    flex-grow: 1;
+}
+
+.itemDetails h3 {
+    margin: 0 0 8px 0;
+    color: white;
+}
+
+.itemDetails p {
+    margin: 5px 0;
+    color: white;
+}
+
+.quantityControl {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.quantityControl button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.quantityControl button:disabled {
+    background-color: #242424;
+    cursor: not-allowed;
+}
+
+.quantityControl span {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.removeItemButton {
+    background-color: #ffc107; /* Yellow for warning/remove */
+    color: #333;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-top: 10px;
+}
+
+.removeItemButton:hover {
+    background-color: #e0a800;
+}
+
+.cartSummary {
+    flex: 1; /* Takes less space */
+    min-width: 280px;
+    max-width: 400px;
+    border: 1px solid #646cff;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #242424;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    align-self: flex-start; /* Aligns to the top */
+}
+
+.cartSummary h2 {
+    margin-top: 0;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+    color: white;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: white;
+}
+
+.summaryRow.totalRow {
+    font-weight: bold;
+    font-size: 1.3em;
+    color: #646cff;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 15px;
+}
+
+.checkoutButton {
+    background-color: #28a745; /* Green for success/checkout */
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+.checkoutButton:hover {
+    background-color: #218838;
+}
+
+.siteFooter {
+    text-align: center;
+    padding: 20px;
+    background-color: #242424;
+    border-top: 1px solid #eee;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.siteFooter p {
+    margin: 0;
+    color: #777;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .cartContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cartItemsList, .cartSummary {
+        width: 100%;
+        max-width: 600px; /* Limit width on smaller screens for better readability */
+    }
+}

@@ -65,6 +65,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('user');
         localStorage.removeItem('token');
+        localStorage.removeItem('shoppingCart');
     };
 
     // Value passed to the context provider

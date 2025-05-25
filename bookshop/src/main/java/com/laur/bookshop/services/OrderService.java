@@ -1,6 +1,8 @@
 package com.laur.bookshop.services;
 
 import com.laur.bookshop.config.dto.BookOrderDTO;
+import com.laur.bookshop.config.dto.ConfirmationEmailDTO;
+import com.laur.bookshop.config.dto.ConfirmationEmailData;
 import com.laur.bookshop.config.exceptions.AppUserNotFoundException;
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
 import com.laur.bookshop.model.AppUser;
@@ -9,10 +11,14 @@ import com.laur.bookshop.model.BookOrder;
 import com.laur.bookshop.repositories.AppUserRepo;
 import com.laur.bookshop.repositories.BookRepo;
 import com.laur.bookshop.repositories.OrderRepo;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static com.laur.bookshop.config.enums.AppMessages.BOOK_NOT_FOUND_MESSAGE;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +27,7 @@ public class OrderService {
     private final BookRepo bookRepo;
     private final AppUserRepo userRepo;
 
+    @Transactional
     public BookOrder saveOrderedBook(BookOrderDTO dto) {
         Book book = bookRepo.findById(UUID.fromString(dto.getBookId()))
                 .orElseThrow(() -> new BookNotFoundException("Ordered book UUID " + dto.getBookId() + " not found!"));
@@ -32,33 +39,46 @@ public class OrderService {
         bookOrder.setPrice(dto.getPrice());
         bookOrder.setBookID(book.getId());
         bookOrder.setOrderNumber(dto.getOrderNumber());
+        bookOrder.setQuantity(dto.getQuantity());
         return repo.save(bookOrder);
     }
 
-    public Double computeOrderPrice(Integer orderNumber) {
-        Double price = 0.0;
-        List<BookOrder> orderedItems = repo.findByOrderNumber(orderNumber);
-        for(BookOrder item: orderedItems) {
-            price += item.getPrice();
-        }
-        return  price;
+    public List<BookOrder> getOrderedBooksEntries(Integer orderNumber) {
+        return repo.findByOrderNumber(orderNumber);
     }
 
-    public List<List<Optional<Book>>> getAllOrders(UUID userId) {
-        List<List<Optional<Book>>> orders = new ArrayList<>();
-        Set<Integer> associatedOrders = repo.findOrderNumbersByAppUserId(userId);
-        for(Integer orderNumber : associatedOrders) {
-            orders.add(getOrderedBooks(orderNumber));
-        }
-        return orders;
+    public Integer generateNewOrder() {
+        return repo.findAll()
+                .stream()
+                .map(BookOrder::getOrderNumber)
+                .max(Integer::compareTo)
+                .map(n -> n + 1)
+                .orElse(1); // If no orders exist, start from 1
     }
 
-    public List<Optional<Book>> getOrderedBooks(Integer orderNumber) {
-        List<BookOrder> orders = repo.findByOrderNumber(orderNumber);
-        List<Optional<Book>> books = new ArrayList<>();
-        for(BookOrder order : orders) {
-            books.add(bookRepo.findById(order.getId()));
+
+    @Transactional
+    public List<ConfirmationEmailData> process(ConfirmationEmailDTO ce) {
+        List<ConfirmationEmailData> data = new ArrayList<>();
+        List<BookOrder> bookOrders = repo.findByOrderNumber(ce.getOrderNumber());
+        List<Pair<Book, Integer>> bookIds = new ArrayList<>();
+        boolean missingItems = false;
+        for(BookOrder bookOrder : bookOrders) {
+            Book b = bookRepo.findById(bookOrder.getBookID())
+                    .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND_MESSAGE + bookOrder.getBookID().toString()));
+            if (b.getStock() - bookOrder.getQuantity() >= 0) {
+                bookIds.add(Pair.of(b, bookOrder.getQuantity()));
+                data.add(new ConfirmationEmailData(b.getTitle(), bookOrder.getQuantity(), bookOrder.getPrice()));
+            }
+            else
+                missingItems = true;
         }
-        return books;
+        for(Pair<Book, Integer> b : bookIds) {
+            b.getFirst().setStock(b.getFirst().getStock() - b.getSecond());
+            bookRepo.save(b.getFirst());
+        }
+        if(missingItems)
+            data.add(new ConfirmationEmailData(null, -1, 0.0));
+        return data;
     }
 }

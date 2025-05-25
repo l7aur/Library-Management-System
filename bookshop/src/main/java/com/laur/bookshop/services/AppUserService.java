@@ -14,9 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.laur.bookshop.config.enums.AppMessages.*;
 
@@ -73,6 +71,7 @@ public class AppUserService {
         );
         if(!passwordEncoder.matches(lr.getPassword(), appUser.getPassword()))
             throw new InvalidPassword(WRONG_PASSWORD_MESSAGE);
+        appUser.setBookOrders(Collections.emptyList());
         return appUser;
     }
 
