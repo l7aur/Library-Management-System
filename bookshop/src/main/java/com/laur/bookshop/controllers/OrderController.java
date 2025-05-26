@@ -3,8 +3,8 @@ package com.laur.bookshop.controllers;
 import com.laur.bookshop.config.dto.BookOrderDTO;
 import com.laur.bookshop.config.dto.ConfirmationEmailDTO;
 import com.laur.bookshop.config.dto.ConfirmationEmailData;
+import com.laur.bookshop.config.dto.FullOrderDTO;
 import com.laur.bookshop.model.BookOrder;
-import com.laur.bookshop.services.BookService;
 import com.laur.bookshop.services.EmailService;
 import com.laur.bookshop.services.OrderService;
 import jakarta.validation.Valid;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -20,7 +21,6 @@ import java.util.List;
 public class OrderController {
     private final OrderService service;
     private final EmailService emailService;
-    private final BookService bookService;
 
     @PostMapping("/orders/place")
     public ResponseEntity<String> placeOrder(@RequestBody @Valid BookOrderDTO dto) {
@@ -34,17 +34,10 @@ public class OrderController {
         return service.getOrderedBooksEntries(orderNumber);
     }
 
-//    @GetMapping("orders/appUserId")
-//    public List<List<Book>> getAllOrdersByAppUser(@RequestParam UUID appUserId) {
-//        List<List<Optional<Book>>> books = service.getOrderedBooks(appUserId);
-//        return books.stream()
-//                .map(innerList -> innerList
-//                        .stream()
-//                        .filter(Optional::isPresent)
-//                        .map(Optional::get)
-//                        .toList())
-//                .toList();
-//    }
+    @GetMapping("orders/order_history")
+    public Map<Integer, FullOrderDTO> getUserOrderHistory(@RequestParam String username) {
+        return service.getOrderHistory(username);
+    }
 
     @GetMapping("orders/get_order_number")
     public Integer generateOrderNumber() {

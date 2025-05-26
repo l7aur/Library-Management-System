@@ -10,3 +10,4 @@ export const NOT_FOUND_PATH = "*";
 export const UNAUTHORIZED_PATH = "/unauthorized";
 export const RESET_PASSWORD_PATH = "/reset-password";
 export const BUY_PATH = "/buy";
+export const ORDER_HISTORY_PATH = "/order-history";

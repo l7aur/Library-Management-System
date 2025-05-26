@@ -36,3 +36,4 @@ export const ORDER_BASE_URL = `${API_BASE_URL}/orders`;
 export const PLACE_ORDER_ENDPOINT = `${ORDER_BASE_URL}/place`;
 export const GET_ORDER_NUMBER = `${ORDER_BASE_URL}/get_order_number`;
 export const SEND_CONF_EMAIL = `${ORDER_BASE_URL}/send_email`;
+export const GET_ORDER_HISTORY = `${ORDER_BASE_URL}/order_history`;

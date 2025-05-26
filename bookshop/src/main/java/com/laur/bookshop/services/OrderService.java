@@ -3,6 +3,7 @@ package com.laur.bookshop.services;
 import com.laur.bookshop.config.dto.BookOrderDTO;
 import com.laur.bookshop.config.dto.ConfirmationEmailDTO;
 import com.laur.bookshop.config.dto.ConfirmationEmailData;
+import com.laur.bookshop.config.dto.FullOrderDTO;
 import com.laur.bookshop.config.exceptions.AppUserNotFoundException;
 import com.laur.bookshop.config.exceptions.BookNotFoundException;
 import com.laur.bookshop.model.AppUser;
@@ -17,6 +18,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.laur.bookshop.config.enums.AppMessages.BOOK_NOT_FOUND_MESSAGE;
 
@@ -26,6 +28,7 @@ public class OrderService {
     private final OrderRepo repo;
     private final BookRepo bookRepo;
     private final AppUserRepo userRepo;
+    private final AppUserRepo appUserRepo;
 
     @Transactional
     public BookOrder saveOrderedBook(BookOrderDTO dto) {
@@ -80,5 +83,53 @@ public class OrderService {
         if(missingItems)
             data.add(new ConfirmationEmailData(null, -1, 0.0));
         return data;
+    }
+
+    public Map<Integer, FullOrderDTO> getOrderHistory(String username) {
+        UUID userId = appUserRepo.findByUsername(username)
+                .orElseThrow(() -> new AppUserNotFoundException("User " + username + " not found!"))
+                .getId();
+
+        List<BookOrder> bookOrders = repo.findBookOrdersByAppUserId(userId);
+        if (bookOrders.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        Set<UUID> bookIds = bookOrders.stream()
+                .map(BookOrder::getBookID)
+                .collect(Collectors.toSet());
+
+        Map<UUID, Book> booksById = bookRepo.findAllById(bookIds).stream()
+                .collect(Collectors.toMap(Book::getId, book -> book));
+
+        Map<Integer, FullOrderDTO> orders = new HashMap<>();
+
+        for (BookOrder bookOrder : bookOrders) {
+            Book book = booksById.get(bookOrder.getBookID());
+
+            if (book == null) {
+                System.err.println("Warning: Book with ID " + bookOrder.getBookID() +
+                        " for Order Number " + bookOrder.getOrderNumber() + " not found. Skipping this item.");
+                continue; // Skip processing this specific order item
+            }
+
+            ConfirmationEmailData item = new ConfirmationEmailData(
+                    book.getTitle(),
+                    bookOrder.getQuantity(),
+                    bookOrder.getPrice()
+            );
+
+            orders.compute(bookOrder.getOrderNumber(), (orderNum, existingOrderDTO) -> {
+                if (existingOrderDTO == null) {
+                    return new FullOrderDTO(List.of(item), bookOrder.getOrderDate());
+                } else {
+                    List<ConfirmationEmailData> updatedItems = new ArrayList<>(existingOrderDTO.getItems());
+                    updatedItems.add(item);
+                    return new FullOrderDTO(updatedItems, existingOrderDTO.getDate());
+                }
+            });
+        }
+
+        return orders;
     }
 }

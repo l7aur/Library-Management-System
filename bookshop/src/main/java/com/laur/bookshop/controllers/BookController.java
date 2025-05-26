@@ -3,7 +3,6 @@ package com.laur.bookshop.controllers;
 import com.laur.bookshop.config.dto.BookDTO;
 import com.laur.bookshop.model.Book;
 import com.laur.bookshop.services.BookService;
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

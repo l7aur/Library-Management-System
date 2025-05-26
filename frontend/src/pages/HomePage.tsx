@@ -1,8 +1,11 @@
 import { useAuth } from "../config/GlobalState.tsx";
-import styles from "./HomePage.module.css"; // Import a CSS module
+import styles from "./HomePage.module.css";
+import {useNavigate} from "react-router-dom";
+import {ORDER_HISTORY_PATH} from "../constants/Paths.ts"; // Import a CSS module
 
 function HomePage() {
     const { isAuthenticated, user } = useAuth();
+    const navigate = useNavigate();
 
     return (
         <div className={styles.homePage}>
@@ -18,7 +21,7 @@ function HomePage() {
                     <p className={styles.welcomeBack}>Welcome back. We're delighted to have you here.</p>
                     <div className={styles.userActions}>
                         <button className={styles.viewProfile}>View Your Profile</button>
-                        <button className={styles.viewOrders}>Your Order History</button>
+                        <button className={styles.viewOrders} onClick={() => navigate(ORDER_HISTORY_PATH)}>Your Order History</button>
                     </div>
                 </section>
             )}

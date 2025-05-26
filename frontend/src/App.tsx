@@ -10,14 +10,26 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import AppUsersPage from "./pages/AppUsersPage.tsx";
 import {
-    APP_USERS_PATH, AUTHORS_PATH, BOOKS_PATH, BUY_PATH, CART_PATH, HOME_PATH,
-    LOGIN_PATH, NOT_FOUND_PATH, PUBLISHERS_PATH, REGISTER_PATH, RESET_PASSWORD_PATH, UNAUTHORIZED_PATH
+    APP_USERS_PATH,
+    AUTHORS_PATH,
+    BOOKS_PATH,
+    BUY_PATH,
+    CART_PATH,
+    HOME_PATH,
+    LOGIN_PATH,
+    NOT_FOUND_PATH,
+    ORDER_HISTORY_PATH,
+    PUBLISHERS_PATH,
+    REGISTER_PATH,
+    RESET_PASSWORD_PATH,
+    UNAUTHORIZED_PATH
 } from "./constants/Paths.ts";
 import { AuthProvider } from './config/GlobalState.tsx';
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import UnauthorizedPage from "./pages/UnauthorizedPage.tsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.tsx";
 import BuyPage from "./pages/BuyPage.tsx";
+import OrderHistoryPage from "./pages/OrderHistoryPage.tsx";
 
 function    App() {
     return (
@@ -36,6 +48,7 @@ function    App() {
                         <Route element={<ProtectedRoute />}>
                             <Route path={CART_PATH} element={<CartPage />} />
                             <Route path={BUY_PATH} element={<BuyPage/>} />
+                            <Route path={ORDER_HISTORY_PATH} element={<OrderHistoryPage/>} />
                         </Route>
 
                         {/* Protected Route - Employee Only */}
