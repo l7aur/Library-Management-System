@@ -4,200 +4,239 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c0f4b02-f8f6-4623-abcc-64514c7560a1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../bookshop/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/BookshopApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/GlobalExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/AppUserDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/AuthorDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/BookDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/BookOrderDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/ChangePasswordRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/ConfirmationEmailDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/ConfirmationEmailData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/FullOrderDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/LoginRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/LoginResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/PublisherDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/SendEmailRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/enums/AppMessages.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/enums/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/AppUserNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/AuthorNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/BookNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/DuplicateException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/EmailNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/ExpiredSecurityCodeException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/InvalidPassword.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/PublisherNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/JwtAuthEntryPoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/JwtUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/email/EmailValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/email/EmailValidatorImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/isbn/IsbnValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/isbn/IsbnValidatorImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/password/PasswordValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/password/PasswordValidatorImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/AppUserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/AuthorController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/BookController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/EmailController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/OrderController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/PublisherController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/AppUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/Author.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/Book.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/BookOrder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/EmailDetails.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/Publisher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/AppUserRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/AuthorRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/BookRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/EmailRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/OrderRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/PublisherRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/AppUserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/AuthorService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/BookService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/CustomUserDetailsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/EmailService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/OrderService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/PublisherService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/resources/static/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/BookshopApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/AppUserControllerIntegrationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/AuthorControllerIntegrationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/BookControllerIntegrationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/PublisherControllerIntegrationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/Util.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/AppUserServiceTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/AuthorServiceTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/BookServiceTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/PublisherServiceTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/application-test.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/app_user_seed0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/author_seed0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/book_seed0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/publisher_seed0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../database/generate_app_users.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../database/generate_authors.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../database/generate_publishers.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/eslint.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/public/vite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/ProtectedRoute.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/assets/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/AppUserSearchBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/BookSearchBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CRUDMenu.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CRUDMenu.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/FilterSearchBar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/MyNavbar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/MyNavbar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/AppUsersTable.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/AuthorsTable.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/BooksTable.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/PublishersTable.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/Table.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateAppUserForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateBookForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateForm.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreatePublisherForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateaAuthorForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/LoginForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/config/GlobalState.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/constants/Paths.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/constants/api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllAppUsers.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllAuthors.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllBooks.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllPublishers.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/main.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/AppUsersPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/AuthorsPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/BooksPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Buy.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/BuyPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/CartPage.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/CartPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/HomePage.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/HomePage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/LoginPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/NotFoundPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/OrderHistoryPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/OrderPage.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Page.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/PublishersPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/RegisterPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/ResetPasswordPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/UnauthorizedPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/bookImg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/AppUserService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/AuthorService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/BookService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/OrderService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/PublisherService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/AppUserType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/AuthorType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/BookType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/BookTypeDTO.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/CartItemType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/FormDataType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/LoginResponseType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/LoginType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/OrderType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/PublisherType.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/vite-env.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/tsconfig.app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/tsconfig.node.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/vite.config.ts" beforeDir="false" />
-    </list>
+    <list default="true" id="ab839260-6e7b-4d11-8365-93d2a62fe5ed" name="Changes" comment="fixed backend2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 1
-}]]></component>
-  <component name="ProjectId" id="2xfOXUjwmDEGeihxQoTlZrIBjdN" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/laur/bookshop/config/security/JwtUtil.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2v0Pr5uYim67spA1JI7P3CroHox" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/L7aur/Desktop/SD/project-root/backend/app",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.AppUserControllerIntegrationTests.deleteOne_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.login_InvalidPassword.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.login_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.login_InvalidUsername.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.login_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testAdd_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testAdd_InvalidPayload1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testAdd_InvalidPayload2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testAdd_InvalidPayload3.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testAdd_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testDeleteAppUsers_InvalidIds.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testDeleteAppUsers_InvalidIds1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testDeleteAppUsers_InvalidIds2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testDeleteAppUsers_ValidIds.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testDelete_ValidIds.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.testFindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.update_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.update_InvalidPayload2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserControllerIntegrationTests.update_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.testAdd.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.testDeleteMany.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.testDeleteOne.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.testDeleteOne2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.testUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AppUserServiceTests.testUpdateAppUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testAdd_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testAdd_InvalidPayload1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testAdd_InvalidPayload3.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testAdd_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testAdd_ValidPayload1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testDeleteOne_InvalidIds.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testDeleteOne_ValidIds.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testFindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorControllerIntegrationTests.testUpdate_ValidPayload.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.AuthorServiceTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorServiceTests.testFindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthorServiceTests.testUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testAdd_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testAdd_InvalidPayload2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testAdd_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testDeleteOne_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testDeleteOne_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testDelete_InvalidPayload2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testFindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testUpdate_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testUpdate_InvalidPayload1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerIntegrationTests.testUpdate_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testAdd.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testAddAuthorsPublisher.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testAddNoAuthorPublisher.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.BookServiceTests.testDeleteManyNoAuthorNoPublisher.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testDeleteOne.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testDeleteOne3.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.BookServiceTests.testDeleteOne4.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testFindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testUpdate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookServiceTests.testUpdateAuthorsPublisher.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.deleteOne_InvalidIds1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.deleteOne_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.testAdd_InvalidPayload1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.testAdd_InvalidPayload2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.testAdd_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.testAdd_ValidPayload2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.testFindAll.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.update_InvalidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherControllerIntegrationTests.update_ValidPayload.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.testAdd.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.testDeleteMany.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.testDeleteOne1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.testDeleteOne2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.testFindAll.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PublisherServiceTests.testUpdate.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.bookshop in bookshop.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.controller in bookshop.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in bookshop.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.service in bookshop.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bookshop [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bookshop [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BookshopApplication.executor&quot;: &quot;Run&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/L7aur/Desktop/SD/project-root/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.37040818&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.3058104&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.laur.bookshop.config.exceptions" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\L7aur\Desktop\SD\bookshop\src\main\resources\static" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.service in bookshop">
+    <configuration name="BookControllerIntegrationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bookshop" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.laur.bookshop.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.laur.bookshop.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.laur.bookshop.controller.BookControllerIntegrationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bookshop in bookshop" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bookshop" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/com/laur/bookshop" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="controller in bookshop" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bookshop" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/com/laur/bookshop/controller" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in bookshop" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bookshop" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="service in bookshop" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bookshop" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/com/laur/bookshop/service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BookshopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="bookshop" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.laur.bookshop.BookshopApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.service in bookshop" />
+        <item itemvalue="JUnit.controller in bookshop" />
+        <item itemvalue="JUnit.bookshop in bookshop" />
+        <item itemvalue="JUnit.java in bookshop" />
+        <item itemvalue="JUnit.BookControllerIntegrationTests" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -209,16 +248,113 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5c0f4b02-f8f6-4623-abcc-64514c7560a1" name="Changes" comment="" />
-      <created>1748325701314</created>
+      <changelist id="ab839260-6e7b-4d11-8365-93d2a62fe5ed" name="Changes" comment="" />
+      <created>1743279214421</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1748325701314</updated>
-      <workItem from="1748325703168" duration="65000" />
+      <updated>1743279214421</updated>
+      <workItem from="1743279215796" duration="13686000" />
+      <workItem from="1743311758891" duration="6760000" />
+      <workItem from="1743329104285" duration="1685000" />
+      <workItem from="1743453404997" duration="2542000" />
+      <workItem from="1743485760930" duration="6843000" />
+      <workItem from="1743539167479" duration="4481000" />
+      <workItem from="1743574974875" duration="6355000" />
+      <workItem from="1743745911771" duration="2470000" />
+      <workItem from="1743748519536" duration="496000" />
+      <workItem from="1743749026301" duration="10300000" />
+      <workItem from="1743784209565" duration="101000" />
+      <workItem from="1743837948359" duration="34173000" />
+      <workItem from="1743919650081" duration="22771000" />
+      <workItem from="1743942653662" duration="45000" />
+      <workItem from="1743954154089" duration="7169000" />
+      <workItem from="1744035543046" duration="8780000" />
+      <workItem from="1744274379593" duration="96000" />
+      <workItem from="1744437614885" duration="8804000" />
+      <workItem from="1744455133055" duration="5584000" />
+      <workItem from="1744527187143" duration="8668000" />
+      <workItem from="1744549227018" duration="145000" />
+      <workItem from="1744549416898" duration="475000" />
+      <workItem from="1744549996521" duration="314000" />
+      <workItem from="1744550361983" duration="362000" />
+      <workItem from="1744828071307" duration="261000" />
+      <workItem from="1744867821061" duration="1995000" />
+      <workItem from="1746887364379" duration="1847000" />
+      <workItem from="1746890892370" duration="2523000" />
+      <workItem from="1746950854195" duration="40000" />
+      <workItem from="1746950903608" duration="2012000" />
+      <workItem from="1746963847961" duration="13182000" />
+      <workItem from="1747059189449" duration="9194000" />
+      <workItem from="1747117284537" duration="1686000" />
+      <workItem from="1747119069639" duration="150000" />
+      <workItem from="1747119232654" duration="137000" />
+      <workItem from="1747120925647" duration="1158000" />
+      <workItem from="1747245302456" duration="691000" />
+      <workItem from="1747247247605" duration="498000" />
+      <workItem from="1747296566652" duration="14000" />
+      <workItem from="1747296882963" duration="502000" />
+      <workItem from="1747328030334" duration="646000" />
+      <workItem from="1747679473809" duration="741000" />
+      <workItem from="1747761786227" duration="627000" />
+      <workItem from="1747806175878" duration="1752000" />
+      <workItem from="1747807954505" duration="9409000" />
+      <workItem from="1747847345273" duration="1840000" />
+      <workItem from="1748154903579" duration="19340000" />
+      <workItem from="1748183220455" duration="152000" />
+      <workItem from="1748183842739" duration="17000" />
+      <workItem from="1748256811922" duration="8266000" />
+      <workItem from="1748325526800" duration="91000" />
+      <workItem from="1748325769197" duration="67000" />
+      <workItem from="1748325999686" duration="592000" />
+      <workItem from="1748326607306" duration="164000" />
+      <workItem from="1748326913962" duration="837000" />
+      <workItem from="1748328558402" duration="1325000" />
     </task>
+    <task id="LOCAL-00001" summary="fixed backend">
+      <option name="closed" value="true" />
+      <created>1743291951156</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743291951156</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fixed backend2">
+      <option name="closed" value="true" />
+      <created>1743292035608</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743292035608</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/../.." />
+      <path value="$PROJECT_DIR$/.." />
+      <path value="$PROJECT_DIR$/../../.." />
+    </ignored-roots>
+    <MESSAGE value="fixed backend" />
+    <MESSAGE value="fixed backend2" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed backend2" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

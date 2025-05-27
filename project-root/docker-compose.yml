@@ -1,0 +1,60 @@
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:13-alpine # Using a lightweight Alpine-based PostgreSQL image
+    restart: always
+    environment:
+      # Database name, user, and password. Values are read from .env or default to the specified ones.
+      POSTGRES_DB: ${POSTGRES_DB:-library_db}
+      POSTGRES_USER: ${POSTGRES_USER:-simple_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-simple_user}
+    ports:
+      - "5432:5432" # Expose PostgreSQL port to the host machine
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persistent volume for PostgreSQL data
+
+  # Spring Boot Backend Service
+  backend:
+    build:
+      context: ./backend # Path to your Spring Boot project directory
+      dockerfile: Dockerfile # Name of the Dockerfile for the backend
+    ports:
+      - "8080:8080" # Map host port 8080 to container port 8080
+    environment:
+      # Spring Boot application properties mapped to environment variables
+      # These override properties in application.properties when running in Docker
+      SPRING_APPLICATION_NAME: bookshop
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-library_db} # 'postgres' is the service name in docker-compose
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-simple_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-simple_user}
+      SPRING_SQL_INIT_PLATFORM: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: 'true' # Boolean values in YAML often need to be quoted
+      SERVER_PORT: 8080 # Explicitly set, though usually handled by ports mapping
+      SPRING_SECURITY_USER_NAME: l7aur
+      SPRING_SECURITY_USER_PASSWORD: l7aur
+      JWT_SECRET: ${JWT_SECRET:-your-very-long-and-secret-key-here} # Read from .env or default
+      JWT_EXPIRATION: 3600000
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: gradlaurentiucalin16@gmail.com
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-luxt zpux gmat hgqk} # Read from .env or default
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: 'true'
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: 'true'
+    depends_on:
+      - postgres # Ensures postgres starts before the backend
+    restart: on-failure # Restarts the container if it exits with an error
+
+  # React Frontend Service
+  frontend:
+    build:
+      context: ./frontend # Path to your React project directory
+      dockerfile: Dockerfile # Name of the Dockerfile for the frontend
+    ports:
+      - "3000:80" # Map host port 3000 to container port 80 (Nginx default)
+    depends_on:
+      - backend # Ensures backend starts before the frontend
+    restart: on-failure
+
+volumes:
+  pgdata: # Define the named volume for PostgreSQL data persistence
