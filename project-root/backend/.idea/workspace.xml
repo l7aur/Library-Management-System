@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5c0f4b02-f8f6-4623-abcc-64514c7560a1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../bookshop/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/BookshopApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/AppUserDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/AuthorDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/BookDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/BookOrderDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/ChangePasswordRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/ConfirmationEmailDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/ConfirmationEmailData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/FullOrderDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/LoginRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/LoginResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/PublisherDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/dto/SendEmailRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/enums/AppMessages.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/enums/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/AppUserNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/AuthorNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/BookNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/DuplicateException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/EmailNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/ExpiredSecurityCodeException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/InvalidPassword.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/exceptions/PublisherNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/JwtAuthEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/security/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/email/EmailValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/email/EmailValidatorImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/isbn/IsbnValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/isbn/IsbnValidatorImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/password/PasswordValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/config/validators/password/PasswordValidatorImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/AppUserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/AuthorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/BookController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/EmailController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/OrderController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/controllers/PublisherController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/AppUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/Author.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/Book.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/BookOrder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/EmailDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/model/Publisher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/AppUserRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/AuthorRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/BookRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/EmailRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/OrderRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/repositories/PublisherRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/AppUserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/AuthorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/BookService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/CustomUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/EmailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/OrderService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/java/com/laur/bookshop/services/PublisherService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/main/resources/static/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/BookshopApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/AppUserControllerIntegrationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/AuthorControllerIntegrationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/BookControllerIntegrationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/PublisherControllerIntegrationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/controller/Util.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/AppUserServiceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/AuthorServiceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/BookServiceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/java/com/laur/bookshop/service/PublisherServiceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/application-test.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/app_user_seed0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/author_seed0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/book_seed0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bookshop/src/test/resources/fixtures/publisher_seed0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../database/generate_app_users.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../database/generate_authors.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../database/generate_publishers.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/eslint.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/public/vite.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/ProtectedRoute.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/assets/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/AppUserSearchBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/BookSearchBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CRUDMenu.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CRUDMenu.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/FilterSearchBar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/MyNavbar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/MyNavbar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/AppUsersTable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/AuthorsTable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/BooksTable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/PublishersTable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/Tables/Table.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateAppUserForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateBookForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateForm.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreatePublisherForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/CreateaAuthorForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/forms/LoginForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/config/GlobalState.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/constants/Paths.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/constants/api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllAppUsers.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllAuthors.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllBooks.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/hooks/useFindAllPublishers.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/main.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/AppUsersPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/AuthorsPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/BooksPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Buy.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/BuyPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/CartPage.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/CartPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/HomePage.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/HomePage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/LoginPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/NotFoundPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/OrderHistoryPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/OrderPage.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Page.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/PublishersPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/RegisterPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/ResetPasswordPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/UnauthorizedPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/bookImg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/AppUserService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/AuthorService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/BookService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/OrderService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/PublisherService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/AppUserType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/AuthorType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/BookType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/BookTypeDTO.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/CartItemType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/FormDataType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/LoginResponseType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/LoginType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/OrderType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/types/PublisherType.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/vite-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/tsconfig.node.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/vite.config.ts" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2xfOXUjwmDEGeihxQoTlZrIBjdN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/L7aur/Desktop/SD/project-root/backend/app",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5c0f4b02-f8f6-4623-abcc-64514c7560a1" name="Changes" comment="" />
+      <created>1748325701314</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1748325701314</updated>
+      <workItem from="1748325703168" duration="65000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
