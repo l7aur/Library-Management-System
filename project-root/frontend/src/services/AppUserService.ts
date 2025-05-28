@@ -25,7 +25,6 @@ export const findAll = async (token: string | null): Promise<AppUserType[]> => {
     });
 
     if (!response.ok) {
-        // Handle errors appropriately.  This is crucial.
         let errorMessage = `Failed to fetch users: ${response.status}`;
         try {
             const errorJson = await response.json();
@@ -94,6 +93,9 @@ export const add = async (newUser: AppUserType): Promise<AppUserType> => {
         },
         body: JSON.stringify(newUser),
     });
+
+    if(!response.ok)
+        throw new Error("Unable to add user!");
     return response.json();
 }
 
@@ -118,11 +120,13 @@ export const update = async (user: AppUserType, token: string | null): Promise<A
         },
         body: JSON.stringify(user),
     });
+
+    if(!response.ok)
+        throw new Error("Unable to update user!");
     return response.json();
 }
 
 export const login1 = async (lr: LoginType): Promise<LoginResponseType> => {
-    console.log(lr);
     const response = await fetch(APP_USERS_LOGIN_ENDPOINT, {
         method: "POST",
         headers: {
@@ -131,5 +135,7 @@ export const login1 = async (lr: LoginType): Promise<LoginResponseType> => {
         body: JSON.stringify(lr),
     });
 
+    if(!response.ok)
+        throw new Error("Unable to login!");
     return await response.json();
 };

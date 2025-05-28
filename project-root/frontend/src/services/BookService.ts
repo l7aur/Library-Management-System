@@ -80,6 +80,8 @@ export const add = async (newBook: BookTypeDTO, token: string | null): Promise<B
         },
         body: JSON.stringify(newBook),
     });
+    if(!response.ok)
+        throw new Error("Unable to add book!");
     return response.json();
 }
 
@@ -104,5 +106,7 @@ export const update = async (book: BookTypeDTO, token: string | null): Promise<B
         },
         body: JSON.stringify(book),
     });
+    if(!response.ok)
+        throw new Error("Unable to update book!");
     return response.json();
 }

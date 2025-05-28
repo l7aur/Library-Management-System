@@ -46,6 +46,9 @@ export const add = async (newAuthor: AuthorType, token: string | null): Promise<
         },
         body: JSON.stringify(newAuthor),
     });
+
+    if(!response.ok)
+        throw new Error("Unable to add author!");
     return response.json();
 }
 
@@ -70,5 +73,8 @@ export const update = async (author: AuthorType, token: string | null): Promise<
         },
         body: JSON.stringify(author),
     });
+
+    if(!response.ok)
+        throw new Error("Unable to update author!");
     return response.json();
 }

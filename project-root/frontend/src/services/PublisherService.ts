@@ -46,6 +46,9 @@ export const add = async (newPublisher: PublisherType, token: string | null): Pr
         },
         body: JSON.stringify(newPublisher),
     });
+
+    if(!response.ok)
+        throw new Error("Unable to add publisher!");
     return response.json();
 }
 
@@ -70,5 +73,8 @@ export const update = async (publisher: PublisherType, token: string | null): Pr
         },
         body: JSON.stringify(publisher),
     });
+
+    if(!response.ok)
+        throw new Error("Unable to update publisher!");
     return response.json();
 }
