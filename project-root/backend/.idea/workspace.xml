@@ -172,7 +172,7 @@
       <recent name="C:\Users\L7aur\Desktop\SD\bookshop\src\main\resources\static" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.service in bookshop">
+  <component name="RunManager" selected="Spring Boot.BookshopApplication">
     <configuration name="BookControllerIntegrationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bookshop" />
       <extension name="coverage">
@@ -309,6 +309,7 @@
       <workItem from="1748326607306" duration="164000" />
       <workItem from="1748326913962" duration="837000" />
       <workItem from="1748328558402" duration="1325000" />
+      <workItem from="1748371615556" duration="532000" />
     </task>
     <task id="LOCAL-00001" summary="fixed backend">
       <option name="closed" value="true" />

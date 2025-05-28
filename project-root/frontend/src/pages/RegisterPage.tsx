@@ -84,7 +84,7 @@ const RegisterPage = () => {
             <h2>Please register to be able to access our services!</h2>
             {error.length > 0 && (
                 <div>
-                    <h3>Errors:</h3>
+                    <h3>Request exit status:</h3>
                     <ul>
                         {error.map((err, index) => (
                             <li key={index} className="error-text">{err}</li>
@@ -94,7 +94,7 @@ const RegisterPage = () => {
             )}
             {okays.length > 0 && (
                 <div>
-                    <h3>Success:</h3>
+                    <h3>Request exit status:</h3>
                     <ul>
                         {okays.map((msg, index) => (
                             <li key={index} className="info-text">{msg}</li>

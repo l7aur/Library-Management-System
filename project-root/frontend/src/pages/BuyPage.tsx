@@ -57,7 +57,7 @@ function BuyPage() {
 
     const handleAddToCart = (bookToAdd: BookTypeImpl) => {
         setCart(prevCart => {
-            const existingItem = prevCart.find(item => item.id === bookToAdd.isbn);
+            const existingItem = prevCart.find(item => item.id === bookToAdd.id);
             if (existingItem) {
                 return prevCart.map(item =>
                     item.id === bookToAdd.id ? { ...item, quantity: item.quantity + 1, price: item.price, name: item.name } : item
